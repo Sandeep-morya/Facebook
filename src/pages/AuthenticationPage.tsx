@@ -6,29 +6,35 @@ import {
 	Title,
 	Box,
 	Text,
-	TextInput,
-	Button,
-	PasswordInput,
 	Divider,
+	Modal,
 } from "@mantine/core";
 import Footer from "../components/Footer/Footer";
-import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { useForm } from "@mantine/form";
-import { Link } from "react-router-dom";
+
+import { useDisclosure } from "@mantine/hooks";
+import SignUpForm from "../components/Auth/SignUpForm";
+import LoginForm from "../components/Auth/LoginForm";
 
 type Props = {};
 
 const AuthenticationPage = (props: Props) => {
-	const form = useForm({
-		initialValues: {
-			email: "",
-			password: "",
-		},
+	const [opened, { open, close }] = useDisclosure(false);
 
-		validate: {
-			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-		},
-	});
+	// :: Handle Login ::
+	function handleLogin(values: { email: string; password: string }) {
+		console.log(values);
+	}
+
+	// :: Handle Signup ::
+	function handleSignup(values: {
+		name: string;
+		dob: string;
+		mobile: string;
+		gender: string;
+		password: string;
+	}) {
+		console.log(values);
+	}
 
 	return (
 		<Stack w={"100%"}>
@@ -99,46 +105,9 @@ const AuthenticationPage = (props: Props) => {
 					}}
 					maw="550px"
 					gap="1rem">
-					<Box
-						component="form"
-						onSubmit={form.onSubmit((values) => alert(values))}
-						bg={"white"}
-						sx={{
-							w: "100%",
-							boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-							borderRadius: "0.5rem",
+					{/*---:: Login Form ::---*/}
+					<LoginForm {...{ handleLogin, open }} />
 
-							padding: "1rem",
-							display: "flex",
-							flexDirection: "column",
-							gap: "1rem",
-							aspectRatio: "1",
-						}}>
-						<TextInput
-							placeholder="Email address or phone number"
-							size="xl"
-							{...form.getInputProps("email")}
-						/>
-						<PasswordInput
-							placeholder="Password"
-							size="xl"
-							{...form.getInputProps("password")}
-						/>
-						<Button size="xl" type="submit">
-							Log in
-						</Button>
-						<Text align="center" color={"blue"} component={Link} to="/">
-							Forgotten password?
-						</Text>
-						<Divider />
-						<Button
-							sx={{ alignSelf: "center" }}
-							color={"green"}
-							size="xl"
-							type="submit">
-							Create new Account
-						</Button>
-					</Box>
 					<Text align="center">
 						<Text component="span" fw="700">
 							Create a Page
@@ -161,6 +130,22 @@ const AuthenticationPage = (props: Props) => {
 				pb="3rem">
 				<Footer />
 			</Flex>
+			{/*---:: Modal ::---*/}
+			<Modal
+				opened={opened}
+				onClose={close}
+				title={
+					<Flex direction={"column"}>
+						<Title order={1}>Sign Up</Title>
+						<Text fs={"sm"}>It's quick and easy.</Text>
+					</Flex>
+				}
+				centered>
+				<Divider />
+				{/*---:: SignUpForm ::---*/}
+
+				<SignUpForm {...{ handleSignup }} />
+			</Modal>
 		</Stack>
 	);
 };
