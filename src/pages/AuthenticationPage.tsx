@@ -36,24 +36,19 @@ const AuthenticationPage = (props: Props) => {
 			<Flex
 				w={"100%"}
 				bg="#F0F2F5"
-				direction={{
-					xs: "column",
-					sm: "column",
-					md: "column",
-					lg: "row",
-					xl: "row",
-				}}
+				gap={"2rem"}
+				direction={{ base: "column", sm: "row" }}
 				p={{
-					xs: "0 0.5rem",
+					xs: "0 1rem",
 					sm: "0 1rem",
 					md: "0 2rem",
 					lg: "0 10rem",
 					xl: "0 28rem",
 				}}
 				h={{
-					xs: "0 0.5rem",
-					sm: "0 1rem",
-					md: "0 2rem",
+					xs: "100vh",
+					sm: "100vh",
+					md: "100vh",
 					lg: "100vh",
 					xl: "75vh",
 				}}>
@@ -63,17 +58,17 @@ const AuthenticationPage = (props: Props) => {
 						xs: "100%",
 						sm: "100%",
 						md: "100%",
-						lg: "60%",
+						lg: "50%",
 						xl: "60%",
 					}}
 					direction={"column"}
-					mt={"20%"} /* {{
+					mt={{
 						xs: "2%",
 						sm: "5%",
-						md: "10%",
-						lg: "15%",
+						md: "20%",
+						lg: "20%",
 						xl: "20%",
-					}} */
+					}}
 					gap={"0.5rem"}>
 					<Box w={"45%"}>
 						<Image
@@ -92,18 +87,18 @@ const AuthenticationPage = (props: Props) => {
 				{/*---:: Right Side (Login Form) ::---*/}
 				<Flex
 					justify={"center"}
+					sx={{ flexFlow: "1" }}
 					align="center"
 					direction={"column"}
 					w={{
 						xs: "100%",
 						sm: "100%",
 						md: "100%",
-						lg: "50%",
-						xl: "50%",
+						lg: "45%",
+						xl: "45%",
 					}}
-					miw="500px"
+					maw="550px"
 					gap="1rem">
-					{/*---:: Login Form ::---*/}
 					<Box
 						component="form"
 						onSubmit={form.onSubmit((values) => alert(values))}
@@ -112,12 +107,12 @@ const AuthenticationPage = (props: Props) => {
 							w: "100%",
 							boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
 							borderRadius: "0.5rem",
-							aspectRatio: "1",
-							height: "50%",
+
 							padding: "1rem",
 							display: "flex",
 							flexDirection: "column",
 							gap: "1rem",
+							aspectRatio: "1",
 						}}>
 						<TextInput
 							placeholder="Email address or phone number"
@@ -144,7 +139,7 @@ const AuthenticationPage = (props: Props) => {
 							Create new Account
 						</Button>
 					</Box>
-					<Text p="0 10%">
+					<Text align="center">
 						<Text component="span" fw="700">
 							Create a Page
 						</Text>{" "}
