@@ -1,9 +1,21 @@
-﻿import { MantineProvider, Text, Button } from "@mantine/core";
+﻿import { MantineProvider, Text, Button, Stack } from "@mantine/core";
+import AllRoutes from "./Routes";
 
 export default function App() {
 	return (
-		<MantineProvider withGlobalStyles withNormalizeCSS>
-			<Button>This is button from Mantine</Button>
+		<MantineProvider
+			withGlobalStyles
+			withNormalizeCSS
+			theme={{
+				breakpoints: {
+					xs: "30em",
+					sm: "48em",
+					md: "64em",
+					lg: "74em",
+					xl: "100em",
+				},
+			}}>
+			<AllRoutes />
 		</MantineProvider>
 	);
 }
