@@ -4,6 +4,7 @@
 	Flex,
 	Group,
 	Input,
+	LoadingOverlay,
 	NativeSelect,
 	Radio,
 	Text,
@@ -12,6 +13,7 @@
 import { useForm } from "@mantine/form";
 import React from "react";
 import { Link } from "react-router-dom";
+import useDate from "../../hooks/useDate";
 import useGetRangeArray from "../../hooks/useGetRangeArray";
 import usePasswordValidation from "../../hooks/usePasswordValidation";
 
@@ -23,11 +25,13 @@ type Props = {
 		gender: string;
 		password: string;
 	}) => void;
+	loading: boolean;
 };
 
-const SignUpForm = ({ handleSignup }: Props) => {
+const SignUpForm = ({ handleSignup, loading }: Props) => {
 	const rangeArray = useGetRangeArray();
 	const validatePassword = usePasswordValidation();
+	const date = useDate();
 	const signupForm = useForm({
 		initialValues: {
 			name: "",
@@ -40,12 +44,15 @@ const SignUpForm = ({ handleSignup }: Props) => {
 			year: "1998",
 		},
 
+		// :: Validation ::
 		validate: {
 			name: (value) => (value.trim().length < 3 ? "Name is Required" : null),
 			mobile: (value) =>
 				/^[6-9]\d{9}$/.test(value) ? null : "Invalid Mobile Number",
 			password: (value) => validatePassword(value),
 		},
+
+		// :: Final Output ::
 		transformValues: (values) => ({
 			name: `${values.name} ${values.surname}`,
 			dob: `${values.day}/${Number(values.month) + 1}/${values.year}`,
@@ -62,9 +69,12 @@ const SignUpForm = ({ handleSignup }: Props) => {
 				flexDirection: "column",
 				marginTop: "1rem",
 				gap: "1rem",
+				position: "relative",
 			}}
+			autoComplete="off"
 			component="form"
 			onSubmit={signupForm.onSubmit((values) => handleSignup(values))}>
+			<LoadingOverlay visible={loading} />
 			<Flex justify={"space-between"} gap="1rem">
 				{/*---:: name ::---*/}
 				<TextInput
@@ -93,6 +103,7 @@ const SignUpForm = ({ handleSignup }: Props) => {
 				type="password"
 				placeholder="New Password"
 				size={"md"}
+				autoComplete="off"
 				{...signupForm.getInputProps("password")}
 			/>
 
@@ -124,11 +135,9 @@ const SignUpForm = ({ handleSignup }: Props) => {
 					/>
 					<NativeSelect
 						style={{ flexGrow: "1" }}
-						data={rangeArray(
-							new Date().getFullYear() - 118,
-							new Date().getFullYear(),
-							{ reverse: true },
-						)}
+						data={rangeArray(date.getFullYear() - 118, date.getFullYear(), {
+							reverse: true,
+						})}
 						{...signupForm.getInputProps("year")}
 					/>
 				</Flex>

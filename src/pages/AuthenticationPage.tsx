@@ -1,4 +1,6 @@
-﻿import React from "react";
+﻿import React, { useState, useContext, useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
+
 import {
 	Stack,
 	Flex,
@@ -14,26 +16,72 @@ import Footer from "../components/Footer/Footer";
 import { useDisclosure } from "@mantine/hooks";
 import SignUpForm from "../components/Auth/SignUpForm";
 import LoginForm from "../components/Auth/LoginForm";
+import useAlert from "../hooks/useAlert";
+import { LoginApi, SignupApi } from "../api/auth";
+import useSetCookie from "../hooks/useSetCookie";
+import { AuthContext } from "../Provider/AuthContextProvider";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
-type Props = {};
+const AuthenticationPage = () => {
+	const Alert = useAlert();
+	const setCookie = useSetCookie();
+	const location = useLocation();
 
-const AuthenticationPage = (props: Props) => {
+	const { token, setToken } = useContext(AuthContext);
+	const navigate = useNavigate();
 	const [opened, { open, close }] = useDisclosure(false);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
 
 	// :: Handle Login ::
-	function handleLogin(values: { email: string; password: string }) {
-		console.log(values);
+	async function handleLogin(values: { mobile: string; password: string }) {
+		try {
+			setLoading(true);
+			const data = await LoginApi(values);
+			setLoading(false);
+			data.message === "Login Successful"
+				? Alert(data.message, "success")
+				: Alert(data.message, "warning");
+
+			if (data.message === "Login Successful") {
+				setCookie("fb_user", data.token);
+				setToken(data.token);
+			}
+		} catch (error) {
+			Alert("Internal Server Error", "error");
+			setLoading(false);
+			setError(true);
+		}
 	}
 
 	// :: Handle Signup ::
-	function handleSignup(values: {
+	async function handleSignup(values: {
 		name: string;
 		dob: string;
 		mobile: string;
 		gender: string;
 		password: string;
 	}) {
-		console.log(values);
+		try {
+			setLoading(true);
+			const data = await SignupApi(values);
+			setLoading(false);
+			data.message === "Registration Successful"
+				? Alert(data.message, "success")
+				: Alert(data.message, "warning");
+
+			if (data.message === "Registration Successful") {
+				setCookie("fb_user", data.token);
+				setToken(data.token);
+			}
+		} catch (error) {
+			Alert("Internal Server Error", "error");
+			setLoading(false);
+			setError(true);
+		}
+	}
+	if (token) {
+		return <Navigate to={location.state || "/home"} />;
 	}
 
 	return (
@@ -106,7 +154,7 @@ const AuthenticationPage = (props: Props) => {
 					maw="550px"
 					gap="1rem">
 					{/*---:: Login Form ::---*/}
-					<LoginForm {...{ handleLogin, open }} />
+					<LoginForm {...{ handleLogin, open, loading }} />
 
 					<Text align="center">
 						<Text component="span" fw="700">
@@ -144,7 +192,7 @@ const AuthenticationPage = (props: Props) => {
 				<Divider />
 				{/*---:: SignUpForm ::---*/}
 
-				<SignUpForm {...{ handleSignup }} />
+				<SignUpForm {...{ handleSignup, loading }} />
 			</Modal>
 		</Stack>
 	);

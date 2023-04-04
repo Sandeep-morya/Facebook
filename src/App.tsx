@@ -1,4 +1,5 @@
 ﻿import { MantineProvider, Text, Button, Stack } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import AllRoutes from "./Routes";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
 					xl: "100em",
 				},
 			}}>
+			<Notifications />
 			<AllRoutes />
 		</MantineProvider>
 	);

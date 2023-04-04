@@ -2,10 +2,12 @@
 import React from "react";
 import Ftext from "./Ftext";
 import { GoPlus } from "react-icons/go";
+import useDate from "../../hooks/useDate";
 
 type Props = {};
 
-function Footer({}: Props) {
+function Footer() {
+	const date = useDate();
 	return (
 		<footer style={{ width: "100%" }}>
 			<Flex direction={"column"} gap="0.5rem">
@@ -63,7 +65,7 @@ function Footer({}: Props) {
 					<Ftext>Contact uploading and non-users</Ftext>
 				</Flex>
 				<Text mt="0.5rem" fz="xs">
-					Meta &copy; {new Date().getFullYear()}
+					Meta &copy; {date.getFullYear()}
 				</Text>
 			</Flex>
 		</footer>

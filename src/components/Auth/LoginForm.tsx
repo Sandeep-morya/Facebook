@@ -5,6 +5,7 @@
 	PasswordInput,
 	Text,
 	TextInput,
+	LoadingOverlay,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React from "react";
@@ -13,20 +14,22 @@ import usePasswordValidation from "../../hooks/usePasswordValidation";
 
 type Props = {
 	open: () => void;
-	handleLogin: (values: { email: string; password: string }) => void;
+	handleLogin: (values: { mobile: string; password: string }) => void;
+	loading: boolean;
 };
 
-function LoginForm({ handleLogin, open }: Props) {
+function LoginForm({ handleLogin, open, loading }: Props) {
 	const validatePassword = usePasswordValidation();
 
 	const loginForm = useForm({
 		initialValues: {
-			email: "",
+			mobile: "",
 			password: "",
 		},
 
 		validate: {
-			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+			mobile: (value) =>
+				/^[6-9]\d{9}$/.test(value) ? null : "Invalid Mobile Number",
 			password: (value) => validatePassword(value),
 		},
 	});
@@ -39,20 +42,23 @@ function LoginForm({ handleLogin, open }: Props) {
 				w: "100%",
 				boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
 				borderRadius: "0.5rem",
-
+				position: "relative",
 				padding: "1rem",
 				display: "flex",
 				flexDirection: "column",
 				gap: "1rem",
 				aspectRatio: "1",
 			}}>
+			<LoadingOverlay visible={loading} />
 			<TextInput
-				placeholder="Email address or phone number"
+				placeholder="Mobile Number"
+				autoComplete="off"
 				size="lg"
-				{...loginForm.getInputProps("email")}
+				{...loginForm.getInputProps("mobile")}
 			/>
 			<PasswordInput
 				placeholder="Password"
+				autoComplete="on"
 				size="lg"
 				{...loginForm.getInputProps("password")}
 			/>
