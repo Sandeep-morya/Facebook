@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import { AuthenticationPage, Homepage } from "./pages";
+import { AuthenticationPage, ErrorPage, Homepage } from "./pages";
 
 type Props = {};
 
@@ -17,6 +17,7 @@ function AllRoutes({}: Props) {
 					</PrivateRoute>
 				}
 			/>
+			<Route path="/error" element={<ErrorPage />} />
 		</Routes>
 	);
 }

@@ -1,4 +1,4 @@
-﻿import React, { useState, useContext, useEffect } from "react";
+﻿import React, { useState, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import {
@@ -82,6 +82,9 @@ const AuthenticationPage = () => {
 	}
 	if (token) {
 		return <Navigate to={location.state || "/home"} />;
+	}
+	if (error) {
+		return <Navigate to={"/error"} state={location.pathname} />;
 	}
 
 	return (
