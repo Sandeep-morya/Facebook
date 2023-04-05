@@ -11,9 +11,9 @@
 	SimpleGrid,
 	Tabs,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
-import { FaSearch, FaFacebookMessenger } from "react-icons/fa";
+import { FaSearch, FaFacebookMessenger, FaLaptopHouse } from "react-icons/fa";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import {
 	MdNotifications,
@@ -30,6 +30,9 @@ import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi";
 import { TbMenu2 } from "react-icons/tb";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import MobileNav from "./MobileNav";
+import SearchResultList from "./SearchModal";
+import SearchModal from "./SearchModal";
+import AccountModal from "./AccountModal";
 
 type Props = {};
 
@@ -38,6 +41,8 @@ function Navbar({}: Props) {
 	const mobile = useMediaQuery("(max-width: 40rem)");
 	const [opened, { toggle }] = useDisclosure(false);
 	const label = opened ? "Close navigation" : "Open navigation";
+	const [showSearchModal, setShowSearchModal] = useState(false);
+	const [showAccountModal, setShowAccountModal] = useState(false);
 
 	return (
 		/* Moblie Navbar */
@@ -47,7 +52,7 @@ function Navbar({}: Props) {
 		) : (
 			<SimpleGrid
 				cols={3}
-				h={"4rem"}
+				h={"3.5rem"}
 				sx={{
 					width: "100%",
 					backgroundColor: "white",
@@ -55,22 +60,29 @@ function Navbar({}: Props) {
 					alignItems: "center",
 					padding: "0 1rem",
 				}}>
-				<Flex h={"4rem"} align="center" justify={"flex-start"} gap={"0.5rem"}>
+				<Flex h={"3.5rem"} align="center" justify={"flex-start"} gap={"0.5rem"}>
 					<Logo />
-					{matches ? (
-						<IconButton Icon={FaSearch} notficationCount={0} />
-					) : (
-						<Input
-							size={"md"}
-							variant="filled"
-							icon={<FaSearch />}
-							placeholder="Search Facebook"
-							radius="xl"
-						/>
-					)}
+					<Box
+						sx={{
+							position: "relative",
+						}}>
+						{matches ? (
+							<IconButton title="Search" Icon={FaSearch} notficationCount={0} />
+						) : (
+							<Input
+								size={"md"}
+								variant="filled"
+								onFocus={() => setShowSearchModal(true)}
+								icon={<FaSearch />}
+								placeholder="Search Facebook"
+								radius="xl"
+							/>
+						)}
+						{showSearchModal && <SearchModal {...{ setShowSearchModal }} />}
+					</Box>
 				</Flex>
 
-				<Flex h={"4rem"} justify={"space-evenly"}>
+				<Flex h={"3.5rem"} justify={"space-evenly"}>
 					<TabIcon
 						title="Home"
 						Icon={AiOutlineHome}
@@ -100,22 +112,38 @@ function Navbar({}: Props) {
 				</Flex>
 
 				{matches ? (
-					<Flex gap={"0.5rem"} justify="flex-end" h={"4rem"} align="center">
+					<Flex gap={"0.5rem"} justify="flex-end" h={"3.5rem"} align="center">
 						<Burger opened={opened} onClick={toggle} aria-label={label} />
 					</Flex>
 				) : (
-					<Flex gap={"0.5rem"} justify="flex-end" h={"4rem"} align="center">
-						<IconButton Icon={BsGrid3X3GapFill} notficationCount={0} />
-						<IconButton Icon={FaFacebookMessenger} notficationCount={0} />
-						<IconButton Icon={MdNotifications} notficationCount={0} />
-
-						<Avatar
-							size={"2.8rem"}
-							radius="xl"
-							color={"blue"}
-							src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
-							alt="Sandeep Morya"
+					<Flex gap={"0.5rem"} justify="flex-end" h={"3.5rem"} align="center">
+						<IconButton
+							title="Menu"
+							Icon={BsGrid3X3GapFill}
+							notficationCount={0}
 						/>
+						<IconButton
+							title="Messenger"
+							Icon={FaFacebookMessenger}
+							notficationCount={0}
+						/>
+						<IconButton
+							title="Notifications"
+							Icon={MdNotifications}
+							notficationCount={0}
+						/>
+
+						<ActionIcon ml="0.5rem" pos={"relative"}>
+							<Avatar
+								size={"2.8rem"}
+								radius="xl"
+								onClick={() => setShowAccountModal(!showAccountModal)}
+								color={"blue"}
+								src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
+								alt="Sandeep Morya"
+							/>
+							{showAccountModal && <AccountModal />}
+						</ActionIcon>
 					</Flex>
 				)}
 			</SimpleGrid>

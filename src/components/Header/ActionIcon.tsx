@@ -5,14 +5,16 @@ import Ticker from "./Ticker";
 
 type Props = {
 	Icon: IconType;
-	notficationCount: number;
+	title?: string;
+	notficationCount?: number;
 };
 
-const IconButton = ({ Icon, notficationCount }: Props) => {
+const IconButton = ({ Icon, title, notficationCount = 0 }: Props) => {
 	return (
 		<ActionIcon
 			sx={{ position: "relative" }}
-			bg={"#e0e2e5"}
+			bg={"#e0e0e0"}
+			data-title={title}
 			size={"xl"}
 			radius={"xl"}
 			variant="filled">

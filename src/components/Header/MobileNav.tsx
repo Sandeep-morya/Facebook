@@ -24,6 +24,7 @@ import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { IoStorefrontOutline, IoStorefront } from "react-icons/io5";
 import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi";
 import { useDisclosure } from "@mantine/hooks";
+import TextLogo from "./TextLogo";
 type Props = {};
 
 function MobileNav({}: Props) {
@@ -32,18 +33,14 @@ function MobileNav({}: Props) {
 	return (
 		<Flex bg={"white"} w={"100%"} h="8rem" direction={"column"}>
 			<Flex justify={"space-between"} p="0.5rem 1rem">
-				<Box w={"180px"}>
-					<Image
-						w={"100%"}
-						src={
-							"https:res.cloudinary.com/due9pi68z/image/upload/v1680507858/dnpjtjjqrvjvkslrqxxp.png"
-						}
-						alt="facebook-logo-name"
-					/>
-				</Box>
+				<TextLogo />
 				<Group>
-					<IconButton Icon={FaSearch} notficationCount={0} />
-					<IconButton Icon={FaFacebookMessenger} notficationCount={0} />
+					<IconButton title="Search" Icon={FaSearch} notficationCount={0} />
+					<IconButton
+						title="Messenger"
+						Icon={FaFacebookMessenger}
+						notficationCount={0}
+					/>
 					<Burger opened={opened} onClick={toggle} aria-label={label} />
 				</Group>
 			</Flex>
