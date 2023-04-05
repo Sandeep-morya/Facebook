@@ -82,9 +82,9 @@ function Navbar({}: Props) {
 			</Flex>
 
 			<Flex gap={"0.5rem"} justify="flex-end" h={"4rem"} align="center">
-				<IconButton Icon={BsGrid3X3GapFill} />
-				<IconButton Icon={FaFacebookMessenger} />
-				<IconButton Icon={MdNotifications} />
+				<IconButton Icon={BsGrid3X3GapFill} notficationCount={0} />
+				<IconButton Icon={FaFacebookMessenger} notficationCount={2} />
+				<IconButton Icon={MdNotifications} notficationCount={3} />
 
 				<Avatar
 					size={"2.8rem"}

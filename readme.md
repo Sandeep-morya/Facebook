@@ -4,4 +4,5 @@
 
 Routes :
 `/` -> [Authentication]
+
 `/home` -> [Main Page]

@@ -14,9 +14,10 @@ const TabIcon = ({ Icon, SelectedIcon, active, title }: Props) => {
 	const { hovered, ref } = useHover();
 	return (
 		<Flex
-			{...{ title, ref }}
+			ref={ref}
 			justify={"space-between"}
 			direction="column"
+			data-title={title}
 			style={{
 				flexGrow: "1",
 				height: "100%",
@@ -38,6 +39,7 @@ const TabIcon = ({ Icon, SelectedIcon, active, title }: Props) => {
 					width: "100%",
 					visibility: active ? "visible" : "hidden",
 					height: "0.25rem",
+					borderRadius: "1rem",
 					background: "#0076CE",
 				}}></div>
 		</Flex>
