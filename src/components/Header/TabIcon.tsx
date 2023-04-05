@@ -20,7 +20,7 @@ const TabIcon = ({ Icon, SelectedIcon, active, title }: Props) => {
 			data-title={title}
 			style={{
 				flexGrow: "1",
-				height: "100%",
+				height: "4rem",
 			}}>
 			<Box
 				style={{
