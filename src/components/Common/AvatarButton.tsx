@@ -13,17 +13,19 @@ const AvatarButton = ({ name, src }: Props) => {
 	return (
 		<Flex
 			ref={ref}
-			bg={hovered ? "#eeeeee" : "white"}
+			bg={hovered ? "#dddddd" : "transparent"}
 			w={"100%"}
 			align="center"
 			sx={{ borderRadius: "0.5rem" }}
 			gap={"1rem"}
 			p="0.5rem">
 			<Avatar
-				size={"2.8rem"}
+				size={"2.5rem"}
+				sx={{
+					filter: "drop-shadow(0 0 5px rgba(0,0,0,0.15))",
+				}}
 				radius="xl"
 				color={"blue"}
-				sx={{ boxShadow: "0 0 3px gray" }}
 				src={src}
 				alt={name}
 			/>

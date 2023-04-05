@@ -41,7 +41,10 @@ function AccountModal({}: Props) {
 					borderRadius: "0.5rem",
 					overflow: "hidden",
 				}}>
-				<AvatarButton src="hovered" name="Sandeep Morya" />
+				<AvatarButton
+					src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
+					name="Sandeep Morya"
+				/>
 				<Divider size="xs" />
 				<FullLink />
 			</Flex>
