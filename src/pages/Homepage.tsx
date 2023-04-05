@@ -16,14 +16,14 @@ const Homepage = (props: Props) => {
 			<Box w={"100%"} sx={{ position: "sticky", zIndex: 100, top: "0" }}>
 				<Navbar />
 			</Box>
-			<Flex justify={"space-between"} p="1.5rem 0.5rem">
-				<Box sx={{ flexGrow: 1 }}>
+			<Flex p="1.5rem 0.5rem">
+				<Box sx={{ flex: 1 }}>
 					<Sidebar />
 				</Box>
-				<Box sx={{ flexGrow: 1 }}>
+				<Box sx={{ flex: 1 }}>
 					<Feeds />
 				</Box>
-				<Box sx={{ flexGrow: 1 }}>
+				<Box sx={{ flex: 1 }}>
 					<Contacts />
 				</Box>
 			</Flex>

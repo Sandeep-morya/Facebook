@@ -10,8 +10,8 @@ function Sidebar({}: Props) {
 			direction={"column"}
 			// h="100vh"
 			// sx={{ overflowX: "scroll" }}
-			maw={"20rem"}
-			miw="15rem"
+
+			w={"20rem"}
 			align="flex-start">
 			<AvatarButton
 				src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
