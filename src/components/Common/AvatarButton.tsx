@@ -22,7 +22,7 @@ const AvatarButton = ({ name, src }: Props) => {
 			<Avatar
 				size={"2.5rem"}
 				sx={{
-					filter: "drop-shadow(0 0 5px rgba(0,0,0,0.15))",
+					filter: "drop-shadow(0 0 5px rgba(0,0,0,0.1))",
 				}}
 				radius="xl"
 				color={"blue"}
