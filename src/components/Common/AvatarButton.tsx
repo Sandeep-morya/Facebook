@@ -1,4 +1,4 @@
-﻿import { Avatar, Flex, Text, Title } from "@mantine/core";
+﻿import { Avatar, Box, Flex, Text, Title } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import React from "react";
 
@@ -29,6 +29,7 @@ const AvatarButton = ({ name, src }: Props) => {
 				src={src}
 				alt={name}
 			/>
+
 			<Title order={5} fw={500} c="black">
 				{name}
 			</Title>
