@@ -54,7 +54,6 @@ function Contacts({}: Props) {
 		<Flex w="100%" direction={"column"}>
 			<Flex
 				w="20rem"
-				mr={"1.5rem"}
 				sx={{ alignSelf: "flex-end" }}
 				direction={"column"}
 				gap="1rem">
