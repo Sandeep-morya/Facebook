@@ -1,12 +1,16 @@
 ﻿import { Box, Flex, Text } from "@mantine/core";
+import { useHover } from "@mantine/hooks";
 import React from "react";
 import Havatar from "../Common/Havatar";
 
 type Props = {};
 
 function StoryCard({}: Props) {
+	const { hovered, ref } = useHover();
+
 	return (
 		<Flex
+			ref={ref}
 			w={"7rem"}
 			direction="column"
 			h="100%"
@@ -21,7 +25,7 @@ function StoryCard({}: Props) {
 					width: "100%",
 					height: "100%",
 					backgroundImage: `url(https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg)`,
-					backgroundSize: "150%",
+					backgroundSize: hovered ? "155%" : "150%",
 					filter: "brightness(70%)",
 					backgroundPosition: "center",
 				}}></Box>

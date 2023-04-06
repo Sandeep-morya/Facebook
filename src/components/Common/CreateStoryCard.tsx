@@ -1,4 +1,5 @@
 ﻿import { Box, Flex, Image, Text } from "@mantine/core";
+import { useHover } from "@mantine/hooks";
 import React from "react";
 import { MdAdd } from "react-icons/md";
 import Ftext from "../Footer/Ftext";
@@ -6,9 +7,11 @@ import Ftext from "../Footer/Ftext";
 type Props = {};
 
 function CreateStoryCard({}: Props) {
+	const { hovered, ref } = useHover();
 	return (
 		<Flex
 			w={"7rem"}
+			ref={ref}
 			direction="column"
 			h="100%"
 			sx={{
@@ -22,7 +25,7 @@ function CreateStoryCard({}: Props) {
 					height: "80%",
 					position: "relative",
 					backgroundImage: `url(https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg)`,
-					backgroundSize: "150%",
+					backgroundSize: hovered ? "155%" : "150%",
 					backgroundPosition: "center",
 				}}>
 				<Box
