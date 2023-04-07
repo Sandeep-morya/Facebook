@@ -1,4 +1,4 @@
-﻿import { Box, Flex, Title } from "@mantine/core";
+﻿import { Box, Group, Text, UnstyledButton } from "@mantine/core";
 import React from "react";
 
 type Props = {
@@ -8,17 +8,24 @@ type Props = {
 
 function PostButton({ src, name }: Props) {
 	return (
-		<Flex align={"center"} gap="0.5rem">
-			<Box
-				w={"20px"}
-				h="20px"
-				bgr="no-repeat"
-				bgsz={"100%"}
-				bg={`url(${src})`}></Box>
-			<Title order={5} fw={500} c="black" sx={{ wordBreak: "break-all" }}>
-				{name}
-			</Title>
-		</Flex>
+		<UnstyledButton
+			sx={{
+				padding: "0.25rem",
+				borderRadius: "0.5rem",
+				"&:hover": {
+					backgroundColor: "rgba(0,0,0,0.1)",
+				},
+			}}>
+			<Group spacing={5} align="center" sx={{ justifyContent: "center" }}>
+				<Box
+					w={"20px"}
+					h="20px"
+					bgr="no-repeat"
+					bgsz={"100%"}
+					bg={`url(${src})`}></Box>
+				<Text>{name}</Text>
+			</Group>
+		</UnstyledButton>
 	);
 }
 

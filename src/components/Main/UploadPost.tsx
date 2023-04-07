@@ -22,10 +22,10 @@ function UploadPost({ src, firstName }: Props) {
 			bg={"white"}
 			w="100%"
 			direction={"column"}
-			p="1rem"
-			gap={"1rem"}
+			p="0.5rem"
+			gap={"0.5rem"}
 			sx={{ borderRadius: "0.5rem" }}>
-			<Flex justify={"space-between"} gap="1rem" align={"center"}>
+			<Flex justify={"space-between"} gap="1rem" p={"0.15rem"} align={"center"}>
 				<Avatar
 					size={"3rem"}
 					radius="xl"
@@ -42,7 +42,7 @@ function UploadPost({ src, firstName }: Props) {
 				/>
 			</Flex>
 			<Divider />
-			<SimpleGrid cols={3} sx={{ placeItems: "center", gap: "1rem" }}>
+			<SimpleGrid cols={3}>
 				<PostButton
 					src="https://res.cloudinary.com/due9pi68z/image/upload/v1680801000/nc04qapjayg7vmcpahsr.png"
 					name="Live Video"
