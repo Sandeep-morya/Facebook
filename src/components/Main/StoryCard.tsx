@@ -27,8 +27,9 @@ function StoryCard({}: Props) {
 					height: "100%",
 					backgroundImage: `url(https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg)`,
 					backgroundSize: hovered ? "155%" : "150%",
-					filter: "brightness(70%)",
+					filter: "brightness(75%)",
 					backgroundPosition: "center",
+					transition: "all 0.1s",
 				}}></Box>
 			<Box
 				sx={{

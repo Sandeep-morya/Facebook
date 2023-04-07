@@ -1,4 +1,4 @@
-﻿import { Box, Flex } from "@mantine/core";
+﻿import { Box, Center, Flex, Loader } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import React, { useEffect } from "react";
 import MobileNav from "../components/Header/MobileNav";
@@ -62,6 +62,9 @@ const Homepage = (props: Props) => {
 						"&::-webkit-scrollbar": { display: "none" },
 					}}>
 					<Feeds />
+					{/* <Center>
+						<Loader />
+					</Center> */}
 				</Box>
 
 				{/*---:: Contacts - Birthday - Groups ::---*/}

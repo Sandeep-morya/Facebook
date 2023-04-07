@@ -28,6 +28,7 @@ function CreateStoryCard({}: Props) {
 					backgroundImage: `url(https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg)`,
 					backgroundSize: hovered ? "155%" : "150%",
 					backgroundPosition: "center",
+					transition: "all 0.1s",
 				}}>
 				<Box
 					bg={"blue"}
