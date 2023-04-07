@@ -16,17 +16,29 @@ const Homepage = (props: Props) => {
 			<Box w={"100%"} sx={{ position: "sticky", zIndex: 100, top: "0" }}>
 				<Navbar />
 			</Box>
-			<Flex p="1.5rem 0.5rem">
-				<Box sx={{ flex: 1 }}>
+			<Box
+				sx={{
+					width: "100%",
+					flexGrow: 1,
+					display: "grid",
+					padding: "1rem 0em",
+					gridTemplateColumns: "max-content 1fr max-content ",
+				}}>
+				<Box miw={"20rem"}>
 					<Sidebar />
 				</Box>
-				<Box sx={{ flex: 1 }}>
+				<Box
+					sx={{
+						height: "calc(100vh - 5rem)",
+						overflow: "scroll",
+						"&::-webkit-scrollbar": { display: "none" },
+					}}>
 					<Feeds />
 				</Box>
-				<Box sx={{ flex: 1 }}>
+				<Box miw={"20rem"}>
 					<Contacts />
 				</Box>
-			</Flex>
+			</Box>
 		</Flex>
 	);
 };
