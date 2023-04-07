@@ -11,7 +11,7 @@ function CreateStoryCard({}: Props) {
 	return (
 		<Flex
 			w={"7rem"}
-			miw="6rem"
+			miw="7rem"
 			ref={ref}
 			direction="column"
 			h="100%"
