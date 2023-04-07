@@ -34,7 +34,7 @@ function MobileNav({}: Props) {
 		<Flex bg={"white"} w={"100%"} h="8rem" direction={"column"}>
 			<Flex justify={"space-between"} p="0.5rem 1rem">
 				<TextLogo />
-				<Group>
+				<Flex gap="0.5rem" align={"center"}>
 					<IconButton title="Search" Icon={FaSearch} notficationCount={0} />
 					<IconButton
 						title="Messenger"
@@ -42,7 +42,7 @@ function MobileNav({}: Props) {
 						notficationCount={0}
 					/>
 					<Burger opened={opened} onClick={toggle} aria-label={label} />
-				</Group>
+				</Flex>
 			</Flex>
 			<Flex h={"4rem"} justify={"space-evenly"}>
 				<TabIcon
