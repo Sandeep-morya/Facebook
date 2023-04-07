@@ -38,15 +38,11 @@ function StroyNreelTabs({}: Props) {
 					<CreateStoryCard />
 					<StoryCard />
 					<StoryCard />
-					<StoryCard />
-					<StoryCard />
 				</Flex>
 			</Tabs.Panel>
 
 			<Tabs.Panel value="Reels" h="12rem">
 				<Flex gap={"0.5rem"} h="100%">
-					<ReelCard />
-					<ReelCard />
 					<ReelCard />
 					<ReelCard />
 					<ReelCard />

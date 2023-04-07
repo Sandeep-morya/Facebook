@@ -14,9 +14,10 @@ function BirthdayTile({ name }: Props) {
 				}
 				alt={name}
 			/>
-			<Flex w={"100%"}>
-				<Text fw={500}>{name}</Text>'s birthday is today
-			</Flex>
+
+			<Text>
+				<strong>{name}</strong>'s birthday is today
+			</Text>
 		</Flex>
 	);
 }

@@ -6,12 +6,7 @@ type Props = {};
 
 function Sidebar({}: Props) {
 	return (
-		<Flex
-			direction={"column"}
-			// h="100vh"
-			// sx={{ overflowX: "scroll" }}
-
-			align="flex-start">
+		<Flex direction={"column"} pr="1rem" align="flex-start">
 			<AvatarButton
 				src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
 				name="Sandeep Morya"

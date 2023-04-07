@@ -51,7 +51,7 @@ const contacts = [
 
 function Contacts({}: Props) {
 	return (
-		<Flex direction={"column"} gap="1rem">
+		<Flex direction={"column"} gap="1rem" p={"0 1rem"}>
 			{/*---:: Birthdays ::---*/}
 			<Heading name="Birthdays" />
 			<Flex direction={"column"} gap="0.5rem">

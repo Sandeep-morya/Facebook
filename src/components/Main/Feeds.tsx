@@ -16,6 +16,8 @@ function Feeds({}: Props) {
 				lg: "80%",
 				xl: "55%",
 			}}
+			p="0 0.5rem"
+			pb="2rem"
 			m="auto"
 			direction="column"
 			gap={"1rem"}>
@@ -33,7 +35,6 @@ function Feeds({}: Props) {
 				w="100%"
 				h={"auto"}
 				align={"flex-start"}>
-				<Post />
 				<Post />
 			</Flex>
 		</Flex>

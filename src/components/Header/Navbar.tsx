@@ -38,7 +38,7 @@ type Props = {};
 
 function Navbar({}: Props) {
 	const matches = useMediaQuery("(max-width: 62em)");
-	const mobile = useMediaQuery("(max-width: 40rem)");
+	const mobile = useMediaQuery("(max-width: 720px)");
 	const [opened, { toggle }] = useDisclosure(false);
 	const label = opened ? "Close navigation" : "Open navigation";
 	const [showSearchModal, setShowSearchModal] = useState(false);

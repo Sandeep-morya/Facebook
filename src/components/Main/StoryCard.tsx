@@ -12,6 +12,7 @@ function StoryCard({}: Props) {
 		<Flex
 			ref={ref}
 			w={"7rem"}
+			miw="6rem"
 			direction="column"
 			h="100%"
 			sx={{
