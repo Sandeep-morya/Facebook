@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import { AuthenticationPage, ErrorPage, Homepage } from "./pages";
+import { AuthenticationPage, ErrorPage, Homepage, ProfilePage } from "./pages";
 
 type Props = {};
 
@@ -14,6 +14,14 @@ function AllRoutes({}: Props) {
 				element={
 					<PrivateRoute>
 						<Homepage />
+					</PrivateRoute>
+				}
+			/>
+			<Route
+				path="/:id"
+				element={
+					<PrivateRoute>
+						<ProfilePage />
 					</PrivateRoute>
 				}
 			/>

@@ -34,3 +34,20 @@
 	position: relative;
 	padding: 0;
 }
+
+/* profile photo uplaod */
+.photo-view-upload-container {
+	position: relative;
+	height: 100%;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	outline: 0.3rem solid white;
+	transform: translate(20%, -10%);
+}
+
+.profile-photo {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}

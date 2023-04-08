@@ -34,9 +34,11 @@ import SearchResultList from "./SearchModal";
 import SearchModal from "./SearchModal";
 import AccountModal from "./AccountModal";
 
-type Props = {};
+type Props = {
+	unActive?: boolean;
+};
 
-function Navbar({}: Props) {
+function Navbar({ unActive }: Props) {
 	const matches = useMediaQuery("(max-width: 62em)");
 	const mobile = useMediaQuery("(max-width: 720px)");
 	const [opened, { toggle }] = useDisclosure(false);
@@ -87,7 +89,7 @@ function Navbar({}: Props) {
 						title="Home"
 						Icon={AiOutlineHome}
 						SelectedIcon={AiFillHome}
-						active
+						active={!unActive}
 					/>
 					<TabIcon
 						title="Watch"
