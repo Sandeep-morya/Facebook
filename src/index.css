@@ -42,7 +42,8 @@
 	aspect-ratio: 1;
 	border-radius: 50%;
 	outline: 0.3rem solid white;
-	transform: translate(20%, -10%);
+	margin-top: -2%;
+	margin-left: 2%;
 }
 
 .profile-photo {

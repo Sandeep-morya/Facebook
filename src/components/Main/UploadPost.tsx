@@ -24,7 +24,11 @@ function UploadPost({ src, firstName }: Props) {
 			direction={"column"}
 			p="0.5rem"
 			gap={"0.5rem"}
-			sx={{ borderRadius: "0.5rem" }}>
+			sx={{
+				borderRadius: "0.5rem",
+				boxShadow:
+					" rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
+			}}>
 			<Flex justify={"space-between"} gap="1rem" p={"0.15rem"} align={"center"}>
 				<Avatar
 					size={"3rem"}

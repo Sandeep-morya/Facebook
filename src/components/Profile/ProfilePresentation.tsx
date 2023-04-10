@@ -9,10 +9,17 @@
 	Group,
 	Image,
 	Loader,
+	Title,
 	LoadingOverlay,
+	Text,
+	Avatar,
+	Divider,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { FaCamera } from "react-icons/fa";
+import { FaCamera, FaPencilAlt } from "react-icons/fa";
+import { MdAdd } from "react-icons/md";
+import { TbDots } from "react-icons/tb";
+import TexTab from "./TexTab";
 
 type Props = {};
 
@@ -20,11 +27,7 @@ function ProfilePresentation({}: Props) {
 	const [file, setFile] = useState<File | null>(null);
 	const [loading, setLoading] = useState(false);
 	return (
-		<Flex
-			w={"100%"}
-			h="100%"
-			sx={{ border: "1px solid red" }}
-			direction="column">
+		<Flex w={"100%"} h="100%" direction="column">
 			{/*---:: Cover Image ::---*/}
 			<Box aria-labelledby="cover-image" w={"100%"} h="65%" pos={"relative"}>
 				<BackgroundImage
@@ -51,7 +54,7 @@ function ProfilePresentation({}: Props) {
 			</Box>
 
 			{/*---:: Profile photo and etc ::---*/}
-			<Flex w="100%" h={"25%"} sx={{ border: "1px solid red" }}>
+			<Flex w="100%" h={"25%"} gap="1rem" align={"center"}>
 				<Box className="photo-view-upload-container">
 					<img
 						className="profile-photo"
@@ -92,6 +95,63 @@ function ProfilePresentation({}: Props) {
 							visible={loading}
 						/>
 					</Box>
+				</Box>
+
+				<Flex sx={{ flex: "1" }} direction={"column"} gap="0.5rem">
+					<Title>{"Sandeep Morya"}</Title>
+					<Text fw={500} c="dimmed">
+						624 Friends
+					</Text>
+					<Flex direction={"row"} justify={"space-between"}>
+						<Avatar.Group spacing="sm">
+							<Avatar src="https://picsum.photos/200?random=1" radius="xl" />
+							<Avatar src="https://picsum.photos/200?random=2" radius="xl" />
+							<Avatar src="https://picsum.photos/200?random=3" radius="xl" />
+							<Avatar src="https://picsum.photos/200?random=4" radius="xl" />
+							<Avatar src="https://picsum.photos/200?random=5" radius="xl" />
+							<Avatar src="https://picsum.photos/200?random=6" radius="xl" />
+							<Avatar radius="xl">+5</Avatar>
+						</Avatar.Group>
+
+						<Group pr={"1rem"}>
+							<Button leftIcon={<MdAdd />}>Add to Story</Button>
+							<Button variant="outline" color="gray" leftIcon={<FaPencilAlt />}>
+								Edit Profile
+							</Button>
+						</Group>
+					</Flex>
+				</Flex>
+			</Flex>
+
+			<Divider m={"0.25rem"} color="black" />
+			{/*---:: Navs ::---*/}
+
+			<Flex
+				justify={"space-between"}
+				align="center"
+				sx={{
+					flex: 1,
+					position: "sticky",
+					top: "100rem",
+				}}>
+				<Flex h="100%">
+					{[
+						"Posts",
+						"About",
+						"Friends",
+						"Photos",
+						"Videos",
+						"Check-ins",
+						"More",
+					].map((e, i) => (
+						<TexTab selected={i === 0} key={e}>
+							{e}
+						</TexTab>
+					))}
+				</Flex>
+
+				<Box mr="1rem">
+					<TbDots size={20} />
 				</Box>
 			</Flex>
 		</Flex>
