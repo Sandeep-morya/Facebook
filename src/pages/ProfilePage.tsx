@@ -1,24 +1,66 @@
 ﻿import { Box, Flex } from "@mantine/core";
+import axios, { AxiosResponse } from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../components/Header/Navbar";
 import Post from "../components/Main/Post";
 import Photos from "../components/Profile/Photos";
 import ProfilePresentation from "../components/Profile/ProfilePresentation";
+import useAlert from "../hooks/useAlert";
 import useGetCookie from "../hooks/useGetCookie";
 import { useUserProfile } from "../Provider/UserContextProvider";
-import { UserProfileType } from "../types";
+import { PostType, UserProfileType } from "../types";
 
 type Props = {};
 
+const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
+
 function ProfilePage({}: Props) {
-	const { isLoading, isError, userdata } = useUserProfile();
+	const {
+		isLoading: userLoading,
+		isError: userError,
+		userdata,
+	} = useUserProfile();
+
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
+	const [posts, setPosts] = useState<PostType[]>([]);
+	const Alert = useAlert();
+
+	const getPosts = useCallback(
+		async (user_id: string) => {
+			setIsError(false);
+			setIsLoading(true);
+			try {
+				const { data }: AxiosResponse<PostType[]> = await axios.get(
+					VITE_API_URL + "/posts/all",
+					{
+						params: { user_id },
+						headers: { Authorization: VITE_TOKEN_SECRET },
+					},
+				);
+				setPosts(data);
+				setIsLoading(false);
+			} catch (error) {
+				setIsLoading(false);
+				setIsError(true);
+				Alert("503 Server Error", "error");
+			}
+		},
+		[VITE_TOKEN_SECRET],
+	);
 
 	useEffect(() => {
 		window.document.title = `Facebook - ${userdata?.name}` || "Facebook";
+		if (userdata?._id) {
+			getPosts(userdata._id);
+		}
 	}, [userdata]);
 
-	if (isLoading || !userdata) {
+	if (userLoading || !userdata) {
 		return <>Loading....</>;
+	}
+	if (posts.length < 1) {
+		return <></>;
 	}
 	return (
 		<Flex w={"100%"} mih="100vh" direction={"column"} bg="#F0F2F5">
@@ -46,10 +88,9 @@ function ProfilePage({}: Props) {
 					<Photos />
 				</Flex>
 				<Flex w="60%" h="100vh" gap="1rem" direction="column">
-					<Post />
-					<Post />
-					<Post />
-					<Post />
+					{posts.map((post) => (
+						<Post key={post._id} {...{ post }} />
+					))}
 				</Flex>
 			</Flex>
 		</Flex>
