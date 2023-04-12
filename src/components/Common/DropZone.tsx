@@ -1,6 +1,8 @@
 ﻿import React, { useState } from "react";
 import { useDropzone, DropzoneOptions } from "react-dropzone";
-import { Box, Button } from "@mantine/core";
+import { ActionIcon, Box, useMantineTheme } from "@mantine/core";
+import { AiOutlinePicture } from "react-icons/ai";
+import { MdClose } from "react-icons/md";
 
 interface DropZoneProps extends DropzoneOptions {
 	files: File[];
@@ -8,10 +10,12 @@ interface DropZoneProps extends DropzoneOptions {
 }
 
 function DropZone({ files, setFiles }: DropZoneProps) {
+	const theme = useMantineTheme();
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop: (acceptedFiles) => {
 			setFiles(acceptedFiles);
 		},
+		multiple: false,
 	});
 
 	const handlePreviewClick = (index: number) => {
@@ -39,10 +43,16 @@ function DropZone({ files, setFiles }: DropZoneProps) {
 			) : (
 				<p>Drag and drop images here, or click to select files</p>
 			)}
+			{files.length < 1 && (
+				<AiOutlinePicture fill={theme.colors.gray[3]} size={100} />
+			)}
 			{files.length > 0 && (
 				<Box
-					mah={"250px"}
-					sx={{ display: "flex", flexWrap: "wrap", overflow: "scroll" }}>
+					sx={{
+						display: "grid",
+						placeItems: "center",
+						position: "relative",
+					}}>
 					{files.map((file, index) => (
 						<img
 							key={index}
@@ -57,11 +67,16 @@ function DropZone({ files, setFiles }: DropZoneProps) {
 							onClick={() => handlePreviewClick(index)}
 						/>
 					))}
+					<ActionIcon
+						bg={theme.colors.gray[2]}
+						size="md"
+						radius={"xl"}
+						onClick={() => setFiles([])}
+						sx={{ position: "absolute", right: "0", top: "0" }}>
+						<MdClose size={22} />
+					</ActionIcon>
 				</Box>
 			)}
-			<Button style={{ marginTop: 20 }} variant="outline">
-				Upload
-			</Button>
 		</div>
 	);
 }
