@@ -52,38 +52,42 @@ export default function UploadModal({ opened, close }: Props) {
 				setIsLoading(false);
 				Alert(data?.message, "success");
 				close();
+				setImageURL("");
+				setFiles([]);
 			} catch (error) {
 				Alert("Something went wrong", "error");
 			}
 		}
-	}, [inputRef, token]);
-
-	// :: Upload Image ::
-	async function uploadPostImage() {
-		setIsLoading(true);
-
-		const formData = new FormData();
-
-		// :: files can be null also so we are returning the user ::
-
-		try {
-			formData.append("file", files[0]);
-			formData.append("upload_preset", VITE_UPLOAD_PRESET);
-			formData.append("cloud_name", VITE_CLOUD_NAME);
-			const { data } = await axios.post(VITE_UPLOAD_URL, formData);
-			setImageURL(data.url);
-			setIsLoading(false);
-		} catch (error) {
-			setIsError(true);
-			setIsLoading(false);
-		} // console.log(data);
-	}
+	}, [inputRef, token, imageURL]);
 
 	useEffect(() => {
+		// :: files can be null  ::
+		// :: Upload Image ::
+		async function uploadPostImage() {
+			setIsLoading(true);
+
+			const formData = new FormData();
+
+			try {
+				formData.append("file", files[0]);
+				formData.append("upload_preset", VITE_UPLOAD_PRESET);
+				formData.append("cloud_name", VITE_CLOUD_NAME);
+				const { data } = await axios.post(VITE_UPLOAD_URL, formData);
+				setImageURL(data.url);
+				setIsLoading(false);
+			} catch (error) {
+				setIsError(true);
+				setIsLoading(false);
+			}
+		}
+
 		if (files.length > 0) {
 			uploadPostImage();
+		} else {
+			setImageURL("");
 		}
-	}, [files]);
+	}, [files, VITE_CLOUD_NAME, VITE_UPLOAD_PRESET, VITE_UPLOAD_URL]);
+	console.log({ imageURL });
 
 	if (!user) {
 		return <></>;
@@ -93,7 +97,7 @@ export default function UploadModal({ opened, close }: Props) {
 		<Modal
 			opened={opened}
 			onClose={close}
-			title={<h3>{"Create Post"}</h3>}
+			title="Create Post"
 			size="md"
 			centered>
 			<Divider />

@@ -15,6 +15,7 @@ function DropZone({ files, setFiles }: DropZoneProps) {
 		onDrop: (acceptedFiles) => {
 			setFiles(acceptedFiles);
 		},
+		accept: { "image/*": [] },
 		multiple: false,
 	});
 
