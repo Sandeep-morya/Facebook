@@ -4,11 +4,13 @@ import React from "react";
 type Props = {
 	src: string;
 	name: string;
+	onClick: () => void;
 };
 
-function PostButton({ src, name }: Props) {
+function PostButton({ src, name, onClick }: Props) {
 	return (
 		<UnstyledButton
+			onClick={onClick}
 			sx={{
 				padding: "0.25rem",
 				borderRadius: "0.5rem",

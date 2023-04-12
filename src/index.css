@@ -3,6 +3,9 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+/* input:focus {
+	border: none !important;
+} */
 [data-title]:hover:after {
 	opacity: 1;
 	transition: all 0.1s ease 0.5s;
