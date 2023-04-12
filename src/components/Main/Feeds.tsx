@@ -1,12 +1,43 @@
 ﻿import { Flex } from "@mantine/core";
-import React from "react";
+import axios, { AxiosResponse } from "axios";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import useAlert from "../../hooks/useAlert";
+import { PostType } from "../../types";
 import Post from "./Post";
 import StroyNreelTabs from "./StroyNreelTabs";
 import UploadPost from "./UploadPost";
 
 type Props = {};
 
+const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
+
 function Feeds({}: Props) {
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
+	const [posts, setPosts] = useState<PostType[]>([]);
+	const Alert = useAlert();
+
+	const getPosts = useCallback(async () => {
+		setIsError(false);
+		setIsLoading(true);
+		try {
+			const { data }: AxiosResponse<PostType[]> = await axios.get(
+				VITE_API_URL + "/posts/all",
+				{ headers: { Authorization: VITE_TOKEN_SECRET } },
+			);
+			setPosts(data);
+			setIsLoading(false);
+		} catch (error) {
+			setIsLoading(false);
+			setIsError(true);
+			Alert("503 Server Error", "error");
+		}
+	}, [VITE_TOKEN_SECRET]);
+
+	useEffect(() => {
+		getPosts();
+	}, []);
+
 	return (
 		<Flex
 			w={{
@@ -35,7 +66,9 @@ function Feeds({}: Props) {
 				w="100%"
 				h={"auto"}
 				align={"flex-start"}>
-				<Post />
+				{posts.map((post) => (
+					<Post key={post._id} {...{ post }} />
+				))}
 			</Flex>
 		</Flex>
 	);

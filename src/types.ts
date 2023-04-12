@@ -17,6 +17,26 @@
 	__v: number;
 }
 
+export interface PostType {
+	_id: string;
+	type: string;
+	text: string;
+	url: string;
+	user_id: string;
+	likes: number;
+	hearts: number;
+	wows: number;
+	sads: number;
+	cares: number;
+	hahas: number;
+	angries: number;
+	comments: string[];
+	shares: number;
+	tags: string[];
+	createdAt: Date;
+	updatedAt: Date;
+}
+
 export interface CloudinaryResponse {
 	asset_id: string;
 	public_id: string;
