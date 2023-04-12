@@ -33,12 +33,14 @@ import MobileNav from "./MobileNav";
 import SearchResultList from "./SearchModal";
 import SearchModal from "./SearchModal";
 import AccountModal from "./AccountModal";
+import { UserProfileType } from "../../types";
 
 type Props = {
 	unActive?: boolean;
+	user: UserProfileType;
 };
 
-function Navbar({ unActive }: Props) {
+function Navbar({ user, unActive }: Props) {
 	const matches = useMediaQuery("(max-width: 62em)");
 	const mobile = useMediaQuery("(max-width: 720px)");
 	const [opened, { toggle }] = useDisclosure(false);
@@ -141,8 +143,8 @@ function Navbar({ unActive }: Props) {
 								radius="xl"
 								onClick={() => setShowAccountModal(!showAccountModal)}
 								color={"blue"}
-								src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
-								alt="Sandeep Morya"
+								src={user.image}
+								alt={user.name}
 							/>
 							{showAccountModal && <AccountModal />}
 						</ActionIcon>

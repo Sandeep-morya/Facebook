@@ -19,11 +19,14 @@ import React, { useState } from "react";
 import { FaCamera, FaPencilAlt } from "react-icons/fa";
 import { MdAdd } from "react-icons/md";
 import { TbDots } from "react-icons/tb";
+import { UserProfileType } from "../../types";
 import TexTab from "./TexTab";
 
-type Props = {};
+type Props = {
+	user: UserProfileType;
+};
 
-function ProfilePresentation({}: Props) {
+function ProfilePresentation({ user }: Props) {
 	const [file, setFile] = useState<File | null>(null);
 	const [loading, setLoading] = useState(false);
 	return (
@@ -34,7 +37,7 @@ function ProfilePresentation({}: Props) {
 					w={"100%"}
 					h="100%"
 					bgp={"0 10%"}
-					src="https://scontent.fluh1-1.fna.fbcdn.net/v/t39.30808-6/240517748_1615155945344887_5561738681943572943_n.jpg?stp=dst-jpg_s960x960&_nc_cat=109&ccb=1-7&_nc_sid=e3f864&_nc_ohc=S4CksW-kh7gAX_o9H80&_nc_oc=AQmaxLyTEEPym8WutmVL0ndjWtGiV6Q2Jlbh1gl4-Z_wZ8tADacSUgQiBRqrBj0JZbY&_nc_ht=scontent.fluh1-1.fna&oh=00_AfCCr7wWlRXCIN5jnGLYkIzgY7BgsoXsJ-kfgz3g1VDgjQ&oe=643600CA"
+					src={user.cover}
 					sx={{ borderRadius: "0 0 0.5rem 0.5rem" }}>
 					<Group
 						sx={{
@@ -56,13 +59,7 @@ function ProfilePresentation({}: Props) {
 			{/*---:: Profile photo and etc ::---*/}
 			<Flex w="100%" h={"25%"} gap="1rem" align={"center"}>
 				<Box className="photo-view-upload-container">
-					<img
-						className="profile-photo"
-						src={
-							"https://scontent.fluh1-1.fna.fbcdn.net/v/t39.30808-6/240517748_1615155945344887_5561738681943572943_n.jpg?stp=dst-jpg_s960x960&_nc_cat=109&ccb=1-7&_nc_sid=e3f864&_nc_ohc=S4CksW-kh7gAX_o9H80&_nc_oc=AQmaxLyTEEPym8WutmVL0ndjWtGiV6Q2Jlbh1gl4-Z_wZ8tADacSUgQiBRqrBj0JZbY&_nc_ht=scontent.fluh1-1.fna&oh=00_AfCCr7wWlRXCIN5jnGLYkIzgY7BgsoXsJ-kfgz3g1VDgjQ&oe=643600CA"
-						}
-						alt="ds"
-					/>
+					<img className="profile-photo" src={user.image} alt="ds" />
 					{/* image uplaod */}
 					<FileButton onChange={() => {}} accept="image/png,image/jpeg">
 						{(props) => (
@@ -104,7 +101,7 @@ function ProfilePresentation({}: Props) {
 					</Text>
 					<Flex direction={"row"} justify={"space-between"}>
 						<Avatar.Group spacing="sm">
-							<Avatar src="https://picsum.photos/200?random=1" radius="xl" />
+							<Avatar src="https://picsum.photos/200?random" radius="xl" />
 							<Avatar src="https://picsum.photos/200?random=2" radius="xl" />
 							<Avatar src="https://picsum.photos/200?random=3" radius="xl" />
 							<Avatar src="https://picsum.photos/200?random=4" radius="xl" />

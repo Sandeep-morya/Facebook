@@ -1,16 +1,16 @@
 ﻿import { Divider, Flex } from "@mantine/core";
 import React from "react";
+import { UserProfileType } from "../../types";
 import AvatarButton from "../Common/AvatarButton";
 
-type Props = {};
+type Props = {
+	user: UserProfileType;
+};
 
-function Sidebar({}: Props) {
+function Sidebar({ user }: Props) {
 	return (
 		<Flex direction={"column"} pr="1rem" align="flex-start">
-			<AvatarButton
-				src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
-				name="Sandeep Morya"
-			/>
+			<AvatarButton src={user.image} name={user.name} redirectOn={user._id} />
 			<AvatarButton
 				src="https://res.cloudinary.com/due9pi68z/image/upload/v1680723363/up49bubcrskek6eluya8.png"
 				name="Friends"

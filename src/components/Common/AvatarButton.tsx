@@ -1,15 +1,17 @@
 ﻿import { Avatar, Box, Flex, Text, Title } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
 	name: string;
 	src: string;
+	redirectOn?: string;
 };
 
-const AvatarButton = ({ name, src }: Props) => {
+const AvatarButton = ({ name, src, redirectOn }: Props) => {
 	const { hovered, ref } = useHover();
-
+	const navigate = useNavigate();
 	return (
 		<Flex
 			ref={ref}
@@ -18,6 +20,7 @@ const AvatarButton = ({ name, src }: Props) => {
 			align="center"
 			sx={{ borderRadius: "0.5rem" }}
 			gap={"1rem"}
+			onClick={() => (redirectOn ? navigate(`/${redirectOn}`) : {})}
 			p="0.5rem">
 			<Avatar
 				size={"2.5rem"}

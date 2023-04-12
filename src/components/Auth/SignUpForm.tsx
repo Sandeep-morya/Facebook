@@ -6,6 +6,7 @@
 	Input,
 	LoadingOverlay,
 	NativeSelect,
+	PasswordInput,
 	Radio,
 	Text,
 	TextInput,
@@ -54,11 +55,17 @@ const SignUpForm = ({ handleSignup, loading }: Props) => {
 
 		// :: Final Output ::
 		transformValues: (values) => ({
-			name: `${values.name} ${values.surname}`,
+			name: `${values.name} ${values.surname}`.trim(),
 			dob: `${values.day}/${Number(values.month) + 1}/${values.year}`,
 			mobile: values.mobile,
 			gender: values.gender,
 			password: values.password,
+			image:
+				values.gender === "male"
+					? "https://res.cloudinary.com/due9pi68z/image/upload/v1681283563/ggk7tjbt6nophsqqy9cd.png"
+					: values.gender === "female"
+					? "https://res.cloudinary.com/due9pi68z/image/upload/v1681283561/tobemqr8ngxfcemchepd.jpg"
+					: "https://res.cloudinary.com/due9pi68z/image/upload/v1681283815/aspuvrjmiwgyhyxig8dz.png",
 		}),
 	});
 	return (
@@ -99,8 +106,7 @@ const SignUpForm = ({ handleSignup, loading }: Props) => {
 			/>
 
 			{/*---:: password ::---*/}
-			<TextInput
-				type="password"
+			<PasswordInput
 				placeholder="New Password"
 				size={"md"}
 				autoComplete="off"
