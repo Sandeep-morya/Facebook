@@ -1,7 +1,14 @@
 ﻿import React from "react";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import { AuthenticationPage, ErrorPage, Homepage, ProfilePage } from "./pages";
+import {
+	AuthenticationPage,
+	ErrorPage,
+	FriendsPage,
+	Homepage,
+	ProfilePage,
+} from "./pages";
+import UserContextProvider from "./Provider/UserContextProvider";
 
 type Props = {};
 
@@ -13,7 +20,9 @@ function AllRoutes({}: Props) {
 				path="/home"
 				element={
 					<PrivateRoute>
-						<Homepage />
+						<UserContextProvider>
+							<Homepage />
+						</UserContextProvider>
 					</PrivateRoute>
 				}
 			/>
@@ -21,7 +30,20 @@ function AllRoutes({}: Props) {
 				path="/:id"
 				element={
 					<PrivateRoute>
-						<ProfilePage />
+						<UserContextProvider>
+							<ProfilePage />
+						</UserContextProvider>
+					</PrivateRoute>
+				}
+			/>
+
+			<Route
+				path="/friends"
+				element={
+					<PrivateRoute>
+						<UserContextProvider>
+							<FriendsPage />
+						</UserContextProvider>
 					</PrivateRoute>
 				}
 			/>

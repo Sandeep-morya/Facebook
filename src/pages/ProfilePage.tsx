@@ -1,36 +1,17 @@
 ﻿import { Box, Flex } from "@mantine/core";
 import React, { useCallback, useEffect, useState } from "react";
-import { getUserInfo } from "../api/user";
 import Navbar from "../components/Header/Navbar";
 import Post from "../components/Main/Post";
 import Photos from "../components/Profile/Photos";
 import ProfilePresentation from "../components/Profile/ProfilePresentation";
 import useGetCookie from "../hooks/useGetCookie";
+import { useUserProfile } from "../Provider/UserContextProvider";
 import { UserProfileType } from "../types";
 
 type Props = {};
 
 function ProfilePage({}: Props) {
-	const token = useGetCookie()("fb_user");
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
-	const [userdata, setUserdata] = useState<UserProfileType>();
-
-	const getUser = useCallback(async () => {
-		try {
-			setIsLoading(true);
-			const data = await getUserInfo(token || "");
-			setUserdata(data);
-			setIsLoading(false);
-		} catch (error) {
-			setIsError(true);
-			setIsLoading(false);
-		}
-	}, [token, getUserInfo]);
-
-	useEffect(() => {
-		getUser();
-	}, []);
+	const { isLoading, isError, userdata } = useUserProfile();
 
 	useEffect(() => {
 		window.document.title = `Facebook - ${userdata?.name}` || "Facebook";
