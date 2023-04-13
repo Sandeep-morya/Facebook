@@ -27,9 +27,10 @@ import TexTab from "./TexTab";
 type Props = {
 	user: UserProfileType;
 	visitor: boolean;
+	refresh: () => void;
 };
 
-function ProfilePresentation({ user, visitor }: Props) {
+function ProfilePresentation({ user, visitor, refresh }: Props) {
 	const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
 	const [coverImage, setCoverImage] = useState<File | null>(null);
 
@@ -51,7 +52,7 @@ function ProfilePresentation({ user, visitor }: Props) {
 
 	useEffect(() => {
 		if (imageURL != "") {
-			updateProfile({ image: imageURL });
+			updateProfile({ image: imageURL }).then(() => refresh());
 		}
 	}, [imageURL]);
 
@@ -96,11 +97,7 @@ function ProfilePresentation({ user, visitor }: Props) {
 			{/*---:: Profile photo and etc ::---*/}
 			<Flex w="100%" h={"25%"} gap="1rem" align={"center"}>
 				<Box className="photo-view-upload-container">
-					<img
-						className="profile-photo"
-						src={!updatedProfile?.image ? user.image : updatedProfile.image}
-						alt="ds"
-					/>
+					<img className="profile-photo" src={user.image} alt="ds" />
 					{/* image uplaod */}
 					{visitor ? (
 						<FaEye

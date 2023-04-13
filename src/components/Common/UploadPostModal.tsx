@@ -20,13 +20,20 @@ interface Props {
 	opened: boolean;
 	close: () => void;
 	refresh: () => void;
+	name: string;
+	image: string;
 }
 const { VITE_CLOUD_NAME, VITE_UPLOAD_PRESET, VITE_UPLOAD_URL, VITE_API_URL } =
 	import.meta.env;
 
-export default function UploadModal({ opened, close, refresh }: Props) {
+export default function UploadModal({
+	opened,
+	close,
+	refresh,
+	name,
+	image,
+}: Props) {
 	const [files, setFiles] = useState<File[]>([]);
-	const { userdata: user } = useUserProfile();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -92,10 +99,6 @@ export default function UploadModal({ opened, close, refresh }: Props) {
 	}, [files, VITE_CLOUD_NAME, VITE_UPLOAD_PRESET, VITE_UPLOAD_URL]);
 	console.log({ imageURL });
 
-	if (!user) {
-		return <></>;
-	}
-
 	return (
 		<Modal
 			opened={opened}
@@ -105,7 +108,7 @@ export default function UploadModal({ opened, close, refresh }: Props) {
 			centered>
 			<Divider />
 			<Flex direction={"column"} gap="1rem">
-				<AvatarButton src={user.image} name={user.name} />
+				<AvatarButton src={image} name={name} />
 				<TextInput
 					variant="unstyled"
 					size={"md"}
@@ -115,7 +118,7 @@ export default function UploadModal({ opened, close, refresh }: Props) {
 					rightSection={
 						<MdEmojiEmotions size={22} fill={theme.colors.gray[5]} />
 					}
-					placeholder={`Whats on your mind, ${user.name.split(" ")[0]}?`}
+					placeholder={`Whats on your mind, ${name.split(" ")[0]}?`}
 				/>
 				<DropZone {...{ files, setFiles }} />
 				<Button loading={isLoading} onClick={uploadThisPost} size={"md"}>

@@ -16,19 +16,16 @@ import PostButton from "./PostButton";
 
 type Props = {
 	refresh: () => void;
+	name: string;
+	image: string;
 };
 
-function UploadPost({ refresh }: Props) {
+function UploadPost({ refresh, name, image }: Props) {
 	const [opened, { open, close }] = useDisclosure(false);
-	const { isLoading, isError, userdata } = useUserProfile();
-
-	if (!userdata) {
-		return <></>;
-	}
 
 	return (
 		<>
-			<UploadModal {...{ opened, close, refresh }} />
+			<UploadModal {...{ opened, close, refresh, name, image }} />
 			<Flex
 				bg={"white"}
 				w="100%"
@@ -49,8 +46,8 @@ function UploadPost({ refresh }: Props) {
 						size={"3rem"}
 						radius="xl"
 						color={"blue"}
-						src={userdata.image}
-						alt={userdata.name}
+						src={image}
+						alt={name}
 					/>
 					<Input
 						size={"md"}
@@ -58,7 +55,7 @@ function UploadPost({ refresh }: Props) {
 						variant="filled"
 						readOnly
 						onClick={open}
-						placeholder={`What's on your mind, ${userdata.name.split(" ")[0]}?`}
+						placeholder={`What's on your mind, ${name.split(" ")[0]}?`}
 						radius="xl"
 					/>
 				</Flex>

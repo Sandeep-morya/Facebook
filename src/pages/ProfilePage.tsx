@@ -21,7 +21,11 @@ const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
 function ProfilePage({}: Props) {
 	const params = useParams();
 	const { userdata: LoggedInUser } = useUserProfile();
-	const { isError: userError, userdata } = useSearchUser(params.id || "");
+	const {
+		isError: userError,
+		userdata,
+		getUserProfile,
+	} = useSearchUser(params.id || "");
 	const { isLoading, isError, posts, getPosts } = useSearchPosts(params.id);
 
 	useEffect(() => {
@@ -59,6 +63,10 @@ function ProfilePage({}: Props) {
 				<ProfilePresentation
 					user={userdata}
 					visitor={LoggedInUser?._id != userdata._id}
+					refresh={() => {
+						getPosts();
+						getUserProfile();
+					}}
 				/>
 			</Box>
 
@@ -68,7 +76,11 @@ function ProfilePage({}: Props) {
 				</Flex>
 				<Flex w="60%" h="100vh" gap="1rem" direction="column">
 					{LoggedInUser?._id === userdata._id && (
-						<UploadPost refresh={getPosts} />
+						<UploadPost
+							refresh={getPosts}
+							name={userdata.name}
+							image={userdata.image}
+						/>
 					)}
 					{posts.map((post) => (
 						<Post key={post._id} {...{ post }} />
