@@ -13,7 +13,6 @@ import { useUserProfile } from "../Provider/UserContextProvider";
 import { UserProfileType } from "../types";
 
 type Props = {};
-const baseURL = import.meta.env.VITE_API_URL;
 
 const Homepage = (props: Props) => {
 	const tabletView = useMediaQuery("(max-width: 62em)");
@@ -35,7 +34,7 @@ const Homepage = (props: Props) => {
 			bg="#F0F2F5"
 			sx={{ overflow: "hidden" }}>
 			<Box w={"100%"} sx={{ position: "sticky", zIndex: 100, top: "0" }}>
-				<Navbar user={userdata} />
+				<Navbar />
 			</Box>
 			<Box
 				sx={{

@@ -1,13 +1,13 @@
 ﻿import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { AuthContext } from "../Provider/AuthContextProvider";
+import { useToken } from "../Provider/AuthContextProvider";
 
 type Props = {
 	children: JSX.Element;
 };
 
 const PrivateRoute = ({ children }: Props) => {
-	const { token } = React.useContext(AuthContext);
+	const { token } = useToken();
 	const location = useLocation();
 
 	return token ? children : <Navigate to={"/"} state={location.pathname} />;

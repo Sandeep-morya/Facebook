@@ -1,12 +1,16 @@
 ﻿import { Box, Flex } from "@mantine/core";
 import axios, { AxiosResponse } from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import Navbar from "../components/Header/Navbar";
 import Post from "../components/Main/Post";
+import UploadPost from "../components/Main/UploadPost";
 import Photos from "../components/Profile/Photos";
 import ProfilePresentation from "../components/Profile/ProfilePresentation";
 import useAlert from "../hooks/useAlert";
 import useGetCookie from "../hooks/useGetCookie";
+import useSearchPosts from "../hooks/useSearchPosts";
+import useSearchUser from "../hooks/useSearchUser";
 import { useUserProfile } from "../Provider/UserContextProvider";
 import { PostType, UserProfileType } from "../types";
 
@@ -15,57 +19,29 @@ type Props = {};
 const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
 
 function ProfilePage({}: Props) {
-	const {
-		isLoading: userLoading,
-		isError: userError,
-		userdata,
-	} = useUserProfile();
-
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
-	const [posts, setPosts] = useState<PostType[]>([]);
-	const Alert = useAlert();
-
-	const getPosts = useCallback(
-		async (user_id: string) => {
-			setIsError(false);
-			setIsLoading(true);
-			try {
-				const { data }: AxiosResponse<PostType[]> = await axios.get(
-					VITE_API_URL + "/posts/all",
-					{
-						params: { user_id },
-						headers: { Authorization: VITE_TOKEN_SECRET },
-					},
-				);
-				setPosts(data);
-				setIsLoading(false);
-			} catch (error) {
-				setIsLoading(false);
-				setIsError(true);
-				Alert("503 Server Error", "error");
-			}
-		},
-		[VITE_TOKEN_SECRET],
-	);
+	const params = useParams();
+	const { userdata: LoggedInUser } = useUserProfile();
+	const { isError: userError, userdata } = useSearchUser(params.id || "");
+	const { isLoading, isError, posts, getPosts } = useSearchPosts(params.id);
 
 	useEffect(() => {
-		window.document.title = `Facebook - ${userdata?.name}` || "Facebook";
-		if (userdata?._id) {
-			getPosts(userdata._id);
-		}
+		window.document.title = `Facebook - ${userdata?.name || ""}` || "Facebook";
 	}, [userdata]);
 
-	if (userLoading || !userdata) {
+	console.log({ posts });
+
+	if (userError) {
+		return <Navigate to="/error" />;
+	}
+
+	if (!userdata) {
 		return <>Loading....</>;
 	}
-	if (posts.length < 1) {
-		return <></>;
-	}
+
 	return (
 		<Flex w={"100%"} mih="100vh" direction={"column"} bg="#F0F2F5">
 			<Box w={"100%"} sx={{ position: "sticky", zIndex: 100, top: "0" }}>
-				<Navbar user={userdata} unActive />
+				<Navbar unActive />
 			</Box>
 
 			<Box
@@ -80,7 +56,10 @@ function ProfilePage({}: Props) {
 				}}
 				sx={{ boxShadow: "rgba(0, 0, 0, 0.5) 0px 15px 20px -20px" }}
 				p={"0 15%"}>
-				<ProfilePresentation user={userdata} />
+				<ProfilePresentation
+					user={userdata}
+					visitor={LoggedInUser?._id != userdata._id}
+				/>
 			</Box>
 
 			<Flex gap="1rem" p={"0 18%"} mt="1rem" mb="3rem" pos={"sticky"} top="10%">
@@ -88,6 +67,9 @@ function ProfilePage({}: Props) {
 					<Photos />
 				</Flex>
 				<Flex w="60%" h="100vh" gap="1rem" direction="column">
+					{LoggedInUser?._id === userdata._id && (
+						<UploadPost refresh={getPosts} />
+					)}
 					{posts.map((post) => (
 						<Post key={post._id} {...{ post }} />
 					))}

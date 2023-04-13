@@ -1,21 +1,43 @@
-﻿import React, { useState, createContext } from "react";
+﻿import React, { useState, createContext, useContext, useCallback } from "react";
+import { TbHeartBroken } from "react-icons/tb";
 import useGetCookie from "../hooks/useGetCookie";
+import useRemoveCookie from "../hooks/useRemoveCookie";
+import useSetCookie from "../hooks/useSetCookie";
 
 type Props = {
 	children: React.ReactNode;
 };
-export const AuthContext = createContext(
+const AuthContext = createContext(
 	{} as {
 		token: string;
-		setToken: React.Dispatch<React.SetStateAction<string>>;
+		replaceToken: (token: string) => void;
+		removeToken: (cookieName: string) => void;
 	},
 );
+
+export const useToken = () => {
+	return useContext(AuthContext);
+};
 const AuthContextProvider = ({ children }: Props) => {
-	const getCookie = useGetCookie();
-	const [token, setToken] = useState(getCookie("fb_user") || "");
+	const cookie_value = useGetCookie()("fb_user");
+	const setCookie = useSetCookie();
+	const removeCookie = useRemoveCookie();
+	console.log({ cookie_value });
+
+	const [token, setToken] = useState(cookie_value || "");
+
+	const replaceToken = useCallback((token: string) => {
+		setCookie("fb_user", token);
+		setToken(token);
+	}, []);
+
+	const removeToken = useCallback(() => {
+		removeCookie("fb_user");
+		setToken("");
+	}, []);
 
 	return (
-		<AuthContext.Provider value={{ token, setToken }}>
+		<AuthContext.Provider value={{ token, replaceToken, removeToken }}>
 			{children}
 		</AuthContext.Provider>
 	);

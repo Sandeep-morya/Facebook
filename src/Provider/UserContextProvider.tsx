@@ -2,6 +2,7 @@
 import { UserProfileType } from "../types";
 import useGetCookie from "../hooks/useGetCookie";
 import axios, { AxiosResponse } from "axios";
+import { useToken } from "./AuthContextProvider";
 
 const baseURL = import.meta.env.VITE_API_URL;
 const secret = import.meta.env.VITE_TOKEN_SECRET;
@@ -21,7 +22,7 @@ function UserContextProvider({ children }: { children: React.ReactNode }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [userdata, setUserdata] = useState<UserProfileType>();
-	const token = useGetCookie()("fb_user");
+	const { token } = useToken();
 
 	const verifyToken = useCallback(async (token: string, secret: string) => {
 		try {
@@ -45,6 +46,7 @@ function UserContextProvider({ children }: { children: React.ReactNode }) {
 				throw new Error("You have to login again");
 			}
 			const id = await verifyToken(token, secret);
+
 			const { data }: AxiosResponse<UserProfileType> = await axios.get(
 				baseURL + "/profile/" + id,
 			);

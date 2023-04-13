@@ -12,24 +12,26 @@ import AvatarButton from "./AvatarButton";
 import { MdEmojiEmotions } from "react-icons/md";
 import DropZone from "./DropZone";
 import axios from "axios";
-import useGetCookie from "../../hooks/useGetCookie";
 import useAlert from "../../hooks/useAlert";
+import { useToken } from "../../Provider/AuthContextProvider";
+import useSearchPosts from "../../hooks/useSearchPosts";
 
 interface Props {
 	opened: boolean;
 	close: () => void;
+	refresh: () => void;
 }
 const { VITE_CLOUD_NAME, VITE_UPLOAD_PRESET, VITE_UPLOAD_URL, VITE_API_URL } =
 	import.meta.env;
 
-export default function UploadModal({ opened, close }: Props) {
+export default function UploadModal({ opened, close, refresh }: Props) {
 	const [files, setFiles] = useState<File[]>([]);
 	const { userdata: user } = useUserProfile();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [imageURL, setImageURL] = useState("");
-	const token = useGetCookie()("fb_user");
+	const { token } = useToken();
 	const Alert = useAlert();
 
 	const theme = useMantineTheme();
@@ -51,6 +53,7 @@ export default function UploadModal({ opened, close }: Props) {
 				});
 				setIsLoading(false);
 				Alert(data?.message, "success");
+				refresh();
 				close();
 				setImageURL("");
 				setFiles([]);

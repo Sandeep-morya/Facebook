@@ -1,7 +1,8 @@
-﻿import { Flex } from "@mantine/core";
+﻿import { Button, Flex } from "@mantine/core";
 import axios, { AxiosResponse } from "axios";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useAlert from "../../hooks/useAlert";
+import useSearchPosts from "../../hooks/useSearchPosts";
 import { PostType } from "../../types";
 import Post from "./Post";
 import StroyNreelTabs from "./StroyNreelTabs";
@@ -9,34 +10,8 @@ import UploadPost from "./UploadPost";
 
 type Props = {};
 
-const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
-
 function Feeds({}: Props) {
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
-	const [posts, setPosts] = useState<PostType[]>([]);
-	const Alert = useAlert();
-
-	const getPosts = useCallback(async () => {
-		setIsError(false);
-		setIsLoading(true);
-		try {
-			const { data }: AxiosResponse<PostType[]> = await axios.get(
-				VITE_API_URL + "/posts/all",
-				{ headers: { Authorization: VITE_TOKEN_SECRET } },
-			);
-			setPosts(data);
-			setIsLoading(false);
-		} catch (error) {
-			setIsLoading(false);
-			setIsError(true);
-			Alert("503 Server Error", "error");
-		}
-	}, [VITE_TOKEN_SECRET]);
-
-	useEffect(() => {
-		getPosts();
-	}, []);
+	const { isLoading, isError, posts, getPosts } = useSearchPosts();
 
 	return (
 		<Flex
@@ -53,10 +28,7 @@ function Feeds({}: Props) {
 			direction="column"
 			gap={"1rem"}>
 			<StroyNreelTabs />
-			<UploadPost
-				firstName="Sandeep"
-				src="https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg"
-			/>
+			<UploadPost refresh={getPosts} />
 
 			{/*---:: All Posts ::---*/}
 

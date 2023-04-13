@@ -14,21 +14,24 @@
 	Text,
 	Avatar,
 	Divider,
+	useMantineTheme,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { FaCamera, FaPencilAlt } from "react-icons/fa";
-import { MdAdd } from "react-icons/md";
+import { FaCamera, FaEye, FaPencilAlt } from "react-icons/fa";
+import { MdAdd, MdChat } from "react-icons/md";
 import { TbDots } from "react-icons/tb";
 import { UserProfileType } from "../../types";
 import TexTab from "./TexTab";
 
 type Props = {
 	user: UserProfileType;
+	visitor: boolean;
 };
 
-function ProfilePresentation({ user }: Props) {
+function ProfilePresentation({ user, visitor }: Props) {
 	const [file, setFile] = useState<File | null>(null);
 	const [loading, setLoading] = useState(false);
+	const theme = useMantineTheme();
 	return (
 		<Flex w={"100%"} h="100%" direction="column">
 			{/*---:: Cover Image ::---*/}
@@ -45,13 +48,18 @@ function ProfilePresentation({ user }: Props) {
 							bottom: "5%",
 							right: "2%",
 						}}>
-						<FileButton onChange={setFile} accept="image/png,image/jpeg">
-							{(props) => (
-								<Button variant={"default"} leftIcon={<FaCamera />} {...props}>
-									Edit Cover Photo
-								</Button>
-							)}
-						</FileButton>
+						{!visitor && (
+							<FileButton onChange={setFile} accept="image/png,image/jpeg">
+								{(props) => (
+									<Button
+										variant={"default"}
+										leftIcon={<FaCamera />}
+										{...props}>
+										Edit Cover Photo
+									</Button>
+								)}
+							</FileButton>
+						)}
 					</Group>
 				</BackgroundImage>
 			</Box>
@@ -61,23 +69,41 @@ function ProfilePresentation({ user }: Props) {
 				<Box className="photo-view-upload-container">
 					<img className="profile-photo" src={user.image} alt="ds" />
 					{/* image uplaod */}
-					<FileButton onChange={() => {}} accept="image/png,image/jpeg">
-						{(props) => (
-							<ActionIcon
-								sx={{
-									position: "absolute",
-									bottom: "5%",
-									right: "5%",
-									filter: "drop-shadow(0 0 5px rgba(0,0,0,0.2))",
-									zIndex: 7,
-								}}
-								bg="white"
-								radius={"xl"}
-								{...props}>
-								<FaCamera color="black" />
-							</ActionIcon>
-						)}
-					</FileButton>
+					{visitor ? (
+						<FaEye
+							size={22}
+							style={{
+								position: "absolute",
+								bottom: "5%",
+								right: "5%",
+								filter: "drop-shadow(0 0 5px rgba(0,0,0,0.2))",
+								zIndex: 7,
+								backgroundColor: "white",
+								padding: "0.5rem",
+								boxSizing: "content-box",
+								borderRadius: "50%",
+							}}
+						/>
+					) : (
+						<FileButton onChange={() => {}} accept="image/png,image/jpeg">
+							{(props) => (
+								<ActionIcon
+									size={"xl"}
+									sx={{
+										position: "absolute",
+										bottom: "5%",
+										right: "5%",
+										filter: "drop-shadow(0 0 5px rgba(0,0,0,0.2))",
+										zIndex: 7,
+									}}
+									bg="white"
+									radius={"xl"}
+									{...props}>
+									<FaCamera size={22} color="black" />
+								</ActionIcon>
+							)}
+						</FileButton>
+					)}
 
 					<Box
 						w="100%"
@@ -95,7 +121,7 @@ function ProfilePresentation({ user }: Props) {
 				</Box>
 
 				<Flex sx={{ flex: "1" }} direction={"column"} gap="0.5rem">
-					<Title>{"Sandeep Morya"}</Title>
+					<Title>{user.name}</Title>
 					<Text fw={500} c="dimmed">
 						624 Friends
 					</Text>
@@ -109,13 +135,21 @@ function ProfilePresentation({ user }: Props) {
 							<Avatar src="https://picsum.photos/200?random=6" radius="xl" />
 							<Avatar radius="xl">+5</Avatar>
 						</Avatar.Group>
-
-						<Group pr={"1rem"}>
-							<Button leftIcon={<MdAdd />}>Add to Story</Button>
-							<Button variant="outline" color="gray" leftIcon={<FaPencilAlt />}>
-								Edit Profile
+						{visitor ? (
+							<Button leftIcon={<MdChat size={22} />} size="md">
+								Send a message
 							</Button>
-						</Group>
+						) : (
+							<Group pr={"1rem"}>
+								<Button leftIcon={<MdAdd />}>Add to Story</Button>
+								<Button
+									variant="outline"
+									color="gray"
+									leftIcon={<FaPencilAlt />}>
+									Edit Profile
+								</Button>
+							</Group>
+						)}
 					</Flex>
 				</Flex>
 			</Flex>

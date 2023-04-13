@@ -21,33 +21,14 @@ import { emojiURLs as emoji } from "../../pages";
 import { BiComment, BiLike } from "react-icons/bi";
 import { PostType, UserProfileType } from "../../types";
 import axios, { AxiosResponse } from "axios";
+import useSearchUser from "../../hooks/useSearchUser";
 
 type Props = {
 	post: PostType;
 };
-const { VITE_API_URL } = import.meta.env;
+
 function Post({ post }: Props) {
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
-	const [userdata, setUserdata] = useState<UserProfileType>();
-
-	const getUserProfile = useCallback(async () => {
-		try {
-			setIsLoading(true);
-			const { data }: AxiosResponse<UserProfileType> = await axios.get(
-				VITE_API_URL + "/profile/" + post.user_id,
-			);
-			setUserdata(data);
-			setIsLoading(false);
-		} catch (error) {
-			setIsError(true);
-			setIsLoading(false);
-		}
-	}, [post]);
-
-	useEffect(() => {
-		getUserProfile();
-	}, []);
+	const { isLoading, isError, userdata } = useSearchUser(post.user_id);
 
 	if (!userdata) {
 		return <></>;

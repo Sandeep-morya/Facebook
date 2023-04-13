@@ -1,5 +1,5 @@
 ﻿import { ActionIcon, Divider, Flex } from "@mantine/core";
-import React from "react";
+import React, { useCallback } from "react";
 import NavButton from "./NavButton";
 import { BsFillMoonFill, BsGearFill } from "react-icons/bs";
 import { MdFeedback, MdOutlineHelp } from "react-icons/md";
@@ -7,13 +7,20 @@ import { ImExit } from "react-icons/im";
 import Ftext from "../Footer/Ftext";
 import useDate from "../../hooks/useDate";
 import AvatarButton from "../Common/AvatarButton";
-import { Link } from "react-router-dom";
 import FullLink from "../Common/FullLink";
-
+import { useUserProfile } from "../../Provider/UserContextProvider";
+import { useNavigate } from "react-router-dom";
+import { useToken } from "../../Provider/AuthContextProvider";
 type Props = {};
 
 function AccountModal({}: Props) {
 	const date = useDate();
+	const { isLoading, isError, userdata } = useUserProfile();
+	const { removeToken } = useToken();
+
+	if (!userdata) {
+		return <></>;
+	}
 	return (
 		<Flex
 			direction={"column"}
@@ -41,10 +48,7 @@ function AccountModal({}: Props) {
 					borderRadius: "0.5rem",
 					overflow: "hidden",
 				}}>
-				<AvatarButton
-					src="https://res.cloudinary.com/due9pi68z/image/upload/v1679227476/g2tb12nyfphkxayv6ood.jpg"
-					name="Sandeep Morya"
-				/>
+				<AvatarButton src={userdata.image} name={userdata.name} />
 				<Divider size="xs" />
 				<FullLink />
 			</Flex>
@@ -58,7 +62,7 @@ function AccountModal({}: Props) {
 					withAngle
 				/>
 				<NavButton Icon={MdFeedback} name="Give Feedback" />
-				<NavButton Icon={ImExit} name="Log Out" />
+				<NavButton onClick={() => removeToken()} Icon={ImExit} name="Log Out" />
 			</Flex>
 			<Flex wrap={"wrap"} gap="0.5rem" rowGap={"0"}>
 				<Ftext>Privacy</Ftext> &#183;

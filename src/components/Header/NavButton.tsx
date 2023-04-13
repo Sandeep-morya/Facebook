@@ -8,9 +8,10 @@ type Props = {
 	Icon: IconType;
 	name: string;
 	withAngle?: boolean;
+	onClick?: () => void;
 };
 
-function NavButton({ Icon, name, withAngle }: Props) {
+function NavButton({ Icon, onClick, name, withAngle }: Props) {
 	const { hovered, ref } = useHover();
 	return (
 		<Flex
@@ -19,6 +20,7 @@ function NavButton({ Icon, name, withAngle }: Props) {
 			p={"0.5rem"}
 			w="100%"
 			ref={ref}
+			onClick={onClick}
 			bg={hovered ? "#eeeeee" : "white"}
 			sx={{ borderRadius: "0.5rem" }}>
 			<Flex gap={"1rem"} align="center">

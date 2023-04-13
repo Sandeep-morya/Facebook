@@ -9,20 +9,26 @@
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React from "react";
+import { useUserProfile } from "../../Provider/UserContextProvider";
 import AvatarButton from "../Common/AvatarButton";
 import UploadModal from "../Common/UploadPostModal";
 import PostButton from "./PostButton";
 
 type Props = {
-	src: string;
-	firstName: string;
+	refresh: () => void;
 };
 
-function UploadPost({ src, firstName }: Props) {
+function UploadPost({ refresh }: Props) {
 	const [opened, { open, close }] = useDisclosure(false);
+	const { isLoading, isError, userdata } = useUserProfile();
+
+	if (!userdata) {
+		return <></>;
+	}
+
 	return (
 		<>
-			<UploadModal {...{ opened, close }} />
+			<UploadModal {...{ opened, close, refresh }} />
 			<Flex
 				bg={"white"}
 				w="100%"
@@ -43,8 +49,8 @@ function UploadPost({ src, firstName }: Props) {
 						size={"3rem"}
 						radius="xl"
 						color={"blue"}
-						src={src}
-						alt={firstName}
+						src={userdata.image}
+						alt={userdata.name}
 					/>
 					<Input
 						size={"md"}
@@ -52,7 +58,7 @@ function UploadPost({ src, firstName }: Props) {
 						variant="filled"
 						readOnly
 						onClick={open}
-						placeholder={`What's on your mind, ${firstName}?`}
+						placeholder={`What's on your mind, ${userdata.name.split(" ")[0]}?`}
 						radius="xl"
 					/>
 				</Flex>

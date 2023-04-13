@@ -18,16 +18,14 @@ import SignUpForm from "../components/Auth/SignUpForm";
 import LoginForm from "../components/Auth/LoginForm";
 import useAlert from "../hooks/useAlert";
 import { LoginApi, SignupApi } from "../api/auth";
-import useSetCookie from "../hooks/useSetCookie";
-import { AuthContext } from "../Provider/AuthContextProvider";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useToken } from "../Provider/AuthContextProvider";
 
 const AuthenticationPage = () => {
 	const Alert = useAlert();
-	const setCookie = useSetCookie();
 	const location = useLocation();
+	const { token, replaceToken } = useToken();
 
-	const { token, setToken } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const [opened, { open, close }] = useDisclosure(false);
 	const [loading, setLoading] = useState(false);
@@ -44,8 +42,7 @@ const AuthenticationPage = () => {
 				: Alert(data.message, "warning");
 
 			if (data.message === "Login Successful") {
-				setCookie("fb_user", data.token);
-				setToken(data.token);
+				replaceToken(data.token);
 			}
 		} catch (error) {
 			Alert("Internal Server Error", "error");
@@ -53,6 +50,7 @@ const AuthenticationPage = () => {
 			setError(true);
 		}
 	}
+	console.log({ token });
 
 	// :: Handle Signup ::
 	async function handleSignup(values: {
@@ -71,8 +69,7 @@ const AuthenticationPage = () => {
 				: Alert(data.message, "warning");
 
 			if (data.message === "Registration Successful") {
-				setCookie("fb_user", data.token);
-				setToken(data.token);
+				replaceToken(data.token);
 			}
 		} catch (error) {
 			Alert("Internal Server Error", "error");

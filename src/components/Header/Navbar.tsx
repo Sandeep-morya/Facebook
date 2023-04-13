@@ -34,19 +34,24 @@ import SearchResultList from "./SearchModal";
 import SearchModal from "./SearchModal";
 import AccountModal from "./AccountModal";
 import { UserProfileType } from "../../types";
+import { useUserProfile } from "../../Provider/UserContextProvider";
 
 type Props = {
 	unActive?: boolean;
-	user: UserProfileType;
 };
 
-function Navbar({ user, unActive }: Props) {
+function Navbar({ unActive }: Props) {
 	const matches = useMediaQuery("(max-width: 62em)");
 	const mobile = useMediaQuery("(max-width: 720px)");
 	const [opened, { toggle }] = useDisclosure(false);
 	const label = opened ? "Close navigation" : "Open navigation";
 	const [showSearchModal, setShowSearchModal] = useState(false);
 	const [showAccountModal, setShowAccountModal] = useState(false);
+	const { isLoading, isError, userdata } = useUserProfile();
+
+	if (!userdata) {
+		return <></>;
+	}
 
 	return (
 		/* Moblie Navbar */
@@ -143,8 +148,8 @@ function Navbar({ user, unActive }: Props) {
 								radius="xl"
 								onClick={() => setShowAccountModal(!showAccountModal)}
 								color={"blue"}
-								src={user.image}
-								alt={user.name}
+								src={userdata.image}
+								alt={userdata.name}
 							/>
 							{showAccountModal && <AccountModal />}
 						</ActionIcon>
