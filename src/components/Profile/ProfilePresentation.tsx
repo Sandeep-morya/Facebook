@@ -14,12 +14,13 @@
 	Text,
 	Avatar,
 	Divider,
-	useMantineTheme,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCamera, FaEye, FaPencilAlt } from "react-icons/fa";
 import { MdAdd, MdChat } from "react-icons/md";
 import { TbDots } from "react-icons/tb";
+import useCloudynaryImageUpload from "../../hooks/useCloudynaryImageUpload";
+import useUpdateProfile from "../../hooks/useUpdateProfile";
 import { UserProfileType } from "../../types";
 import TexTab from "./TexTab";
 
@@ -29,9 +30,31 @@ type Props = {
 };
 
 function ProfilePresentation({ user, visitor }: Props) {
-	const [file, setFile] = useState<File | null>(null);
-	const [loading, setLoading] = useState(false);
-	const theme = useMantineTheme();
+	const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
+	const [coverImage, setCoverImage] = useState<File | null>(null);
+
+	const { isLoading, isError, imageURL, uploadImage } =
+		useCloudynaryImageUpload();
+	const {
+		isLoading: inProgress,
+		updatedProfile,
+		updateProfile,
+	} = useUpdateProfile();
+
+	useEffect(() => {
+		if (profileImageFile) {
+			uploadImage(profileImageFile);
+		}
+	}, [profileImageFile]);
+
+	console.log({ isLoading, imageURL });
+
+	useEffect(() => {
+		if (imageURL != "") {
+			updateProfile({ image: imageURL });
+		}
+	}, [imageURL]);
+
 	return (
 		<Flex w={"100%"} h="100%" direction="column">
 			{/*---:: Cover Image ::---*/}
@@ -40,7 +63,11 @@ function ProfilePresentation({ user, visitor }: Props) {
 					w={"100%"}
 					h="100%"
 					bgp={"0 10%"}
-					src={user.cover}
+					src={
+						user.cover == ""
+							? "https://picsum.photos/1920/1080?random"
+							: user.cover
+					}
 					sx={{ borderRadius: "0 0 0.5rem 0.5rem" }}>
 					<Group
 						sx={{
@@ -49,7 +76,9 @@ function ProfilePresentation({ user, visitor }: Props) {
 							right: "2%",
 						}}>
 						{!visitor && (
-							<FileButton onChange={setFile} accept="image/png,image/jpeg">
+							<FileButton
+								onChange={setCoverImage}
+								accept="image/png,image/jpeg">
 								{(props) => (
 									<Button
 										variant={"default"}
@@ -67,7 +96,11 @@ function ProfilePresentation({ user, visitor }: Props) {
 			{/*---:: Profile photo and etc ::---*/}
 			<Flex w="100%" h={"25%"} gap="1rem" align={"center"}>
 				<Box className="photo-view-upload-container">
-					<img className="profile-photo" src={user.image} alt="ds" />
+					<img
+						className="profile-photo"
+						src={!updatedProfile?.image ? user.image : updatedProfile.image}
+						alt="ds"
+					/>
 					{/* image uplaod */}
 					{visitor ? (
 						<FaEye
@@ -85,7 +118,9 @@ function ProfilePresentation({ user, visitor }: Props) {
 							}}
 						/>
 					) : (
-						<FileButton onChange={() => {}} accept="image/png,image/jpeg">
+						<FileButton
+							onChange={setProfileImageFile}
+							accept="image/png,image/jpeg">
 							{(props) => (
 								<ActionIcon
 									size={"xl"}
@@ -115,7 +150,7 @@ function ProfilePresentation({ user, visitor }: Props) {
 						<LoadingOverlay
 							sx={{ borderRadius: "50%" }}
 							loaderProps={{ color: "dark" }}
-							visible={loading}
+							visible={isLoading || inProgress}
 						/>
 					</Box>
 				</Box>
