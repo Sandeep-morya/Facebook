@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useAlert from "../../hooks/useAlert";
 import useSearchPosts from "../../hooks/useSearchPosts";
+import { useUserProfile } from "../../Provider/UserContextProvider";
 import { PostType } from "../../types";
 import Post from "./Post";
 import StroyNreelTabs from "./StroyNreelTabs";
@@ -12,6 +13,11 @@ type Props = {};
 
 function Feeds({}: Props) {
 	const { isLoading, isError, posts, getPosts } = useSearchPosts();
+	const { userdata } = useUserProfile();
+
+	if (!userdata) {
+		return <></>;
+	}
 
 	return (
 		<Flex
@@ -28,7 +34,11 @@ function Feeds({}: Props) {
 			direction="column"
 			gap={"1rem"}>
 			<StroyNreelTabs />
-			<UploadPost refresh={getPosts} />
+			<UploadPost
+				refresh={getPosts}
+				name={userdata.name}
+				image={userdata.image}
+			/>
 
 			{/*---:: All Posts ::---*/}
 

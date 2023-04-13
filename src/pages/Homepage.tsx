@@ -2,6 +2,7 @@
 import { useMediaQuery } from "@mantine/hooks";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import LoadingScreen from "../components/Common/LoadingScreen";
 
 import MobileNav from "../components/Header/MobileNav";
 import Navbar from "../components/Header/Navbar";
@@ -24,7 +25,7 @@ const Homepage = (props: Props) => {
 	}, []);
 
 	if (isLoading || !userdata) {
-		return <>Loading....</>;
+		return <LoadingScreen />;
 	}
 	return (
 		<Flex

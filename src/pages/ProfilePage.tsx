@@ -1,7 +1,8 @@
 ﻿import { Box, Flex } from "@mantine/core";
 import axios, { AxiosResponse } from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import LoadingScreen from "../components/Common/LoadingScreen";
 import Navbar from "../components/Header/Navbar";
 import Post from "../components/Main/Post";
 import UploadPost from "../components/Main/UploadPost";
@@ -19,27 +20,32 @@ type Props = {};
 const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
 
 function ProfilePage({}: Props) {
+	const ref = useRef<HTMLDivElement>(null);
 	const params = useParams();
 	const { userdata: LoggedInUser } = useUserProfile();
+
 	const {
 		isError: userError,
 		userdata,
 		getUserProfile,
 	} = useSearchUser(params.id || "");
+
 	const { isLoading, isError, posts, getPosts } = useSearchPosts(params.id);
 
 	useEffect(() => {
 		window.document.title = `Facebook - ${userdata?.name || ""}` || "Facebook";
+		window.scrollTo({
+			top: 200,
+			left: 0,
+		});
 	}, [userdata]);
-
-	console.log({ posts });
 
 	if (userError) {
 		return <Navigate to="/error" />;
 	}
 
 	if (!userdata) {
-		return <>Loading....</>;
+		return <LoadingScreen />;
 	}
 
 	return (
@@ -51,6 +57,7 @@ function ProfilePage({}: Props) {
 			<Box
 				w={"100%"}
 				bg="white"
+				ref={ref}
 				h={{
 					xs: "40vh",
 					sm: "40vh",

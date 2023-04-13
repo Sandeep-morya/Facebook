@@ -14,6 +14,7 @@ function Sidebar({ user }: Props) {
 			<AvatarButton
 				src="https://res.cloudinary.com/due9pi68z/image/upload/v1680723363/up49bubcrskek6eluya8.png"
 				name="Friends"
+				redirectOn="friends"
 			/>
 			<AvatarButton
 				src="https://res.cloudinary.com/due9pi68z/image/upload/v1680723363/xpauakwxpbixn6kgjukw.png"
