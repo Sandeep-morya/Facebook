@@ -4,42 +4,42 @@ import { useParams } from "react-router-dom";
 import useSearchPosts from "../../hooks/useSearchPosts";
 import { useUserProfile } from "../../Provider/UserContextProvider";
 import { PostType } from "../../types";
+import { modalCloseButtonStyle } from "../Main/Post";
 
 type Props = {
 	posts: PostType[];
 };
 const MyImage = ({ url }: { url: string }) => {
-	// const [open,setOpen] = useState(false)
+	const [open, setOpen] = useState(false);
 	return (
-		<Box
-			sx={{
-				backgroundImage: `url(${url})`,
-				width: "100%",
-				aspectRatio: "1",
-				backgroundSize: "cover",
-			}}>
-			{/* <Modal
-				title={post.url}
-				fullScreen
+		<>
+			<Box
+				onClick={() => setOpen(true)}
+				sx={{
+					backgroundImage: `url(${url})`,
+					width: "100%",
+					aspectRatio: "1",
+					backgroundSize: "cover",
+				}}></Box>
+			<Modal
 				opened={open}
-				onClose={() => {
-					setOpen(false);
-				}}
-				// size="xl"
+				onClose={() => setOpen(false)}
+				fullScreen
+				centered
+				closeButtonProps={modalCloseButtonStyle}
 				transitionProps={{ transition: "fade", duration: 200 }}>
-
 				<img
 					style={{
 						width: "100%",
-						height: "80vh",
-
+						height: "100%",
+						maxHeight: "80vh",
 						objectFit: "contain",
 					}}
-					src={post.url}
+					src={url}
 					alt="Preview"
 				/>
-			</Modal> */}
-		</Box>
+			</Modal>
+		</>
 	);
 };
 function Photos({ posts }: Props) {
@@ -57,7 +57,7 @@ function Photos({ posts }: Props) {
 			}}>
 			<Flex w={"100%"} align={"center"} justify="space-between" p="1rem">
 				<Title order={2}>Photos</Title>
-				<Text onClick={() => setAll(all === 9 ? posts.length : 9)} c="blue">
+				<Text onClick={() => setAll(all === 9 ? 12 : 9)} c="blue">
 					{"See All Photos"}
 				</Text>
 			</Flex>
@@ -67,9 +67,19 @@ function Photos({ posts }: Props) {
 				mt={0}
 				spacing={5}
 				sx={{ borderRadius: "0.5rem", overflow: "hidden" }}>
-				{posts.slice(0, all).map((post) => (
+				{new Array(12)
+					.fill("photos")
+					.slice(0, all)
+					.map((e, i) => (
+						<MyImage
+							key={e + i}
+							url={`https://picsum.photos/1920/1080?random=${i + 1}`}
+						/>
+					))}
+
+				{/* {posts.slice(0, all).map((post) => (
 					<MyImage key={post._id} url={post.url} />
-				))}
+				))} */}
 			</SimpleGrid>
 		</Flex>
 	);
