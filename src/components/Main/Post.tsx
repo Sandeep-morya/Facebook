@@ -10,6 +10,7 @@
 	Modal,
 	SimpleGrid,
 	Text,
+	TextInput,
 	Title,
 	Tooltip,
 } from "@mantine/core";
@@ -28,20 +29,45 @@ import PostMenu from "./PostMenu";
 import useTimeAgo from "../../hooks/useTimeAgo";
 import AvatarButton from "../Common/AvatarButton";
 import { useNavigate } from "react-router-dom";
+import { useToken } from "../../Provider/AuthContextProvider";
+import useAlert from "../../hooks/useAlert";
 
 type Props = {
 	post: PostType;
 };
+const { VITE_API_URL } = import.meta.env;
 
 function Post({ post }: Props) {
 	const { isLoading, isError, userdata } = useSearchUser(post.user_id);
+	const [visible, setVisible] = useState(true);
 	const timeago = useTimeAgo(post.updatedAt);
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
+	const [inEditMode, setInEditMode] = useState(false);
+	const [text, setText] = useState(post.text);
+	const [updatedText, setUpdateText] = useState("");
+	const { token } = useToken();
+	const Alert = useAlert();
 
-	const handlePost = () => {};
+	const editPost = useCallback(async () => {
+		try {
+			const { data }: AxiosResponse<PostType> = await axios.patch(
+				`${VITE_API_URL}/post/update/${post._id}`,
+				{ text },
+				{
+					headers: { Authorization: token },
+				},
+			);
+			Alert("Post Updated Successfull", "success");
+			setInEditMode(false);
+			setOpen(false);
+			setUpdateText(data.text);
+		} catch (error) {
+			Alert(String(error), "error");
+		}
+	}, [token, text, post._id, VITE_API_URL]);
 
-	if (!userdata) {
+	if (isLoading || !userdata || !visible) {
 		return <></>;
 	}
 	return (
@@ -75,7 +101,14 @@ function Post({ post }: Props) {
 
 					<Flex align={"center"} gap="0.5rem">
 						<Flex pos="relative" align={"center"}>
-							<PostMenu onView={() => setOpen(true)} id={post.user_id} />
+							<PostMenu
+								onView={() => setOpen(true)}
+								id={post._id}
+								user={post.user_id}
+								setVisible={setVisible}
+								setInEditMode={setInEditMode}
+								setOpen={setOpen}
+							/>
 						</Flex>
 
 						<CloseButton
@@ -86,7 +119,7 @@ function Post({ post }: Props) {
 						/>
 					</Flex>
 				</Flex>
-				<Text p="0.5rem">{post.text}</Text>
+				<Text p="0 0.5rem">{updatedText === "" ? post.text : updatedText}</Text>
 			</Flex>
 
 			{/*---:: Body --> Post Media ::---*/}
@@ -98,7 +131,7 @@ function Post({ post }: Props) {
 							width: "100%",
 							maxHeight: "500px",
 							height: "100%",
-							objectFit: "cover",
+							objectFit: "contain",
 						}}
 						src={post.url}
 						alt={userdata.name}
@@ -107,12 +140,26 @@ function Post({ post }: Props) {
 						title={
 							<div>
 								<AvatarButton src={userdata.image} name={userdata.name} />
-
-								<p>{post.text}</p>
+								<Group>
+									<TextInput
+										p="0 0.5rem"
+										size="md"
+										onChange={(e) => setText(e.target.value)}
+										readOnly={!inEditMode}
+										value={text}
+										variant={inEditMode ? "filled" : "unstyled"}
+									/>
+									{inEditMode && <Button onClick={editPost}>Done</Button>}
+								</Group>
 							</div>
 						}
 						opened={open}
-						onClose={() => setOpen(false)}
+						onClose={() => {
+							setOpen(false);
+							if (inEditMode) {
+								setInEditMode(false);
+							}
+						}}
 						size="xl"
 						transitionProps={{ transition: "fade", duration: 200 }}>
 						<img

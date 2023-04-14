@@ -45,7 +45,7 @@ function TabPresentation({
 		<Flex
 			w={"100%"}
 			h="100%"
-			mih="50vh"
+			mih="25rem"
 			pos={"relative"}
 			direction="column"
 			justify={"space-between"}>

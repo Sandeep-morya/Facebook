@@ -97,7 +97,6 @@ export default function UploadModal({
 			setImageURL("");
 		}
 	}, [files, VITE_CLOUD_NAME, VITE_UPLOAD_PRESET, VITE_UPLOAD_URL]);
-	console.log({ imageURL });
 
 	return (
 		<Modal

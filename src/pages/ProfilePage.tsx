@@ -65,9 +65,9 @@ function ProfilePage({}: Props) {
 				ref={ref}
 				bg="white"
 				h={{
-					xs: "50vh",
+					xs: "60vh",
 					sm: "50vh",
-					md: "80vh",
+					md: "90vh",
 					lg: "90vh",
 					xl: "70vh",
 				}}
