@@ -1,18 +1,25 @@
 ﻿import { Box, Flex, SimpleGrid, Text, Title } from "@mantine/core";
 import React from "react";
+import { useParams } from "react-router-dom";
+import useSearchPosts from "../../hooks/useSearchPosts";
+import { useUserProfile } from "../../Provider/UserContextProvider";
+import { PostType } from "../../types";
 
-type Props = {};
+type Props = {
+	posts: PostType[];
+};
 const MyImage = ({ url }: { url: string }) => {
 	return (
 		<Box
 			sx={{
-				backgroundImage: url,
+				backgroundImage: `url(${url})`,
 				width: "100%",
 				aspectRatio: "1",
+				backgroundSize: "cover",
 			}}></Box>
 	);
 };
-function Photos({}: Props) {
+function Photos({ posts }: Props) {
 	return (
 		<Flex
 			bg="white"
@@ -33,15 +40,9 @@ function Photos({}: Props) {
 				mt={0}
 				spacing={5}
 				sx={{ borderRadius: "0.5rem", overflow: "hidden" }}>
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
-				<MyImage url={"url(https://picsum.photos/200/300?random=1)"} />
+				{posts.map((post) => (
+					<MyImage key={post._id} url={post.url} />
+				))}
 			</SimpleGrid>
 		</Flex>
 	);

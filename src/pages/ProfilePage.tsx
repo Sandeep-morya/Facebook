@@ -89,8 +89,10 @@ function ProfilePage({}: Props) {
 				p={"0 18%"}
 				mt="1rem"
 				mb="3rem">
-				<Flex w="40%" h="100vh" direction="column">
-					<Photos />
+				<Flex pos={"sticky"} top="8rem" w="40%" h="100vh" direction="column">
+					<Photos
+						posts={posts.filter((post) => post.type === "image").slice(0, 9)}
+					/>
 				</Flex>
 				<Flex w="60%" gap="1rem" direction="column">
 					{LoggedInUser?._id === userdata._id && (

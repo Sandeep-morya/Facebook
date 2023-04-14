@@ -15,6 +15,7 @@
 	Avatar,
 	Divider,
 } from "@mantine/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaCamera, FaEye, FaPencilAlt } from "react-icons/fa";
 import { MdAdd, MdChat } from "react-icons/md";
@@ -22,6 +23,7 @@ import { TbDots } from "react-icons/tb";
 import { useInView } from "react-intersection-observer";
 import useCloudynaryImageUpload from "../../hooks/useCloudynaryImageUpload";
 import useUpdateProfile from "../../hooks/useUpdateProfile";
+import { useToken } from "../../Provider/AuthContextProvider";
 import { UserProfileType } from "../../types";
 import AvatarButton from "../Common/AvatarButton";
 import TexTab from "./TexTab";
@@ -31,12 +33,15 @@ type Props = {
 	visitor: boolean;
 	refresh: () => void;
 };
+const { VITE_API_URL } = import.meta.env;
 
 function ProfilePresentation({ user, visitor, refresh }: Props) {
 	const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
 	const [coverImage, setCoverImage] = useState<File | null>(null);
+	const { token } = useToken();
+	// For toggling navbar below profile picture
 	const { ref, inView, entry } = useInView({ threshold: 0.5 });
-
+	// For uplaod single image on Cloudaynary
 	const { isLoading, isError, imageURL, uploadImage } =
 		useCloudynaryImageUpload();
 	const {
@@ -53,9 +58,20 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 
 	useEffect(() => {
 		if (imageURL != "") {
-			updateProfile({ image: imageURL }).then(() => refresh());
+			updateProfile({ image: imageURL }).then(() => {
+				const post = {
+					type: "image",
+					text: `${user.name} updated this Profile Picture`,
+					url: imageURL,
+				};
+				axios
+					.post(`${VITE_API_URL}/post/create`, post, {
+						headers: { Authorization: token },
+					})
+					.then(refresh);
+			});
 		}
-	}, [imageURL]);
+	}, [imageURL, VITE_API_URL]);
 
 	return (
 		<Flex w={"100%"} h="100%" direction="column">

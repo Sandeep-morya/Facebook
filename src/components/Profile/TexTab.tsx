@@ -13,7 +13,7 @@ function TexTab({ children, selected }: Props) {
 				width: "5rem",
 				display: "flex",
 				flexDirection: "column",
-
+				cursor: "default",
 				height: "100%",
 			}}>
 			<Box

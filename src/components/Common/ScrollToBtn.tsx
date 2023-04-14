@@ -15,7 +15,7 @@ function ScrollToBtn({ children, onClick }: Props) {
 			sx={{
 				position: "fixed",
 				right: "5rem",
-				bottom: "5rem",
+				bottom: "2rem",
 
 				zIndex: 50,
 				boxShadow:

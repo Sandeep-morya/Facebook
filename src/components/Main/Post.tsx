@@ -13,15 +13,17 @@
 	Tooltip,
 } from "@mantine/core";
 import React, { useCallback, useEffect, useState } from "react";
-import { FaGlobeAsia } from "react-icons/fa";
+import { FaGlobeAsia, FaTrash } from "react-icons/fa";
 import { TbDots, TbShare3 } from "react-icons/tb";
 import Havatar from "../Common/Havatar";
 import Ftext from "../Footer/Ftext";
 import { emojiURLs as emoji } from "../../pages";
-import { BiComment, BiLike } from "react-icons/bi";
+import { BiComment, BiEdit, BiLike } from "react-icons/bi";
 import { PostType, UserProfileType } from "../../types";
 import axios, { AxiosResponse } from "axios";
 import useSearchUser from "../../hooks/useSearchUser";
+import NavButton from "../Header/NavButton";
+import PostMenu from "./PostMenu";
 
 type Props = {
 	post: PostType;
@@ -29,6 +31,8 @@ type Props = {
 
 function Post({ post }: Props) {
 	const { isLoading, isError, userdata } = useSearchUser(post.user_id);
+
+	const handlePost = () => {};
 
 	if (!userdata) {
 		return <></>;
@@ -56,8 +60,11 @@ function Post({ post }: Props) {
 						</Flex>
 					</Flex>
 
-					<Flex align={"center"}>
-						<TbDots size={25} />
+					<Flex align={"center"} gap="0.5rem">
+						<Flex pos="relative" align={"center"}>
+							<PostMenu id={post.user_id} />
+						</Flex>
+
 						<CloseButton
 							title="Close popover"
 							radius={"xl"}
