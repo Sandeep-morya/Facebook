@@ -110,9 +110,7 @@ function ProfilePage({}: Props) {
 				mb="3rem">
 				{!tabletView && (
 					<Flex pos={"sticky"} top="8rem" w="40%" h="100vh" direction="column">
-						<Photos
-							posts={posts.filter((post) => post.type === "image").slice(0, 9)}
-						/>
+						<Photos posts={posts.filter((post) => post.type === "image")} />
 					</Flex>
 				)}
 				<Flex sx={{ flex: 1 }} gap="1rem" direction="column">

@@ -28,6 +28,7 @@ import useUpdateProfile from "../../hooks/useUpdateProfile";
 import { useToken } from "../../Provider/AuthContextProvider";
 import { UserProfileType } from "../../types";
 import AvatarButton from "../Common/AvatarButton";
+import { modalCloseButtonStyle } from "../Main/Post";
 import TabPresentation from "./TabPresentation";
 import TexTab from "./TexTab";
 
@@ -45,7 +46,7 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 	const [coverImage, setCoverImage] = useState<File | null>(null);
 	const { token } = useToken();
 	// For toggling navbar below profile picture
-	const { ref, inView, entry } = useInView({ threshold: 0.5 });
+	const { ref, inView, entry } = useInView();
 	// For uplaod single image on Cloudaynary
 	const { isLoading, imageURL, uploadImage } = useCloudynaryImageUpload();
 	const { isLoading: inProgress, updateProfile } = useUpdateProfile();
@@ -124,11 +125,14 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 						opened={open}
 						onClose={() => setOpen(false)}
 						size="xl"
+						centered
+						closeButtonProps={modalCloseButtonStyle}
 						transitionProps={{ transition: "fade", duration: 200 }}>
 						<img
 							style={{
 								width: "100%",
 								height: "100%",
+								maxHeight: "80vh",
 								objectFit: "contain",
 							}}
 							src={user.image}
@@ -136,7 +140,6 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 						/>
 					</Modal>
 					<img
-						ref={ref}
 						style={{
 							width: "100%",
 							height: "100%",
@@ -192,6 +195,7 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 						sx={{ zIndex: 6 }}
 						top="0"
 						left="0"
+						onClick={() => setOpen(true)}
 						pos="absolute">
 						<LoadingOverlay
 							sx={{ borderRadius: "50%" }}
@@ -202,7 +206,7 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 				</Box>
 
 				<Flex sx={{ flex: "1" }} direction={"column"} gap="0.5rem">
-					<Title>{user.name}</Title>
+					<Title ref={ref}>{user.name}</Title>
 					<Text fw={500} c="dimmed">
 						624 Friends
 					</Text>

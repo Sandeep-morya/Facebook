@@ -37,6 +37,18 @@ type Props = {
 };
 const { VITE_API_URL } = import.meta.env;
 
+export const modalCloseButtonStyle = {
+	style: {
+		backgroundColor: "rgba(0,0,0,0.1)",
+		width: "30px",
+		height: "30px",
+		borderRadius: "50%",
+		color: "black",
+		fontWeight: "bold",
+		boxShadow: "rgba(0, 0, 0, 0.09) 0px 3px 12px",
+	},
+};
+
 function Post({ post }: Props) {
 	const { isLoading, isError, userdata } = useSearchUser(post.user_id);
 	const [visible, setVisible] = useState(true);
@@ -119,12 +131,18 @@ function Post({ post }: Props) {
 						/>
 					</Flex>
 				</Flex>
-				<Text p="0 0.5rem">{updatedText === "" ? post.text : updatedText}</Text>
+				<Text p="0.5rem">{updatedText === "" ? post.text : updatedText}</Text>
 			</Flex>
 
 			{/*---:: Body --> Post Media ::---*/}
 			{post.url !== "" && (
-				<Box w={"100%"} h="min-content">
+				<Box
+					w={"100%"}
+					h="min-content"
+					sx={{
+						borderTop: "0.1rem solid rgba(0,0,0,0.1)",
+						borderBottom: "0.1rem solid rgba(0,0,0,0.1)",
+					}}>
 					<img
 						onClick={() => setOpen(true)}
 						style={{
@@ -137,22 +155,13 @@ function Post({ post }: Props) {
 						alt={userdata.name}
 					/>
 					<Modal
+						closeButtonProps={modalCloseButtonStyle}
 						title={
 							<div>
 								<AvatarButton src={userdata.image} name={userdata.name} />
-								<Group>
-									<TextInput
-										p="0 0.5rem"
-										size="md"
-										onChange={(e) => setText(e.target.value)}
-										readOnly={!inEditMode}
-										value={text}
-										variant={inEditMode ? "filled" : "unstyled"}
-									/>
-									{inEditMode && <Button onClick={editPost}>Done</Button>}
-								</Group>
 							</div>
 						}
+						fullScreen
 						opened={open}
 						onClose={() => {
 							setOpen(false);
@@ -160,12 +169,29 @@ function Post({ post }: Props) {
 								setInEditMode(false);
 							}
 						}}
-						size="xl"
+						// size="xl"
 						transitionProps={{ transition: "fade", duration: 200 }}>
+						<Flex>
+							<TextInput
+								w={"100%"}
+								fz="lg"
+								size="lg"
+								onChange={(e) => setText(e.target.value)}
+								readOnly={!inEditMode}
+								value={text}
+								variant={inEditMode ? "filled" : "unstyled"}
+							/>
+							{inEditMode && (
+								<Button size="lg" onClick={editPost}>
+									Done
+								</Button>
+							)}
+						</Flex>
 						<img
 							style={{
 								width: "100%",
-								height: "100%",
+								height: "80vh",
+
 								objectFit: "contain",
 							}}
 							src={post.url}
