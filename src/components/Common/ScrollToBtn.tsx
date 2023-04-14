@@ -14,7 +14,7 @@ function ScrollToBtn({ children, onClick }: Props) {
 			bg={theme.colors.gray[1]}
 			sx={{
 				position: "fixed",
-				right: "5rem",
+				right: "2rem",
 				bottom: "2rem",
 
 				zIndex: 50,

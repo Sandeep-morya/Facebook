@@ -7,6 +7,7 @@
 	Flex,
 	Group,
 	Image,
+	Modal,
 	SimpleGrid,
 	Text,
 	Title,
@@ -24,6 +25,9 @@ import axios, { AxiosResponse } from "axios";
 import useSearchUser from "../../hooks/useSearchUser";
 import NavButton from "../Header/NavButton";
 import PostMenu from "./PostMenu";
+import useTimeAgo from "../../hooks/useTimeAgo";
+import AvatarButton from "../Common/AvatarButton";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
 	post: PostType;
@@ -31,6 +35,9 @@ type Props = {
 
 function Post({ post }: Props) {
 	const { isLoading, isError, userdata } = useSearchUser(post.user_id);
+	const timeago = useTimeAgo(post.updatedAt);
+	const [open, setOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const handlePost = () => {};
 
@@ -43,6 +50,7 @@ function Post({ post }: Props) {
 			sx={{
 				width: "100%",
 				borderRadius: "0.5rem",
+				overflow: "hidden",
 				boxShadow:
 					" rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
 			}}>
@@ -50,11 +58,16 @@ function Post({ post }: Props) {
 			<Flex direction={"column"}>
 				<Flex justify={"space-between"} p="0.5rem">
 					<Flex gap="0.5rem" align={"center"}>
-						<Havatar src={userdata.image} online name={userdata.name} />
+						<Havatar
+							onClick={() => navigate(`/${post.user_id}`)}
+							src={userdata.image}
+							online
+							name={userdata.name}
+						/>
 						<Flex direction={"column"}>
 							<Title order={5}>{userdata.name}</Title>
 							<Group>
-								<Text fz="sm">3 h</Text>
+								<Text fz="sm">{timeago}</Text>
 								<FaGlobeAsia size={14} />
 							</Group>
 						</Flex>
@@ -62,7 +75,7 @@ function Post({ post }: Props) {
 
 					<Flex align={"center"} gap="0.5rem">
 						<Flex pos="relative" align={"center"}>
-							<PostMenu id={post.user_id} />
+							<PostMenu onView={() => setOpen(true)} id={post.user_id} />
 						</Flex>
 
 						<CloseButton
@@ -80,15 +93,43 @@ function Post({ post }: Props) {
 			{post.url !== "" && (
 				<Box w={"100%"} h="min-content">
 					<img
-						style={{ width: "100%", height: "100%", objectFit: "contain" }}
+						onClick={() => setOpen(true)}
+						style={{
+							width: "100%",
+							maxHeight: "500px",
+							height: "100%",
+							objectFit: "cover",
+						}}
 						src={post.url}
 						alt={userdata.name}
 					/>
+					<Modal
+						title={
+							<div>
+								<AvatarButton src={userdata.image} name={userdata.name} />
+
+								<p>{post.text}</p>
+							</div>
+						}
+						opened={open}
+						onClose={() => setOpen(false)}
+						size="xl"
+						transitionProps={{ transition: "fade", duration: 200 }}>
+						<img
+							style={{
+								width: "100%",
+								height: "100%",
+								objectFit: "contain",
+							}}
+							src={post.url}
+							alt="Preview"
+						/>
+					</Modal>
 				</Box>
 			)}
 
 			{/*---:: Footer --> Likes - Comments - Share ::---*/}
-			<Flex direction={"column"} p="0.5rem">
+			<Flex direction={"column"} p="0.5rem" bg="white">
 				<Flex justify={"space-between"} p="0.5rem">
 					<Group spacing={5}>
 						<Tooltip.Group openDelay={300} closeDelay={100}>

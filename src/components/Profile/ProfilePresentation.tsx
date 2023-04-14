@@ -14,7 +14,9 @@
 	Text,
 	Avatar,
 	Divider,
+	Modal,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaCamera, FaEye, FaPencilAlt } from "react-icons/fa";
@@ -26,6 +28,7 @@ import useUpdateProfile from "../../hooks/useUpdateProfile";
 import { useToken } from "../../Provider/AuthContextProvider";
 import { UserProfileType } from "../../types";
 import AvatarButton from "../Common/AvatarButton";
+import TabPresentation from "./TabPresentation";
 import TexTab from "./TexTab";
 
 type Props = {
@@ -36,19 +39,18 @@ type Props = {
 const { VITE_API_URL } = import.meta.env;
 
 function ProfilePresentation({ user, visitor, refresh }: Props) {
+	const tabletView = useMediaQuery("(max-width: 62em)");
+
 	const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
 	const [coverImage, setCoverImage] = useState<File | null>(null);
 	const { token } = useToken();
 	// For toggling navbar below profile picture
 	const { ref, inView, entry } = useInView({ threshold: 0.5 });
 	// For uplaod single image on Cloudaynary
-	const { isLoading, isError, imageURL, uploadImage } =
-		useCloudynaryImageUpload();
-	const {
-		isLoading: inProgress,
-		updatedProfile,
-		updateProfile,
-	} = useUpdateProfile();
+	const { isLoading, imageURL, uploadImage } = useCloudynaryImageUpload();
+	const { isLoading: inProgress, updateProfile } = useUpdateProfile();
+
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		if (profileImageFile) {
@@ -73,7 +75,11 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 		}
 	}, [imageURL, VITE_API_URL]);
 
-	return (
+	return tabletView ? (
+		<TabPresentation
+			{...{ user, visitor, setProfileImageFile, isLoading, inProgress, inView }}
+		/>
+	) : (
 		<Flex w={"100%"} h="100%" direction="column">
 			{/*---:: Cover Image ::---*/}
 			<Box aria-labelledby="cover-image" w={"100%"} h="65%" pos={"relative"}>
@@ -112,13 +118,39 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 			</Box>
 
 			{/*---:: Profile photo and etc ::---*/}
-			<Flex ref={ref} w="100%" h={"25%"} gap="1rem" align={"center"}>
+			<Flex w="100%" h={"25%"} gap="1rem" align={"center"}>
 				<Box className="photo-view-upload-container">
-					<img className="profile-photo" src={user.image} alt="ds" />
+					<Modal
+						opened={open}
+						onClose={() => setOpen(false)}
+						size="xl"
+						transitionProps={{ transition: "fade", duration: 200 }}>
+						<img
+							style={{
+								width: "100%",
+								height: "100%",
+								objectFit: "contain",
+							}}
+							src={user.image}
+							alt="Preview"
+						/>
+					</Modal>
+					<img
+						ref={ref}
+						style={{
+							width: "100%",
+							height: "100%",
+							objectFit: "cover",
+							borderRadius: "50%",
+						}}
+						src={user.image}
+						alt="ds"
+					/>
 					{/* image uplaod */}
 					{visitor ? (
 						<FaEye
 							size={22}
+							onClick={() => setOpen(true)}
 							style={{
 								position: "absolute",
 								bottom: "5%",

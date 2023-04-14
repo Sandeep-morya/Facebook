@@ -6,19 +6,22 @@ import { useUserProfile } from "../../Provider/UserContextProvider";
 
 type Props = {
 	id: string;
+	onView: () => void;
 };
 
-function PostMenu({ id }: Props) {
+function PostMenu({ id, onView }: Props) {
 	const { userdata } = useUserProfile();
 	return (
-		<Menu trigger="hover" shadow="md" width={150} position="bottom">
+		<Menu trigger="hover" shadow="md" width={150}>
 			<Menu.Target>
 				<TbDots size={25} />
 			</Menu.Target>
 
 			<Menu.Dropdown>
 				<Menu.Label>Options</Menu.Label>
-				<Menu.Item icon={<FaEye size={14} />}>View</Menu.Item>
+				<Menu.Item onClick={onView} icon={<FaEye size={14} />}>
+					View
+				</Menu.Item>
 				{id === userdata?._id && (
 					<Menu.Item icon={<FaPenAlt size={14} />}>Edit</Menu.Item>
 				)}

@@ -1,4 +1,5 @@
 ﻿import { Box, Flex } from "@mantine/core";
+import { useMediaQuery, useWindowScroll } from "@mantine/hooks";
 import axios, { AxiosResponse } from "axios";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
@@ -20,7 +21,10 @@ type Props = {};
 const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
 
 function ProfilePage({}: Props) {
+	const [scroll, scrollTo] = useWindowScroll();
 	const ref = useRef<HTMLDivElement>(null);
+	const tabletView = useMediaQuery("(max-width: 62em)");
+	const moblieView = useMediaQuery("(max-width: 720px)");
 
 	const params = useParams();
 	const { userdata: LoggedInUser } = useUserProfile();
@@ -35,10 +39,11 @@ function ProfilePage({}: Props) {
 
 	useEffect(() => {
 		window.document.title = `Facebook - ${userdata?.name || ""}` || "Facebook";
-		window.scrollTo({
-			top: 150,
-			behavior: "smooth",
-		});
+		// window.scrollTo({
+		// 	top: 150,
+		// 	behavior: "smooth",
+		// });
+		scrollTo({ y: 200 });
 	}, [userdata]);
 
 	if (userError) {
@@ -57,22 +62,30 @@ function ProfilePage({}: Props) {
 
 			<Box
 				w={"100%"}
-				bg="white"
 				ref={ref}
+				bg="white"
 				h={{
-					xs: "40vh",
-					sm: "40vh",
-					md: "40vh",
+					xs: "50vh",
+					sm: "50vh",
+					md: "80vh",
 					lg: "90vh",
 					xl: "70vh",
 				}}
 				sx={{
 					position: "sticky",
-					top: `calc(-${ref.current?.offsetHeight}px + 7rem )`,
+					top: `calc(-${ref.current?.offsetHeight}px + ${
+						moblieView ? "11rem" : "7.5rem"
+					} )`,
 					zIndex: 45,
 					boxShadow: "rgba(0, 0, 0, 0.2) 0px 25px 20px -20px",
 				}}
-				p={"0 15%"}>
+				p={{
+					xs: "0",
+					sm: "0",
+					md: "0 5%",
+					lg: "0 15%",
+					xl: "0 15%",
+				}}>
 				<ProfilePresentation
 					user={userdata}
 					visitor={LoggedInUser?._id != userdata._id}
@@ -86,15 +99,23 @@ function ProfilePage({}: Props) {
 			<Flex
 				aria-labelledby="user-posts"
 				gap="1rem"
-				p={"0 18%"}
+				p={{
+					xs: "0 2%",
+					sm: "0 2%",
+					md: "0 5%",
+					lg: "0 18%",
+					xl: "0 18%",
+				}}
 				mt="1rem"
 				mb="3rem">
-				<Flex pos={"sticky"} top="8rem" w="40%" h="100vh" direction="column">
-					<Photos
-						posts={posts.filter((post) => post.type === "image").slice(0, 9)}
-					/>
-				</Flex>
-				<Flex w="60%" gap="1rem" direction="column">
+				{!tabletView && (
+					<Flex pos={"sticky"} top="8rem" w="40%" h="100vh" direction="column">
+						<Photos
+							posts={posts.filter((post) => post.type === "image").slice(0, 9)}
+						/>
+					</Flex>
+				)}
+				<Flex sx={{ flex: 1 }} gap="1rem" direction="column">
 					{LoggedInUser?._id === userdata._id && (
 						<UploadPost
 							refresh={getPosts}

@@ -6,11 +6,14 @@ type Props = {
 	src?: string;
 	online?: boolean;
 	story?: string;
+	onClick?: () => void;
 };
 
-function Havatar({ story, src, name, online }: Props) {
+function Havatar({ story, src, name, online, onClick }: Props) {
 	return (
-		<Box sx={{ width: "2.5rem", height: "2.5rem", position: "relative" }}>
+		<Box
+			onClick={onClick}
+			sx={{ width: "2.5rem", height: "2.5rem", position: "relative" }}>
 			<Avatar
 				size={story ? "85%" : "100%"}
 				sx={{
