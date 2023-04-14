@@ -9,9 +9,7 @@ import { TfiAngleRight } from "react-icons/tfi";
 import ScrollBtnRight from "../Common/ScrollBtnRight";
 import ScrollBtnLeft from "../Common/ScrollBtnLeft";
 
-type Props = {};
-
-function StroyNreelTabs({}: Props) {
+function StroyNreelTabs() {
 	const [activeTab, setActiveTab] = useState<string | null>("Stories");
 	return (
 		<Tabs

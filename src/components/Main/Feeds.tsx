@@ -9,9 +9,7 @@ import Post from "./Post";
 import StroyNreelTabs from "./StroyNreelTabs";
 import UploadPost from "./UploadPost";
 
-type Props = {};
-
-function Feeds({}: Props) {
+function Feeds() {
 	const { isLoading, isError, posts, getPosts } = useSearchPosts();
 	const { userdata } = useUserProfile();
 

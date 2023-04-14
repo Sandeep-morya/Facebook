@@ -11,7 +11,7 @@ const AuthContext = createContext(
 	{} as {
 		token: string;
 		replaceToken: (token: string) => void;
-		removeToken: (cookieName: string) => void;
+		removeToken: () => void;
 	},
 );
 

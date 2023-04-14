@@ -19,9 +19,11 @@ import React, { useEffect, useState } from "react";
 import { FaCamera, FaEye, FaPencilAlt } from "react-icons/fa";
 import { MdAdd, MdChat } from "react-icons/md";
 import { TbDots } from "react-icons/tb";
+import { useInView } from "react-intersection-observer";
 import useCloudynaryImageUpload from "../../hooks/useCloudynaryImageUpload";
 import useUpdateProfile from "../../hooks/useUpdateProfile";
 import { UserProfileType } from "../../types";
+import AvatarButton from "../Common/AvatarButton";
 import TexTab from "./TexTab";
 
 type Props = {
@@ -33,6 +35,7 @@ type Props = {
 function ProfilePresentation({ user, visitor, refresh }: Props) {
 	const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
 	const [coverImage, setCoverImage] = useState<File | null>(null);
+	const { ref, inView, entry } = useInView({ threshold: 0.5 });
 
 	const { isLoading, isError, imageURL, uploadImage } =
 		useCloudynaryImageUpload();
@@ -47,8 +50,6 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 			uploadImage(profileImageFile);
 		}
 	}, [profileImageFile]);
-
-	console.log({ isLoading, imageURL });
 
 	useEffect(() => {
 		if (imageURL != "") {
@@ -95,7 +96,7 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 			</Box>
 
 			{/*---:: Profile photo and etc ::---*/}
-			<Flex w="100%" h={"25%"} gap="1rem" align={"center"}>
+			<Flex ref={ref} w="100%" h={"25%"} gap="1rem" align={"center"}>
 				<Box className="photo-view-upload-container">
 					<img className="profile-photo" src={user.image} alt="ds" />
 					{/* image uplaod */}
@@ -194,23 +195,25 @@ function ProfilePresentation({ user, visitor, refresh }: Props) {
 				align="center"
 				sx={{
 					flex: 1,
-					position: "sticky",
-					top: "100rem",
 				}}>
-				<Flex h="100%">
-					{[
-						"Posts",
-						"About",
-						"Friends",
-						"Photos",
-						"Videos",
-						"Check-ins",
-						"More",
-					].map((e, i) => (
-						<TexTab selected={i === 0} key={e}>
-							{e}
-						</TexTab>
-					))}
+				<Flex h="100%" align={"center"}>
+					{inView ? (
+						[
+							"Posts",
+							"About",
+							"Friends",
+							"Photos",
+							"Videos",
+							"Check-ins",
+							"More",
+						].map((e, i) => (
+							<TexTab selected={i === 0} key={e}>
+								{e}
+							</TexTab>
+						))
+					) : (
+						<AvatarButton src={user.image} name={user.name} />
+					)}
 				</Flex>
 
 				<Box mr="1rem">

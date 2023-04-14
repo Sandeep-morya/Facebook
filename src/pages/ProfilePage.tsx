@@ -21,6 +21,7 @@ const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
 
 function ProfilePage({}: Props) {
 	const ref = useRef<HTMLDivElement>(null);
+
 	const params = useParams();
 	const { userdata: LoggedInUser } = useUserProfile();
 
@@ -35,8 +36,8 @@ function ProfilePage({}: Props) {
 	useEffect(() => {
 		window.document.title = `Facebook - ${userdata?.name || ""}` || "Facebook";
 		window.scrollTo({
-			top: 200,
-			left: 0,
+			top: 150,
+			behavior: "smooth",
 		});
 	}, [userdata]);
 
@@ -65,7 +66,12 @@ function ProfilePage({}: Props) {
 					lg: "90vh",
 					xl: "70vh",
 				}}
-				sx={{ boxShadow: "rgba(0, 0, 0, 0.5) 0px 15px 20px -20px" }}
+				sx={{
+					position: "sticky",
+					top: `calc(-${ref.current?.offsetHeight}px + 7rem )`,
+					zIndex: 45,
+					boxShadow: "rgba(0, 0, 0, 0.2) 0px 25px 20px -20px",
+				}}
 				p={"0 15%"}>
 				<ProfilePresentation
 					user={userdata}
@@ -77,11 +83,16 @@ function ProfilePage({}: Props) {
 				/>
 			</Box>
 
-			<Flex gap="1rem" p={"0 18%"} mt="1rem" mb="3rem" pos={"sticky"} top="10%">
+			<Flex
+				aria-labelledby="user-posts"
+				gap="1rem"
+				p={"0 18%"}
+				mt="1rem"
+				mb="3rem">
 				<Flex w="40%" h="100vh" direction="column">
 					<Photos />
 				</Flex>
-				<Flex w="60%" h="100vh" gap="1rem" direction="column">
+				<Flex w="60%" gap="1rem" direction="column">
 					{LoggedInUser?._id === userdata._id && (
 						<UploadPost
 							refresh={getPosts}

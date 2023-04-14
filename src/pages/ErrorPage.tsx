@@ -13,6 +13,7 @@ const useStyles = createStyles((theme) => ({
 	root: {
 		paddingTop: rem(80),
 		paddingBottom: rem(120),
+		height: "100vh",
 		backgroundColor: theme.fn.variant({
 			variant: "filled",
 			color: theme.primaryColor,

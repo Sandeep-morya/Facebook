@@ -1,8 +1,10 @@
 ﻿import { Box, Center, Flex, Loader } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { BiEdit } from "react-icons/bi";
 import LoadingScreen from "../components/Common/LoadingScreen";
+import ScrollToBtn from "../components/Common/ScrollToBtn";
 
 import MobileNav from "../components/Header/MobileNav";
 import Navbar from "../components/Header/Navbar";
@@ -70,8 +72,13 @@ const Homepage = (props: Props) => {
 				<Box
 					sx={{
 						height: "calc(100vh - 5rem)",
-						overflow: "scroll",
-						"&::-webkit-scrollbar": { display: "none" },
+						overflowY: "scroll",
+						"&::-webkit-scrollbar": { width: "8px" },
+						"&::-webkit-scrollbar-thumb": {
+							background: "rgba(0, 0, 0, 0.2)",
+							borderRadius: "1rem",
+						},
+						"&::-webkit-scrollbar-track": { backgroundColor: "transparent" },
 					}}>
 					<Feeds />
 					{/* <Center>
@@ -95,6 +102,9 @@ const Homepage = (props: Props) => {
 					</Box>
 				)}
 			</Box>
+			<ScrollToBtn onClick={() => {}}>
+				<BiEdit color="black" size={22} />
+			</ScrollToBtn>
 		</Flex>
 	);
 };
