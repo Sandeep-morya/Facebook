@@ -57,7 +57,10 @@ function Photos({ posts }: Props) {
 			}}>
 			<Flex w={"100%"} align={"center"} justify="space-between" p="1rem">
 				<Title order={2}>Photos</Title>
-				<Text onClick={() => setAll(all === 9 ? 12 : 9)} c="blue">
+				<Text
+					sx={{ cursor: "default" }}
+					onClick={() => setAll(all === 9 ? 12 : 9)}
+					c="blue">
 					{"See All Photos"}
 				</Text>
 			</Flex>
