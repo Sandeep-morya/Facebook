@@ -8,6 +8,7 @@
 	dob: string;
 	gender: string;
 	friends: string[];
+	requests: string[];
 	followers: string[];
 	followings: string[];
 	chats: string[];
@@ -60,4 +61,10 @@ export interface CloudinaryResponse {
 	error?: {
 		message: string;
 	};
+}
+
+export interface FriendType {
+	_id: string;
+	image: string;
+	name: string;
 }

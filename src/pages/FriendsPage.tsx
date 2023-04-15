@@ -2,12 +2,24 @@
 import { useMediaQuery } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import LoadingScreen from "../components/Common/LoadingScreen";
+import AllFriends from "../components/Friends/AllFriends";
+import FriendRequests from "../components/Friends/FriendRequests";
 import FriendsGrid from "../components/Friends/FriendsGrid";
+import NoFriends from "../components/Friends/NoFriends";
 import Sidebar from "../components/Friends/Sidebar";
 import Navbar from "../components/Header/Navbar";
 import { useUserProfile } from "../Provider/UserContextProvider";
 
 type Props = {};
+
+const titles = [
+	"People you may know",
+	"All Friend Requests",
+	"Suggested by Facebook",
+	"Your all Friends",
+	"Birthdays",
+	"Custom Lists",
+];
 
 function FriendsPage({}: Props) {
 	const tabletView = useMediaQuery("(max-width: 62em)");
@@ -30,12 +42,24 @@ function FriendsPage({}: Props) {
 			</Box>
 			<Flex>
 				{!tabletView && <Sidebar {...{ tabIndex, setTabIndex }} />}
-				{tabIndex === 0 && <FriendsGrid title="Peopele you may know" />}
-				{tabIndex === 1 && <FriendsGrid title="Friend Requests" />}
-				{tabIndex === 2 && <FriendsGrid title="Suggested by facebook" />}
-				{tabIndex === 3 && <FriendsGrid title="Your all friends" />}
-				{tabIndex === 4 && <FriendsGrid title="Birthdays" />}
-				{tabIndex === 5 && <FriendsGrid title="Your Custom List" />}
+				<Flex
+					p={{
+						xs: "0.5rem",
+						md: "1rem",
+						lg: "2rem",
+					}}
+					sx={{ flex: 1 }}
+					direction={"column"}>
+					<Title order={4} pt="md">
+						{titles[tabIndex]}
+					</Title>
+					{tabIndex === 0 && <FriendsGrid title="Peopele you may know" />}
+					{tabIndex === 1 && <FriendRequests />}
+					{tabIndex === 2 && <FriendsGrid title="Suggested by facebook" />}
+					{tabIndex === 3 && <AllFriends />}
+					{tabIndex === 4 && <NoFriends />}
+					{tabIndex === 5 && <NoFriends />}
+				</Flex>
 			</Flex>
 		</Flex>
 	);
