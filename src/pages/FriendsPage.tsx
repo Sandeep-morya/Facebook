@@ -1,6 +1,6 @@
 ﻿import { Box, Flex, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import FriendsGrid from "../components/Friends/FriendsGrid";
 import Sidebar from "../components/Friends/Sidebar";
@@ -16,6 +16,10 @@ function FriendsPage({}: Props) {
 	const [tabIndex, setTabIndex] = useState(0);
 
 	const { isLoading, isError, userdata } = useUserProfile();
+	useEffect(() => {
+		window.document.title = "Facebook - Friends";
+	}, []);
+
 	if (isLoading) {
 		return <LoadingScreen />;
 	}
