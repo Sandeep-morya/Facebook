@@ -23,6 +23,15 @@ const sidebarData = [
 	{ name: "Custom Lists", Icon: RiUserStarFill },
 ];
 
+const titles = [
+	"Friends",
+	"Friend Requests",
+	"Suggestions",
+	"All Friends",
+	"Birthdays",
+	"Custom Lists",
+];
+
 function Sidebar({ tabIndex, setTabIndex }: Props) {
 	const theme = useMantineTheme();
 	return (
@@ -41,7 +50,7 @@ function Sidebar({ tabIndex, setTabIndex }: Props) {
 			gap={"0.5rem"}
 			h="100vh">
 			<Flex p="0.5rem" justify={"space-between"} align="center">
-				<Title order={3}>Firends</Title>
+				<Title order={3}>{titles[tabIndex]}</Title>
 				<ActionIcon size={"lg"} bg={theme.colors.dark[0]} radius={"xl"}>
 					<MdSettings size={22} color="black" />
 				</ActionIcon>
