@@ -2,7 +2,9 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useToken } from "../Provider/AuthContextProvider";
 
-type Props = PropsWithChildren;
+type Props = {
+	children: JSX.Element;
+};
 
 const PrivateRoute = ({ children }: Props) => {
 	const { token } = useToken();
