@@ -68,3 +68,11 @@ export interface FriendType {
 	image: string;
 	name: string;
 }
+
+export interface MessageType {
+	room: string;
+	message: string;
+	sender: string;
+	recipient: string;
+	time: number;
+}
