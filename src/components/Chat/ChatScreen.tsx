@@ -1,6 +1,7 @@
 ﻿import { Avatar, Flex, Input, Text, useMantineTheme } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import React, { useCallback, useState } from "react";
+import axios from "axios";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { BiLike } from "react-icons/bi";
 import { FaSmile } from "react-icons/fa";
 import { HiGif } from "react-icons/hi2";
@@ -11,7 +12,10 @@ import {
 	MdOutlineWavingHand,
 	MdStickyNote2,
 } from "react-icons/md";
+import useAlert from "../../hooks/useAlert";
 import useSearchUser from "../../hooks/useSearchUser";
+import { useToken } from "../../Provider/AuthContextProvider";
+import { useSocket } from "../../Provider/SocketContextProvider";
 import { useUserProfile } from "../../Provider/UserContextProvider";
 import { MessageType, UserProfileType } from "../../types";
 import AvatarButton from "../Common/AvatarButton";
@@ -22,31 +26,75 @@ type Props = {
 	recipient: UserProfileType;
 };
 
+const { VITE_API_URL } = import.meta.env;
+
 function ChatScreen({ recipient }: Props) {
 	const theme = useMantineTheme();
 	const { ref, hovered } = useHover();
+	const { token } = useToken();
+	const socket = useSocket();
+	const [room, setRoom] = useState("");
 
 	// ::  ::
 	const { userdata: sender } = useUserProfile();
 	const [chats, setChats] = useState<MessageType[]>([]);
 	const [message, setMessage] = useState("");
 
+	const Alert = useAlert();
+
+	const getChatMessages = useCallback(async () => {
+		if (sender) {
+			try {
+				const { data } = await axios.post(
+					`${VITE_API_URL}/chat/create`,
+					{
+						members: [sender._id, recipient._id],
+					},
+					{ headers: { Authorization: token } },
+				);
+				setChats(data.messages);
+				setRoom(data._id);
+			} catch (error) {
+				Alert(String(error), "error");
+			}
+		}
+	}, [sender, recipient, token]);
+
 	const handleMessageSend = useCallback(
 		(e: React.KeyboardEvent<HTMLInputElement>) => {
-			if (e.key === "Enter" && message != "") {
+			if (e.key === "Enter" && message != "" && socket) {
 				const chat = {
-					room: "",
+					room,
 					message,
 					sender: sender!._id,
 					recipient: recipient._id,
 					time: Date.now(),
 				};
 				setChats((e) => [...e, chat]);
+				socket.emit("client:send-message", chat);
 				setMessage("");
 			}
 		},
-		[message, sender],
+		[message, sender, socket, room],
 	);
+
+	useEffect(() => {
+		getChatMessages();
+	}, []);
+
+	useEffect(() => {
+		if (socket && room != "") {
+			socket.emit("client:join-room", room);
+		}
+	}, [room, socket]);
+
+	useEffect(() => {
+		if (socket) {
+			socket.on("server:send-message", (chat) => {
+				setChats((e) => [...e, chat]);
+			});
+		}
+	}, [socket]);
 
 	if (!sender) {
 		return <></>;

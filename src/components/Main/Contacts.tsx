@@ -1,7 +1,8 @@
 ﻿import { Divider, Flex, Group, Input, Stack } from "@mantine/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdSearch, MdVideoCall } from "react-icons/md";
 import { TbDots } from "react-icons/tb";
+import { useSocket } from "../../Provider/SocketContextProvider";
 import { useUserProfile } from "../../Provider/UserContextProvider";
 import BirthdayTilte from "../Common/BirthdayTile";
 import ContactTile from "../Common/ContactTile";
@@ -12,6 +13,23 @@ type Props = {};
 
 function Contacts({}: Props) {
 	const { userdata } = useUserProfile();
+	const socket = useSocket();
+	const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+
+	useEffect(() => {
+		if (socket) {
+			socket.on("server:activeUsers", (activeUsers) => {
+				setOnlineUsers(activeUsers);
+			});
+		}
+		return () => {
+			if (socket) {
+				socket.off("server:activeUsers", (activeUsers) => {
+					setOnlineUsers(activeUsers);
+				});
+			}
+		};
+	}, [socket]);
 
 	return (
 		<Flex
@@ -23,16 +41,18 @@ function Contacts({}: Props) {
 			{/*---:: Birthdays ::---*/}
 			<Stack h="50%" sx={{ justifySelf: "flex-start" }}>
 				<Heading name="Global Users" />
-				<Input
+				{/* <Input
 					size="md"
 					radius={"xl"}
 					icon={<MdSearch size={22} />}
 					placeholder="Enter name of user"
-				/>
+				/> */}
 				<Flex direction={"column"} gap="0.5rem">
-					{userdata?.friends.map((e) => (
-						<ContactTile id={e} key={e} online={false} />
-					))}
+					{onlineUsers
+						.filter((e) => e != userdata?._id)
+						.map((e) => (
+							<ContactTile id={e} key={e} online={false} />
+						))}
 				</Flex>
 			</Stack>
 
@@ -49,9 +69,11 @@ function Contacts({}: Props) {
 
 				{/*---:: Online Contacts ::---*/}
 				<Flex direction={"column"}>
-					{userdata?.friends.map((e) => (
-						<ContactTile id={e} key={e} story={" "} />
-					))}
+					{onlineUsers
+						.filter((e) => userdata?.friends.includes(e))
+						.map((e) => (
+							<ContactTile id={e} key={e} story={" "} />
+						))}
 				</Flex>
 			</Stack>
 		</Flex>

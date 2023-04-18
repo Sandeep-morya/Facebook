@@ -22,7 +22,6 @@ const Chats = React.memo(({ chats, sender, recipient }: Props) => {
 			}, 100);
 		}
 	}, [chats, lastMessageRef]);
-	console.log("renders");
 
 	return (
 		<Flex
@@ -59,7 +58,9 @@ const Chats = React.memo(({ chats, sender, recipient }: Props) => {
 							sx={{
 								color: "white",
 								padding: 8,
-								borderRadius: 8,
+								borderRadius: isFromSender
+									? "2rem 2rem 0 2rem"
+									: "2rem 2rem  2rem 0",
 							}}>
 							<Text fw={500}>{message.message}</Text>
 						</Box>
