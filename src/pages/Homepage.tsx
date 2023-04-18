@@ -12,6 +12,7 @@ import Contacts from "../components/Main/Contacts";
 import Feeds from "../components/Main/Feeds";
 import Sidebar from "../components/Main/Sidebar";
 import useGetCookie from "../hooks/useGetCookie";
+import SocketProvider from "../Provider/SocketContextProvider";
 import { useUserProfile } from "../Provider/UserContextProvider";
 import { UserProfileType } from "../types";
 
@@ -98,7 +99,9 @@ const Homepage = (props: Props) => {
 							overflow: "scroll",
 							"&::-webkit-scrollbar": { display: "none" },
 						}}>
-						<Contacts />
+						<SocketProvider>
+							<Contacts />
+						</SocketProvider>
 					</Box>
 				)}
 			</Box>

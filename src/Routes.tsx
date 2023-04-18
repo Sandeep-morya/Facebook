@@ -8,6 +8,7 @@ import {
 	Homepage,
 	ProfilePage,
 } from "./pages";
+import SocketProvider from "./Provider/SocketContextProvider";
 import UserContextProvider from "./Provider/UserContextProvider";
 
 type Props = {};
