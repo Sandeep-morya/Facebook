@@ -3,9 +3,11 @@ import { useHover } from "@mantine/hooks";
 import React from "react";
 import { MdPlayArrow } from "react-icons/md";
 
-type Props = {};
+type Props = {
+	image: string;
+};
 
-function ReelCard({}: Props) {
+function ReelCard({ image }: Props) {
 	const { hovered, ref } = useHover();
 	return (
 		<Flex
@@ -24,7 +26,7 @@ function ReelCard({}: Props) {
 				sx={{
 					width: "100%",
 					height: "100%",
-					backgroundImage: `url(https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg)`,
+					backgroundImage: `url(${image})`,
 					backgroundSize: hovered ? "155%" : "150%",
 					filter: "brightness(75%)",
 					backgroundPosition: "center",

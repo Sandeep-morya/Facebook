@@ -1,13 +1,16 @@
 ﻿import { ActionIcon } from "@mantine/core";
 import React from "react";
 import { TfiAngleRight } from "react-icons/tfi";
-type Props = {};
+type Props = {
+	onClick: () => void;
+};
 
-function ScrollBtnRight({}: Props) {
+function ScrollBtnRight({ onClick }: Props) {
 	return (
 		<ActionIcon
 			size={"xl"}
 			radius="xl"
+			onClick={onClick}
 			bg={"white"}
 			sx={{
 				position: "absolute",

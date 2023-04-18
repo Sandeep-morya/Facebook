@@ -1,5 +1,5 @@
 ﻿import { ActionIcon, Box, Flex, Tabs } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaBookOpen } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
 import CreateStoryCard from "../Common/CreateStoryCard";
@@ -11,6 +11,19 @@ import ScrollBtnLeft from "../Common/ScrollBtnLeft";
 
 function StroyNreelTabs() {
 	const [activeTab, setActiveTab] = useState<string | null>("Stories");
+	const flexRef = useRef<HTMLDivElement>(null);
+
+	const handleScrollLeft = () => {
+		if (flexRef.current) {
+			flexRef.current.scrollBy({ left: -200, behavior: "smooth" });
+		}
+	};
+
+	const handleScrollRight = () => {
+		if (flexRef.current) {
+			flexRef.current.scrollBy({ left: 200, behavior: "smooth" });
+		}
+	};
 	return (
 		<Tabs
 			value={activeTab}
@@ -43,39 +56,34 @@ function StroyNreelTabs() {
 						"&::-webkit-scrollbar": { display: "none" },
 					}}>
 					<CreateStoryCard />
-					<StoryCard />
-					<StoryCard />
-					<StoryCard />
-					<StoryCard />
-					<StoryCard />
-					<StoryCard />
-					<StoryCard />
+					{new Array(10).fill("reel").map((e, i) => (
+						<StoryCard
+							key={e + i}
+							image={`https://picsum.photos/400/600?random=${i + 1}`}
+						/>
+					))}
 				</Flex>
-				<ScrollBtnRight />
+				<ScrollBtnRight onClick={() => {}} />
 			</Tabs.Panel>
 
 			<Tabs.Panel value="Reels" h="12rem" pos={"relative"}>
-				<ScrollBtnLeft />
+				<ScrollBtnLeft onClick={handleScrollLeft} />
 				<Flex
+					ref={flexRef}
 					gap={"0.5rem"}
 					h="100%"
 					sx={{
 						overflowX: "scroll",
 						"&::-webkit-scrollbar": { display: "none" },
 					}}>
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
-					<ReelCard />
+					{new Array(10).fill("reel").map((e, i) => (
+						<ReelCard
+							key={e + i}
+							image={`https://picsum.photos/400/600?random=${(i + 1) * 3}`}
+						/>
+					))}
 				</Flex>
-				<ScrollBtnRight />
+				<ScrollBtnRight onClick={handleScrollRight} />
 			</Tabs.Panel>
 		</Tabs>
 	);

@@ -3,9 +3,11 @@ import { useHover } from "@mantine/hooks";
 import React from "react";
 import Havatar from "../Common/Havatar";
 
-type Props = {};
+type Props = {
+	image: string;
+};
 
-function StoryCard({}: Props) {
+function StoryCard({ image }: Props) {
 	const { hovered, ref } = useHover();
 
 	return (
@@ -25,10 +27,11 @@ function StoryCard({}: Props) {
 				sx={{
 					width: "100%",
 					height: "100%",
-					backgroundImage: `url(https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg)`,
+					backgroundImage: `url(${image})`,
 					backgroundSize: hovered ? "155%" : "150%",
 					filter: "brightness(75%)",
 					backgroundPosition: "center",
+					backgroundRepeat: "no-repeat",
 					transition: "all 0.1s",
 				}}></Box>
 			<Box
@@ -37,12 +40,7 @@ function StoryCard({}: Props) {
 					top: "5%",
 					left: "10%",
 				}}>
-				<Havatar
-					online={true}
-					name="arm"
-					src="https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg"
-					story="s"
-				/>
+				<Havatar online={true} name="arm" src={image} story="s" />
 			</Box>
 
 			<Text

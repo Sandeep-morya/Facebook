@@ -2,12 +2,15 @@
 import React from "react";
 import { TfiAngleLeft } from "react-icons/tfi";
 
-type Props = {};
+type Props = {
+	onClick: () => void;
+};
 
-function ScrollBtnLeft({}: Props) {
+function ScrollBtnLeft({ onClick }: Props) {
 	return (
 		<ActionIcon
 			size={"xl"}
+			onClick={onClick}
 			radius="xl"
 			bg={"white"}
 			sx={{
