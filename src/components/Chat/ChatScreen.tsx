@@ -42,7 +42,7 @@ function ChatScreen({ recipient }: Props) {
 
 	const Alert = useAlert();
 
-	const getChatMessages = useCallback(async () => {
+	const getChatRoom = useCallback(async () => {
 		if (sender) {
 			try {
 				const { data } = await axios.post(
@@ -52,13 +52,37 @@ function ChatScreen({ recipient }: Props) {
 					},
 					{ headers: { Authorization: token } },
 				);
-				setChats(data.messages);
 				setRoom(data._id);
 			} catch (error) {
 				Alert(String(error), "error");
 			}
 		}
 	}, [sender, recipient, token]);
+
+	const getMessages = useCallback(
+		async (room: string) => {
+			try {
+				const { data } = await axios.get(`${VITE_API_URL}/message/${room}`, {
+					headers: { Authorization: token },
+				});
+				setChats(data);
+			} catch (error) {}
+		},
+		[VITE_API_URL, token],
+	);
+
+	const AddMessageToDatabase = useCallback(
+		async (message: MessageType) => {
+			try {
+				const { data } = await axios.post(
+					`${VITE_API_URL}/message`,
+					{ message },
+					{ headers: { Authorization: token } },
+				);
+			} catch (error) {}
+		},
+		[VITE_API_URL, token],
+	);
 
 	const handleMessageSend = useCallback(
 		(e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -72,6 +96,7 @@ function ChatScreen({ recipient }: Props) {
 				};
 				setChats((e) => [...e, chat]);
 				socket.emit("client:send-message", chat);
+				AddMessageToDatabase(chat);
 				setMessage("");
 			}
 		},
@@ -79,11 +104,12 @@ function ChatScreen({ recipient }: Props) {
 	);
 
 	useEffect(() => {
-		getChatMessages();
+		getChatRoom();
 	}, []);
 
 	useEffect(() => {
 		if (socket && room != "") {
+			getMessages(room);
 			socket.emit("client:join-room", room);
 		}
 	}, [room, socket]);
