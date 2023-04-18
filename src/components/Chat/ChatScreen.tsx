@@ -85,7 +85,7 @@ function ChatScreen({ recipient }: Props) {
 	);
 
 	const handleMessageSend = useCallback(
-		(e: React.KeyboardEvent<HTMLInputElement>) => {
+		(e: React.KeyboardEvent<HTMLInputElement>, message: string) => {
 			if (e.key === "Enter" && message != "" && socket) {
 				const chat = {
 					room,
@@ -100,7 +100,7 @@ function ChatScreen({ recipient }: Props) {
 				setMessage("");
 			}
 		},
-		[message, sender, socket, room],
+		[sender, socket, room],
 	);
 
 	useEffect(() => {
@@ -134,36 +134,39 @@ function ChatScreen({ recipient }: Props) {
 				// borderBottom: "0.1rem solid rgba(0,0,0,0.1)",
 			}}>
 			{/*---:: Chats ::---*/}
-			<Flex justify={"center"} w="100%" align="end" h="60vh">
-				{
-					/* recipient.chats.length < 1 */ false && (
-						<Flex ref={ref} direction={"column"} align="center" gap={"md"}>
-							<Avatar
-								size={"xl"}
-								radius={"xl"}
-								src={recipient.image}
-								alt={recipient.name}
-							/>
-							<Text>{recipient.name}</Text>
-							<Button
-								colorScheme={theme.colors.blue[5]}
-								size="md"
-								style={{
-									boxShadow: "none",
-									background: hovered ? theme.colors.blue[5] : "none",
-									color: hovered ? "white" : theme.colors.gray[5],
-								}}>
-								Send a Hi <MdOutlineWavingHand />
-							</Button>
-						</Flex>
-					)
-				}
+			<Flex justify={"center"} w="100%" align="end" h="60vh" pos="relative">
+				{chats.length < 1 && (
+					<Flex
+						ref={ref}
+						direction={"column"}
+						align="center"
+						gap={"md"}
+						top="50%"
+						left="50%"
+						sx={{ transform: "translate(-50% , -50%)" }}
+						pos="absolute">
+						<Avatar
+							size={"xl"}
+							radius={"xl"}
+							src={recipient.image}
+							alt={recipient.name}
+						/>
+						<Text>{recipient.name}</Text>
+						<Button
+							colorScheme={theme.colors.blue[5]}
+							size="md"
+							onClick={() => setMessage("Hi")}
+							style={{
+								boxShadow: "none",
+								background: hovered ? theme.colors.blue[5] : "none",
+								color: hovered ? "white" : theme.colors.gray[5],
+							}}>
+							Send a Hi <MdOutlineWavingHand />
+						</Button>
+					</Flex>
+				)}
 
-				{
-					/* recipient.chats.length < 0 */ true && (
-						<Chats {...{ chats, sender, recipient }} />
-					)
-				}
+				{chats.length > 0 && <Chats {...{ chats, sender, recipient }} />}
 			</Flex>
 			{/*---:: Send Bar ::---*/}
 			<Flex
@@ -184,7 +187,7 @@ function ChatScreen({ recipient }: Props) {
 					c="blue"
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
-					onKeyDown={handleMessageSend}
+					onKeyDown={(e) => handleMessageSend(e, message)}
 					icon={<IoTextSharp size={25} color={theme.colors.gray[5]} />}
 					rightSection={<FaSmile size={25} color={theme.colors.gray[5]} />}
 				/>

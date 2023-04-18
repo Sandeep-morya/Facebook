@@ -2,7 +2,10 @@
 
 [Live URL](https://advance-facebook-clone.vercel.app/)
 
-Routes :
-`/` -> [Authentication]
+features:
 
-`/home` -> [Main Page]
+- Authentication
+- Create a post
+- Add Freind
+- Chat with friends and Strangers
+- Real time chat application
