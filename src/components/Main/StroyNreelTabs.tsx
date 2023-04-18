@@ -12,6 +12,7 @@ import ScrollBtnLeft from "../Common/ScrollBtnLeft";
 function StroyNreelTabs() {
 	const [activeTab, setActiveTab] = useState<string | null>("Stories");
 	const flexRef = useRef<HTMLDivElement>(null);
+	const secondRef = useRef<HTMLDivElement>(null);
 
 	const handleScrollLeft = () => {
 		if (flexRef.current) {
@@ -24,6 +25,19 @@ function StroyNreelTabs() {
 			flexRef.current.scrollBy({ left: 200, behavior: "smooth" });
 		}
 	};
+
+	const SecondhandleScrollLeft = () => {
+		if (flexRef.current) {
+			flexRef.current.scrollBy({ left: -200, behavior: "smooth" });
+		}
+	};
+
+	const SecondhandleScrollRight = () => {
+		if (flexRef.current) {
+			flexRef.current.scrollBy({ left: 200, behavior: "smooth" });
+		}
+	};
+
 	return (
 		<Tabs
 			value={activeTab}
@@ -51,10 +65,12 @@ function StroyNreelTabs() {
 				<Flex
 					gap={"0.5rem"}
 					h="100%"
+					ref={secondRef}
 					sx={{
 						overflowX: "scroll",
 						"&::-webkit-scrollbar": { display: "none" },
 					}}>
+					{/* <ScrollBtnLeft onClick={SecondhandleScrollLeft} /> */}
 					<CreateStoryCard />
 					{new Array(10).fill("reel").map((e, i) => (
 						<StoryCard
@@ -63,11 +79,11 @@ function StroyNreelTabs() {
 						/>
 					))}
 				</Flex>
-				<ScrollBtnRight onClick={() => {}} />
+				{/* <ScrollBtnRight onClick={SecondhandleScrollRight} /> */}
 			</Tabs.Panel>
 
 			<Tabs.Panel value="Reels" h="12rem" pos={"relative"}>
-				<ScrollBtnLeft onClick={handleScrollLeft} />
+				{/* <ScrollBtnLeft onClick={handleScrollLeft} /> */}
 				<Flex
 					ref={flexRef}
 					gap={"0.5rem"}
