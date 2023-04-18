@@ -9,10 +9,12 @@ export function useSocket() {
 	return useContext(SocketContext);
 }
 
+const { VITE_API_URL } = import.meta.env;
+
 function SocketProvider({ children }: PropsWithChildren) {
 	const { userdata } = useUserProfile();
 	const socket = useMemo(() => {
-		return io("http://localhost:8080", {
+		return io(VITE_API_URL, {
 			query: { user: userdata?._id },
 		});
 	}, []);
