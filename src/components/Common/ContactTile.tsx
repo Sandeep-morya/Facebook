@@ -58,8 +58,14 @@ const ContactTile = ({ id, src, online = true, story }: Props) => {
 					setOpen(false);
 				}}
 				title={
-					<Flex>
-						<AvatarButton src={userdata.image} name={userdata.name} />
+					<Flex align="center" gap="1rem">
+						<Havatar
+							{...{ src: userdata.image, online, name: userdata.name }}
+						/>
+						<Flex direction={"column"}>
+							<Text fw={600}>{userdata.name}</Text>
+							<Text fz="xs">{online ? "Online" : "Offline"}</Text>
+						</Flex>
 					</Flex>
 				}>
 				{/* Modal content */}

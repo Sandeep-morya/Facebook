@@ -38,6 +38,7 @@ const Chats = React.memo(({ chats, sender, recipient }: Props) => {
 					background: "rgba(0, 0, 0, 0.1)",
 					borderRadius: "1rem",
 				},
+				scrollbarWidth: "thin",
 				"&::-webkit-scrollbar-track": { backgroundColor: "transparent" },
 			}}>
 			{sortedMessages.map((message, index) => {
@@ -52,17 +53,22 @@ const Chats = React.memo(({ chats, sender, recipient }: Props) => {
 						sx={{
 							width: "max-content",
 							alignSelf: !isFromSender ? "flex-start" : "flex-end",
+							display: "flex",
+							flexDirection: "column",
+							alignItems: !isFromSender ? "flex-start" : "flex-end",
 						}}>
 						<Box
 							bg={isFromSender ? "blue" : "green"}
 							sx={{
 								color: "white",
-								padding: 8,
+								padding: 7,
 								borderRadius: isFromSender
 									? "2rem 2rem 0 2rem"
 									: "2rem 2rem  2rem 0",
 							}}>
-							<Text fw={500}>{message.message}</Text>
+							<Text ta={isFromSender ? "end" : "start"} fw={500}>
+								{message.message}
+							</Text>
 						</Box>
 						<TimeAgo time={message.time} />
 					</Box>

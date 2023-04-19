@@ -9,7 +9,7 @@ import { TfiAngleRight } from "react-icons/tfi";
 import ScrollBtnRight from "../Common/ScrollBtnRight";
 import ScrollBtnLeft from "../Common/ScrollBtnLeft";
 
-function StroyNreelTabs() {
+function StoryNreelTabs() {
 	const [activeTab, setActiveTab] = useState<string | null>("Stories");
 	const flexRef = useRef<HTMLDivElement>(null);
 	const secondRef = useRef<HTMLDivElement>(null);
@@ -27,14 +27,14 @@ function StroyNreelTabs() {
 	};
 
 	const SecondhandleScrollLeft = () => {
-		if (flexRef.current) {
-			flexRef.current.scrollBy({ left: -200, behavior: "smooth" });
+		if (secondRef.current) {
+			secondRef.current.scrollBy({ left: -200, behavior: "smooth" });
 		}
 	};
 
 	const SecondhandleScrollRight = () => {
-		if (flexRef.current) {
-			flexRef.current.scrollBy({ left: 200, behavior: "smooth" });
+		if (secondRef.current) {
+			secondRef.current.scrollBy({ left: 200, behavior: "smooth" });
 		}
 	};
 
@@ -69,21 +69,23 @@ function StroyNreelTabs() {
 					sx={{
 						overflowX: "scroll",
 						"&::-webkit-scrollbar": { display: "none" },
+						"-ms-overflow-style": "none" /* IE 11 */,
+						scrollbarWidth: "none",
 					}}>
-					{/* <ScrollBtnLeft onClick={SecondhandleScrollLeft} /> */}
+					<ScrollBtnLeft onClick={SecondhandleScrollLeft} />
 					<CreateStoryCard />
-					{new Array(10).fill("reel").map((e, i) => (
+					{new Array(20).fill("reel").map((e, i) => (
 						<StoryCard
 							key={e + i}
 							image={`https://picsum.photos/400/600?random=${i + 1}`}
 						/>
 					))}
 				</Flex>
-				{/* <ScrollBtnRight onClick={SecondhandleScrollRight} /> */}
+				<ScrollBtnRight onClick={SecondhandleScrollRight} />
 			</Tabs.Panel>
 
 			<Tabs.Panel value="Reels" h="12rem" pos={"relative"}>
-				{/* <ScrollBtnLeft onClick={handleScrollLeft} /> */}
+				<ScrollBtnLeft onClick={handleScrollLeft} />
 				<Flex
 					ref={flexRef}
 					gap={"0.5rem"}
@@ -91,8 +93,10 @@ function StroyNreelTabs() {
 					sx={{
 						overflowX: "scroll",
 						"&::-webkit-scrollbar": { display: "none" },
+						"-ms-overflow-style": "none" /* IE 11 */,
+						scrollbarWidth: "none",
 					}}>
-					{new Array(10).fill("reel").map((e, i) => (
+					{new Array(20).fill("reel").map((e, i) => (
 						<ReelCard
 							key={e + i}
 							image={`https://picsum.photos/400/600?random=${(i + 1) * 3}`}
@@ -105,4 +109,4 @@ function StroyNreelTabs() {
 	);
 }
 
-export default StroyNreelTabs;
+export default StoryNreelTabs;

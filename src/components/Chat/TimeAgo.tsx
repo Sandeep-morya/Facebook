@@ -8,16 +8,7 @@ type Props = {
 
 function TimeAgo({ time }: Props) {
 	const timeago = useTimeAgo(new Date(time));
-	return (
-		<Text
-			size="xs"
-			style={{
-				display: "block",
-				marginTop: 4,
-			}}>
-			{timeago}
-		</Text>
-	);
+	return <Text size="xs">{timeago}</Text>;
 }
 
 export default TimeAgo;

@@ -48,7 +48,11 @@ function AccountModal({}: Props) {
 					borderRadius: "0.5rem",
 					overflow: "hidden",
 				}}>
-				<AvatarButton src={userdata.image} name={userdata.name} />
+				<AvatarButton
+					src={userdata.image}
+					name={userdata.name}
+					redirectOn={userdata._id}
+				/>
 				<Divider size="xs" />
 				<FullLink />
 			</Flex>

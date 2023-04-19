@@ -1,7 +1,8 @@
 ﻿import { Box, Flex, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import React from "react";
+import React, { useMemo } from "react";
 import { MdPlayArrow } from "react-icons/md";
+import { randomNumber } from "../../hooks/useRandomName";
 
 type Props = {
 	image: string;
@@ -9,6 +10,7 @@ type Props = {
 
 function ReelCard({ image }: Props) {
 	const { hovered, ref } = useHover();
+	const views = useMemo(() => randomNumber(10, 999), []);
 	return (
 		<Flex
 			ref={ref}
@@ -43,7 +45,7 @@ function ReelCard({ image }: Props) {
 					style={{ transform: "translateY(20%)" }}
 				/>
 				<Text fw={700} fz="sm" c="white">
-					123K
+					{`${views}K`}
 				</Text>
 			</Flex>
 		</Flex>

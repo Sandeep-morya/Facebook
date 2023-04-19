@@ -6,7 +6,7 @@ import useSearchPosts from "../../hooks/useSearchPosts";
 import { useUserProfile } from "../../Provider/UserContextProvider";
 import { PostType } from "../../types";
 import Post from "./Post";
-import StroyNreelTabs from "./StroyNreelTabs";
+import StoryNreelTabs from "./StoryNreelTabs";
 import UploadPost from "./UploadPost";
 
 function Feeds() {
@@ -31,7 +31,7 @@ function Feeds() {
 			m="auto"
 			direction="column"
 			gap={"1rem"}>
-			<StroyNreelTabs />
+			<StoryNreelTabs />
 			<UploadPost
 				refresh={getPosts}
 				name={userdata.name}

@@ -1,7 +1,9 @@
-﻿import { Box, Flex, Text } from "@mantine/core";
+﻿import { Box, Flex, Modal, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import React from "react";
+import React, { useState } from "react";
+import useRandomName from "../../hooks/useRandomName";
 import Havatar from "../Common/Havatar";
+import { modalCloseButtonStyle } from "./Post";
 
 type Props = {
 	image: string;
@@ -9,6 +11,8 @@ type Props = {
 
 function StoryCard({ image }: Props) {
 	const { hovered, ref } = useHover();
+	const randomName = useRandomName();
+	const [open, setOpen] = useState(false);
 
 	return (
 		<Flex
@@ -24,6 +28,7 @@ function StoryCard({ image }: Props) {
 				position: "relative",
 			}}>
 			<Box
+				onClick={() => setOpen(true)}
 				sx={{
 					width: "100%",
 					height: "100%",
@@ -53,8 +58,28 @@ function StoryCard({ image }: Props) {
 				fw={600}
 				fz="sm"
 				c="white">
-				Arun Kumar mishra
+				{randomName}
 			</Text>
+			{/* Modal */}
+			<Modal
+				opened={open}
+				onClose={() => setOpen(false)}
+				fullScreen
+				style={{ backgroundColor: "red" }}
+				centered
+				closeButtonProps={modalCloseButtonStyle}
+				transitionProps={{ transition: "fade", duration: 200 }}>
+				<img
+					style={{
+						width: "100%",
+						height: "100%",
+						maxHeight: "80vh",
+						objectFit: "contain",
+					}}
+					src={image}
+					alt="Preview"
+				/>
+			</Modal>
 		</Flex>
 	);
 }

@@ -38,27 +38,14 @@ function Contacts({}: Props) {
 			h="90vh"
 			justify={"space-between"}
 			p={"0 1rem"}>
-			{/*---:: Birthdays ::---*/}
-			<Stack h="50%" sx={{ justifySelf: "flex-start" }}>
-				<Heading name="Global Users" />
-				{/* <Input
-					size="md"
-					radius={"xl"}
-					icon={<MdSearch size={22} />}
-					placeholder="Enter name of user"
-				/> */}
-				<Flex direction={"column"} gap="0.5rem">
-					{onlineUsers
-						.filter((e) => e != userdata?._id)
-						.map((e) => (
-							<ContactTile id={e} key={e} online={false} />
-						))}
-				</Flex>
-			</Stack>
-
-			{/* <Divider /> */}
-
-			<Stack sx={{ flex: 1 }}>
+			<Stack
+				sx={{
+					flex: 1,
+					overflowY: "scroll",
+					"&::-webkit-scrollbar": { display: "none" },
+					"-ms-overflow-style": "none" /* IE 11 */,
+					scrollbarWidth: "none",
+				}}>
 				<Flex justify={"space-between"} align="center">
 					<Heading name=" Your Contacts" />
 					<Flex gap={"1rem"}>
@@ -69,10 +56,37 @@ function Contacts({}: Props) {
 
 				{/*---:: Online Contacts ::---*/}
 				<Flex direction={"column"}>
+					{userdata?.friends.map((e) => (
+						<ContactTile
+							id={e}
+							key={e}
+							story={" "}
+							online={onlineUsers.includes(e)}
+						/>
+					))}
+				</Flex>
+			</Stack>
+			<Stack
+				h="50%"
+				sx={{
+					justifySelf: "flex-start",
+					overflowY: "scroll",
+					"&::-webkit-scrollbar": { display: "none" },
+					"-ms-overflow-style": "none" /* IE 11 */,
+					scrollbarWidth: "none",
+				}}>
+				<Heading name="Online Users" />
+				<Input
+					size="md"
+					radius={"xl"}
+					icon={<MdSearch size={22} />}
+					placeholder="Enter name of user"
+				/>
+				<Flex direction={"column"} gap="0.5rem">
 					{onlineUsers
-						.filter((e) => userdata?.friends.includes(e))
+						.filter((e) => e != userdata?._id)
 						.map((e) => (
-							<ContactTile id={e} key={e} story={" "} />
+							<ContactTile id={e} key={e} />
 						))}
 				</Flex>
 			</Stack>

@@ -64,6 +64,8 @@ const Homepage = (props: Props) => {
 							height: "calc(100vh - 5rem)",
 							overflowY: "scroll",
 							"&::-webkit-scrollbar": { display: "none" },
+							"-ms-overflow-style": "none" /* IE 11 */,
+							scrollbarWidth: "none",
 						}}>
 						<Sidebar user={userdata} />
 					</Box>
@@ -75,11 +77,12 @@ const Homepage = (props: Props) => {
 						height: "calc(100vh - 5rem)",
 						overflowY: "scroll",
 						"&::-webkit-scrollbar": { width: "8px" },
+						scrollbarWidth: "thin",
+
 						"&::-webkit-scrollbar-thumb": {
 							background: "rgba(0, 0, 0, 0.2)",
 							borderRadius: "1rem",
 						},
-						"&::-webkit-scrollbar-track": { backgroundColor: "transparent" },
 					}}>
 					<Feeds />
 					{/* <Center>
@@ -98,6 +101,8 @@ const Homepage = (props: Props) => {
 							height: "calc(100vh - 5rem)",
 							overflow: "scroll",
 							"&::-webkit-scrollbar": { display: "none" },
+							"-ms-overflow-style": "none" /* IE 11 */,
+							scrollbarWidth: "none",
 						}}>
 						<SocketProvider>
 							<Contacts />

@@ -53,7 +53,7 @@ function FriendsPage({}: Props) {
 					<Title order={4} pt="md">
 						{titles[tabIndex]}
 					</Title>
-					{tabIndex === 0 && <FriendsGrid title="Peopele you may know" />}
+					{tabIndex === 0 && <AllFriends />}
 					{tabIndex === 1 && <FriendRequests />}
 					{tabIndex === 2 && <FriendsGrid title="Suggested by facebook" />}
 					{tabIndex === 3 && <AllFriends />}
