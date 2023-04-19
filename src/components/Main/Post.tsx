@@ -14,7 +14,7 @@
 	Title,
 	Tooltip,
 } from "@mantine/core";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FaGlobeAsia, FaTrash } from "react-icons/fa";
 import { TbDots, TbShare3 } from "react-icons/tb";
 import Havatar from "../Common/Havatar";
@@ -31,6 +31,7 @@ import AvatarButton from "../Common/AvatarButton";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "../../Provider/AuthContextProvider";
 import useAlert from "../../hooks/useAlert";
+import { randomNumber } from "../../hooks/useRandomName";
 
 type Props = {
 	post: PostType;
@@ -60,6 +61,11 @@ function Post({ post }: Props) {
 	const [updatedText, setUpdateText] = useState("");
 	const { token } = useToken();
 	const Alert = useAlert();
+
+	const emojiOne = useMemo(() => randomNumber(0, 6), []);
+	const emojiTwo = useMemo(() => randomNumber(0, 6), []);
+	const emojiThree = useMemo(() => randomNumber(0, 6), []);
+	const reactionCount = useMemo(() => randomNumber(10, 999), []);
 
 	const editPost = useCallback(async () => {
 		try {
@@ -208,17 +214,17 @@ function Post({ post }: Props) {
 						<Tooltip.Group openDelay={300} closeDelay={100}>
 							<Avatar.Group spacing={5}>
 								<Tooltip label="Salazar Troop" withArrow>
-									<Avatar size={"sm"} src={emoji.haha} radius="xl" />
+									<Avatar size={"sm"} src={emoji[emojiOne]} radius="xl" />
 								</Tooltip>
 								<Tooltip label="Bandit Crimes" withArrow>
-									<Avatar size={"sm"} src={emoji.like} radius="xl" />
+									<Avatar size={"sm"} src={emoji[emojiTwo]} radius="xl" />
 								</Tooltip>
 								<Tooltip label="Jane Rata" withArrow>
-									<Avatar size={"sm"} src={emoji.wow} radius="xl" />
+									<Avatar size={"sm"} src={emoji[emojiThree]} radius="xl" />
 								</Tooltip>
 							</Avatar.Group>
 						</Tooltip.Group>
-						<Text>You and 250 others</Text>
+						<Text>You and {reactionCount} others</Text>
 					</Group>
 					<Text>{post.comments.length} comments</Text>
 				</Flex>
