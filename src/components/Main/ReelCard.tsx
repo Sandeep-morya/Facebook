@@ -1,8 +1,9 @@
-﻿import { Box, Flex, Text } from "@mantine/core";
+﻿import { Box, Flex, Modal, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import { randomNumber } from "../../hooks/useRandomName";
+import { modalCloseButtonStyle } from "./Post";
 
 type Props = {
 	image: string;
@@ -11,6 +12,7 @@ type Props = {
 function ReelCard({ image }: Props) {
 	const { hovered, ref } = useHover();
 	const views = useMemo(() => randomNumber(10, 999), []);
+	const [open, setOpen] = useState(false);
 	return (
 		<Flex
 			ref={ref}
@@ -25,6 +27,7 @@ function ReelCard({ image }: Props) {
 				position: "relative",
 			}}>
 			<Box
+				onClick={() => setOpen(true)}
 				sx={{
 					width: "100%",
 					height: "100%",
@@ -48,6 +51,26 @@ function ReelCard({ image }: Props) {
 					{`${views}K`}
 				</Text>
 			</Flex>
+			{/* Modal */}
+			<Modal
+				opened={open}
+				onClose={() => setOpen(false)}
+				fullScreen
+				style={{ backgroundColor: "red" }}
+				centered
+				closeButtonProps={modalCloseButtonStyle}
+				transitionProps={{ transition: "fade", duration: 200 }}>
+				<img
+					style={{
+						width: "100%",
+						height: "100%",
+						maxHeight: "80vh",
+						objectFit: "contain",
+					}}
+					src={image}
+					alt="Preview"
+				/>
+			</Modal>
 		</Flex>
 	);
 }

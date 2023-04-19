@@ -16,9 +16,9 @@ type Props = {};
 function AllRoutes({}: Props) {
 	return (
 		<Routes>
-			<Route path="/" element={<AuthenticationPage />} />
+			<Route path="/login" element={<AuthenticationPage />} />
 			<Route
-				path="/home"
+				path="/"
 				element={
 					<PrivateRoute>
 						<UserContextProvider>

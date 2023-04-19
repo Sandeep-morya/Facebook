@@ -79,7 +79,7 @@ const AuthenticationPage = () => {
 	}
 
 	if (token) {
-		return <Navigate to={location.state || "/home"} />;
+		return <Navigate to={location.state || "/"} />;
 	}
 	if (error) {
 		return <Navigate to={"/error"} state={location.pathname} />;

@@ -68,7 +68,7 @@ function ServerError() {
 					development team was already notified. Try refreshing the page.
 				</Text>
 				<Group position="center">
-					<Button onClick={() => navigate("/home")} variant="white" size="md">
+					<Button onClick={() => navigate("/")} variant="white" size="md">
 						Go to Homepage
 					</Button>
 				</Group>

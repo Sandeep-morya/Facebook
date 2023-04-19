@@ -8,9 +8,8 @@ type Props = {
 
 const PrivateRoute = ({ children }: Props) => {
 	const { token } = useToken();
-	const location = useLocation();
 
-	return token ? children : <Navigate to={"/"} state={location.pathname} />;
+	return token ? children : <Navigate to={"/login"} />;
 };
 
 export default PrivateRoute;
