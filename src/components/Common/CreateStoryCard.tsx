@@ -2,12 +2,14 @@
 import { useHover } from "@mantine/hooks";
 import React from "react";
 import { MdAdd } from "react-icons/md";
+import { useUserProfile } from "../../Provider/UserContextProvider";
 import Ftext from "../Footer/Ftext";
 
 type Props = {};
 
 function CreateStoryCard({}: Props) {
 	const { hovered, ref } = useHover();
+	const { userdata } = useUserProfile();
 	return (
 		<Flex
 			w={"7rem"}
@@ -25,7 +27,7 @@ function CreateStoryCard({}: Props) {
 					width: "100%",
 					height: "80%",
 					position: "relative",
-					backgroundImage: `url(https://res.cloudinary.com/due9pi68z/image/upload/v1679380793/ezbgodogpxxel4aokkfg.jpg)`,
+					backgroundImage: `url(${userdata?.image})`,
 					backgroundSize: hovered ? "155%" : "150%",
 					backgroundPosition: "center",
 					transition: "all 0.1s",
