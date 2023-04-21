@@ -78,6 +78,10 @@ const AuthenticationPage = () => {
 		}
 	}
 
+	useEffect(() => {
+		window.document.title = `Facebook - log in or sign up`;
+	}, []);
+
 	if (token) {
 		return <Navigate to={location.state || "/"} />;
 	}

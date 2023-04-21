@@ -27,7 +27,7 @@ const Homepage = (props: Props) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		window.document.title = "Facebook - Home";
+		window.document.title = "Facebook";
 	}, []);
 
 	if (isLoading || !userdata) {

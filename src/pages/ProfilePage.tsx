@@ -39,10 +39,6 @@ function ProfilePage({}: Props) {
 
 	useEffect(() => {
 		window.document.title = `Facebook - ${userdata?.name || ""}` || "Facebook";
-		// window.scrollTo({
-		// 	top: 150,
-		// 	behavior: "smooth",
-		// });
 		scrollTo({ y: 200 });
 	}, [userdata]);
 
