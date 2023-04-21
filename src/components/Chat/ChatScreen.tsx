@@ -1,9 +1,9 @@
-﻿import { Avatar, Flex, Input, Text, useMantineTheme } from "@mantine/core";
+﻿import { Avatar, Box, Flex, Input, Text, useMantineTheme } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import axios from "axios";
 import React, { useCallback, useState, useEffect, useRef } from "react";
 import { BiLike } from "react-icons/bi";
-import { FaSmile } from "react-icons/fa";
+import { FaSmile, FaVideo } from "react-icons/fa";
 import { HiGif } from "react-icons/hi2";
 import { ImImages } from "react-icons/im";
 import { IoTextSharp } from "react-icons/io5";
@@ -12,6 +12,7 @@ import {
 	MdOutlineWavingHand,
 	MdStickyNote2,
 } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import useAlert from "../../hooks/useAlert";
 import useSearchUser from "../../hooks/useSearchUser";
 import { useToken } from "../../Provider/AuthContextProvider";
@@ -41,6 +42,7 @@ function ChatScreen({ recipient }: Props) {
 	const [message, setMessage] = useState("");
 
 	const Alert = useAlert();
+	const navigate = useNavigate();
 
 	const getChatRoom = useCallback(async () => {
 		if (sender) {
@@ -127,81 +129,96 @@ function ChatScreen({ recipient }: Props) {
 	}
 
 	return (
-		<Flex
-			direction={"column"}
-			sx={{
-				borderTop: "0.1rem solid rgba(0,0,0,0.1)",
-				// borderBottom: "0.1rem solid rgba(0,0,0,0.1)",
-			}}>
-			{/*---:: Chats ::---*/}
-			<Flex justify={"center"} w="100%" align="end" h="60vh" pos="relative">
-				{chats.length < 1 && (
-					<Flex
-						ref={ref}
-						direction={"column"}
-						align="center"
-						gap={"md"}
-						top="50%"
-						left="50%"
-						sx={{ transform: "translate(-50% , -50%)" }}
-						pos="absolute">
-						<Avatar
-							size={"xl"}
-							radius={"xl"}
-							src={recipient.image}
-							alt={recipient.name}
-						/>
-						<Text>{recipient.name}</Text>
-						<Button
-							colorScheme={theme.colors.blue[5]}
-							size="md"
-							onClick={() => setMessage("Hi")}
-							style={{
-								boxShadow: "none",
-								background: hovered ? theme.colors.blue[5] : "none",
-								color: hovered ? "white" : theme.colors.gray[5],
-							}}>
-							Send a Hi <MdOutlineWavingHand />
-						</Button>
-					</Flex>
-				)}
-
-				{chats.length > 0 && <Chats {...{ chats, sender, recipient }} />}
-			</Flex>
-			{/*---:: Send Bar ::---*/}
+		<Box pos={"relative"}>
+			{/*---:: Video call ::---*/}
+			<Box
+				title="Video-Call"
+				onClick={() => navigate(`/connect/${room}`)}
+				sx={{
+					position: "absolute",
+					top: "-8%",
+					right: "20%",
+					zIndex: 1000,
+				}}>
+				<FaVideo size={22} color="rgba(0,0,0,0.5)" />
+			</Box>
 			<Flex
-				w="100%"
-				maw="100%"
-				align={"center"}
-				gap="1rem"
-				justify="space-between"
-				sx={{ overflow: "hidden" }}>
-				<MdAddCircle color={theme.colors.gray[5]} size={25} />
-				<ImImages size={25} color={theme.colors.gray[5]} />
-				<MdStickyNote2 size={25} color={theme.colors.gray[5]} />
-				<HiGif size={25} color={theme.colors.gray[5]} />
-				<Input
-					radius={"xl"}
-					variant="filled"
-					size={"md"}
-					c="blue"
-					value={message}
-					onChange={(e) => setMessage(e.target.value)}
-					onKeyDown={(e) => handleMessageSend(e, message)}
-					icon={<IoTextSharp size={25} color={theme.colors.gray[5]} />}
-					rightSection={<FaSmile size={25} color={theme.colors.gray[5]} />}
-				/>
-				<Button
-					colorScheme={theme.colors.blue[5]}
-					style={{
-						padding: 0,
-						background: "none",
-						boxShadow: "none",
-					}}>
-					<BiLike size={25} color={theme.colors.gray[5]} />
-				</Button>
+				direction={"column"}
+				sx={{
+					borderTop: "0.1rem solid rgba(0,0,0,0.1)",
+					// borderBottom: "0.1rem solid rgba(0,0,0,0.1)",
+				}}>
+				{/*---:: Chats ::---*/}
+				<Flex justify={"center"} w="100%" align="end" h="60vh" pos="relative">
+					{chats.length < 1 && (
+						<Flex
+							ref={ref}
+							direction={"column"}
+							align="center"
+							gap={"md"}
+							top="50%"
+							left="50%"
+							sx={{ transform: "translate(-50% , -50%)" }}
+							pos="absolute">
+							<Avatar
+								size={"xl"}
+								radius={"xl"}
+								src={recipient.image}
+								alt={recipient.name}
+							/>
+							<Text>{recipient.name}</Text>
+							<Button
+								colorScheme={theme.colors.blue[5]}
+								size="md"
+								onClick={() => setMessage("Hi")}
+								style={{
+									boxShadow: "none",
+									background: hovered ? theme.colors.blue[5] : "none",
+									color: hovered ? "white" : theme.colors.gray[5],
+								}}>
+								Send a Hi <MdOutlineWavingHand />
+							</Button>
+						</Flex>
+					)}
+
+					{chats.length > 0 && <Chats {...{ chats, sender, recipient }} />}
+				</Flex>
+				{/*---:: Send Bar ::---*/}
+
+				<Flex
+					w="100%"
+					maw="100%"
+					align={"center"}
+					gap="1rem"
+					justify="space-between"
+					sx={{ overflow: "hidden" }}>
+					<MdAddCircle color={theme.colors.gray[5]} size={25} />
+					<ImImages size={25} color={theme.colors.gray[5]} />
+					<MdStickyNote2 size={25} color={theme.colors.gray[5]} />
+					<HiGif size={25} color={theme.colors.gray[5]} />
+					<Input
+						radius={"xl"}
+						variant="filled"
+						size={"md"}
+						c="blue"
+						value={message}
+						onChange={(e) => setMessage(e.target.value)}
+						onKeyDown={(e) => handleMessageSend(e, message)}
+						icon={<IoTextSharp size={25} color={theme.colors.gray[5]} />}
+						rightSection={<FaSmile size={25} color={theme.colors.gray[5]} />}
+					/>
+					<Button
+						colorScheme={theme.colors.blue[5]}
+						style={{
+							padding: 0,
+							background: "none",
+							boxShadow: "none",
+						}}>
+						<BiLike size={25} color={theme.colors.gray[5]} />
+					</Button>
+				</Flex>
 			</Flex>
-		</Flex>
+		</Box>
 	);
 }
 

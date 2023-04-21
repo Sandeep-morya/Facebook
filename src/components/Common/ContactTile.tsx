@@ -1,6 +1,7 @@
 ﻿import { Avatar, Box, Flex, Modal, Text, Title } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import React, { useState } from "react";
+import { FaVideo } from "react-icons/fa";
 import { MdCall, MdVideoCall } from "react-icons/md";
 import useSearchUser from "../../hooks/useSearchUser";
 import ChatScreen from "../Chat/ChatScreen";

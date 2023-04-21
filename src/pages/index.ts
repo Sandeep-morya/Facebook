@@ -2,6 +2,7 @@
 export { default as Homepage } from "./Homepage";
 export { default as ProfilePage } from "./ProfilePage";
 export { default as FriendsPage } from "./FriendsPage";
+export { default as ConnectPage } from "./ConnectPage";
 export { default as ErrorPage } from "./ErrorPage";
 
 export const emojiURLs = [

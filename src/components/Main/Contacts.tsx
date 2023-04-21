@@ -1,7 +1,8 @@
-﻿import { Divider, Flex, Group, Input, Stack } from "@mantine/core";
+﻿import { Divider, Flex, Group, Input, Stack, Text, Title } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { MdSearch, MdVideoCall } from "react-icons/md";
 import { TbDots } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 import { useSocket } from "../../Provider/SocketContextProvider";
 import { useUserProfile } from "../../Provider/UserContextProvider";
 import BirthdayTilte from "../Common/BirthdayTile";
@@ -14,6 +15,7 @@ type Props = {};
 function Contacts({}: Props) {
 	const { userdata } = useUserProfile();
 	const socket = useSocket();
+	const navigate = useNavigate();
 	const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
 
 	useEffect(() => {
@@ -49,8 +51,11 @@ function Contacts({}: Props) {
 				<Flex justify={"space-between"} align="center">
 					<Heading name=" Your Contacts" />
 					<Flex gap={"1rem"}>
-						<MdVideoCall size={20} /> <MdSearch size={20} />{" "}
-						<TbDots size={20} />
+						<MdVideoCall
+							onClick={() => navigate("/connect/global")}
+							size={20}
+						/>{" "}
+						<MdSearch size={20} /> <TbDots size={20} />
 					</Flex>
 				</Flex>
 
@@ -83,6 +88,12 @@ function Contacts({}: Props) {
 					placeholder="Enter name of user"
 				/>
 				<Flex direction={"column"} gap="0.5rem">
+					<Text fz="sm" color="dimmed">
+						To chat with anyone click on "Avatar"
+					</Text>
+					{onlineUsers.filter((e) => e != userdata?._id).length < 1 && (
+						<Title order={4}>😢 No user is online</Title>
+					)}
 					{onlineUsers
 						.filter((e) => e != userdata?._id)
 						.map((e) => (

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import {
 	AuthenticationPage,
+	ConnectPage,
 	ErrorPage,
 	FriendsPage,
 	Homepage,
@@ -44,6 +45,16 @@ function AllRoutes({}: Props) {
 					<PrivateRoute>
 						<UserContextProvider>
 							<FriendsPage />
+						</UserContextProvider>
+					</PrivateRoute>
+				}
+			/>
+			<Route
+				path="/connect/:room"
+				element={
+					<PrivateRoute>
+						<UserContextProvider>
+							<ConnectPage />
 						</UserContextProvider>
 					</PrivateRoute>
 				}

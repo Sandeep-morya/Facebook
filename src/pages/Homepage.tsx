@@ -3,8 +3,10 @@ import { useMediaQuery } from "@mantine/hooks";
 import axios from "axios";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BiEdit } from "react-icons/bi";
+import { MdVideoCall } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/Common/LoadingScreen";
-import ScrollToBtn from "../components/Common/ScrollToBtn";
+import VideoCallButton from "../components/Common/VideoCallButton";
 
 import MobileNav from "../components/Header/MobileNav";
 import Navbar from "../components/Header/Navbar";
@@ -22,6 +24,7 @@ const Homepage = (props: Props) => {
 	const tabletView = useMediaQuery("(max-width: 62em)");
 	const moblieView = useMediaQuery("(max-width: 720px)");
 	const { isLoading, isError, userdata } = useUserProfile();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		window.document.title = "Facebook - Home";
@@ -110,9 +113,9 @@ const Homepage = (props: Props) => {
 					</Box>
 				)}
 			</Box>
-			<ScrollToBtn onClick={() => {}}>
-				<BiEdit color="black" size={22} />
-			</ScrollToBtn>
+			<VideoCallButton onClick={() => navigate("/connect/global")}>
+				<MdVideoCall color="black" size={22} />
+			</VideoCallButton>
 		</Flex>
 	);
 };
