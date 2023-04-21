@@ -1,6 +1,6 @@
 ﻿# Facebook Clone
 
-[Live URL](https://advance-facebook-clone.vercel.app/)
+[Live URL](https://sandeep-facebook.netlify.app/)
 
 
 Currently this project is completed. but in future days, i will includes few more functinality for sure.
@@ -8,6 +8,7 @@ Currently this project is completed. but in future days, i will includes few mor
 features:
 
 - Authentication
+- Video call
 - Create a post
 - Add Freind
 - Chat with friends and Strangers
