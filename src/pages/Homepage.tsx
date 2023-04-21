@@ -6,7 +6,7 @@ import { BiEdit } from "react-icons/bi";
 import { MdVideoCall } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/Common/LoadingScreen";
-import VideoCallButton from "../components/Common/VideoCallButton";
+import VideoCallButton from "../components/Common/FixedButton";
 
 import MobileNav from "../components/Header/MobileNav";
 import Navbar from "../components/Header/Navbar";
@@ -113,7 +113,9 @@ const Homepage = (props: Props) => {
 					</Box>
 				)}
 			</Box>
-			<VideoCallButton onClick={() => navigate("/connect/global")}>
+			<VideoCallButton
+				style={{ right: "2rem", bottom: "2rem" }}
+				onClick={() => navigate("/connect/global")}>
 				<MdVideoCall color="black" size={22} />
 			</VideoCallButton>
 		</Flex>

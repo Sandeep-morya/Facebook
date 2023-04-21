@@ -2,12 +2,14 @@
 	ActionIcon,
 	Box,
 	Burger,
+	Drawer,
 	Flex,
 	Group,
 	Image,
+	Input,
 	SimpleGrid,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import { TbMenu2 } from "react-icons/tb";
 import { FaFacebookMessenger, FaSearch } from "react-icons/fa";
 import { BsGrid3X3GapFill } from "react-icons/bs";
@@ -25,11 +27,23 @@ import { IoStorefrontOutline, IoStorefront } from "react-icons/io5";
 import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi";
 import { useDisclosure } from "@mantine/hooks";
 import TextLogo from "./TextLogo";
+import Sidebar from "../Main/Sidebar";
+import { useUserProfile } from "../../Provider/UserContextProvider";
+import { modalCloseButtonStyle } from "../Main/Post";
+import Logo from "./Logo";
+import Contacts from "../Main/Contacts";
 type Props = {};
 
 function MobileNav({}: Props) {
 	const [opened, { toggle }] = useDisclosure(false);
 	const label = opened ? "Close navigation" : "Open navigation";
+	const { isLoading, isError, userdata } = useUserProfile();
+	const [open, setOpen] = useState(false);
+
+	if (!userdata) {
+		return <></>;
+	}
+
 	return (
 		<Flex bg={"white"} w={"100%"} h="8rem" direction={"column"}>
 			<Flex justify={"space-between"} p="0.5rem 1rem">
@@ -40,8 +54,24 @@ function MobileNav({}: Props) {
 						title="Messenger"
 						Icon={FaFacebookMessenger}
 						notficationCount={0}
+						onClick={() => setOpen(true)}
 					/>
+					<Drawer
+						opened={open}
+						onClose={() => setOpen(false)}
+						title={<Logo />}
+						position="right"
+						closeButtonProps={modalCloseButtonStyle}>
+						<Contacts />
+					</Drawer>
 					<Burger opened={opened} onClick={toggle} aria-label={label} />
+					<Drawer
+						opened={opened}
+						onClose={toggle}
+						title={<Logo />}
+						closeButtonProps={modalCloseButtonStyle}>
+						<Sidebar user={userdata} />
+					</Drawer>
 				</Flex>
 			</Flex>
 			<Flex h={"4rem"} justify={"space-evenly"}>

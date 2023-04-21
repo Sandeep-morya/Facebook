@@ -7,13 +7,15 @@ type Props = {
 	Icon: IconType;
 	title?: string;
 	notficationCount?: number;
+	onClick?: () => void;
 };
 
-const IconButton = ({ Icon, title, notficationCount = 0 }: Props) => {
+const IconButton = ({ Icon, title, notficationCount = 0, onClick }: Props) => {
 	return (
 		<ActionIcon
 			sx={{ position: "relative" }}
 			bg={"#e0e0e0"}
+			onClick={onClick}
 			data-title={title}
 			size={"xl"}
 			radius={"xl"}

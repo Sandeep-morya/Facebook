@@ -5,6 +5,7 @@
 	Badge,
 	Box,
 	Burger,
+	Drawer,
 	Flex,
 	Group,
 	Input,
@@ -35,6 +36,7 @@ import SearchModal from "./SearchModal";
 import AccountModal from "./AccountModal";
 import { UserProfileType } from "../../types";
 import { useUserProfile } from "../../Provider/UserContextProvider";
+import Sidebar from "../Main/Sidebar";
 
 type Props = {
 	unActive?: boolean;
@@ -123,6 +125,9 @@ function Navbar({ unActive }: Props) {
 				{matches ? (
 					<Flex gap={"0.5rem"} justify="flex-end" h={"3.5rem"} align="center">
 						<Burger opened={opened} onClick={toggle} aria-label={label} />
+						<Drawer opened={opened} onClose={toggle} withCloseButton={false}>
+							<Sidebar user={userdata} />
+						</Drawer>
 					</Flex>
 				) : (
 					<Flex gap={"0.5rem"} justify="flex-end" h={"3.5rem"} align="center">
