@@ -32,6 +32,9 @@ import { useUserProfile } from "../../Provider/UserContextProvider";
 import { modalCloseButtonStyle } from "../Main/Post";
 import Logo from "./Logo";
 import Contacts from "../Main/Contacts";
+import NavButton from "./NavButton";
+import { ImExit } from "react-icons/im";
+import { useToken } from "../../Provider/AuthContextProvider";
 type Props = {};
 
 function MobileNav({}: Props) {
@@ -39,6 +42,7 @@ function MobileNav({}: Props) {
 	const label = opened ? "Close navigation" : "Open navigation";
 	const { isLoading, isError, userdata } = useUserProfile();
 	const [open, setOpen] = useState(false);
+	const {removeToken} = useToken()
 
 	if (!userdata) {
 		return <></>;
@@ -71,6 +75,11 @@ function MobileNav({}: Props) {
 						title={<Logo />}
 						closeButtonProps={modalCloseButtonStyle}>
 						<Sidebar user={userdata} />
+						<NavButton
+							onClick={() => removeToken()}
+							Icon={ImExit}
+							name="Log Out"
+						/>
 					</Drawer>
 				</Flex>
 			</Flex>

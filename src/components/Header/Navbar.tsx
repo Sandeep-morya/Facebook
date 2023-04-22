@@ -37,6 +37,9 @@ import AccountModal from "./AccountModal";
 import { UserProfileType } from "../../types";
 import { useUserProfile } from "../../Provider/UserContextProvider";
 import Sidebar from "../Main/Sidebar";
+import NavButton from "./NavButton";
+import { ImExit } from "react-icons/im";
+import { useToken } from "../../Provider/AuthContextProvider";
 
 type Props = {
 	unActive?: boolean;
@@ -50,6 +53,7 @@ function Navbar({ unActive }: Props) {
 	const [showSearchModal, setShowSearchModal] = useState(false);
 	const [showAccountModal, setShowAccountModal] = useState(false);
 	const { isLoading, isError, userdata } = useUserProfile();
+	const {removeToken} = useToken()
 
 	if (!userdata) {
 		return <></>;
@@ -127,6 +131,11 @@ function Navbar({ unActive }: Props) {
 						<Burger opened={opened} onClick={toggle} aria-label={label} />
 						<Drawer opened={opened} onClose={toggle} withCloseButton={false}>
 							<Sidebar user={userdata} />
+							<NavButton
+								onClick={() => removeToken()}
+								Icon={ImExit}
+								name="Log Out"
+							/>
 						</Drawer>
 					</Flex>
 				) : (

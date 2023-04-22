@@ -136,7 +136,7 @@ function ChatScreen({ recipient }: Props) {
 				onClick={() => navigate(`/connect/${room}`)}
 				sx={{
 					position: "absolute",
-					top: "-8%",
+					top: "-1.2cm",
 					right: "20%",
 					zIndex: 1000,
 				}}>
