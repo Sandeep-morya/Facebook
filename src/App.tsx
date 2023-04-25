@@ -16,6 +16,7 @@ export default function App() {
 	useEffect(() => {
 		heatUpTheServer();
 	}, [heatUpTheServer]);
+	// return <Boot />;
 	return loading ? (
 		<Boot />
 	) : (
