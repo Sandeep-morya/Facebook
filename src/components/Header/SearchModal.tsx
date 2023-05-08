@@ -37,7 +37,7 @@ const SearchModal = ({ setShowSearchModal }: Props) => {
 					size={"md"}
 					variant="filled"
 					icon={<FaSearch />}
-					placeholder="Search Facebook"
+					placeholder="Search Socailbook"
 					radius="xl"
 				/>
 			</Flex>

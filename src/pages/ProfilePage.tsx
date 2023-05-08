@@ -38,7 +38,7 @@ function ProfilePage({}: Props) {
 	const { isLoading, isError, posts, getPosts } = useSearchPosts(params.id);
 
 	useEffect(() => {
-		window.document.title = `Facebook - ${userdata?.name || ""}` || "Facebook";
+		window.document.title = `Socailbook - ${userdata?.name || ""}` || "Socailbook";
 		scrollTo({ y: 200 });
 	}, [userdata]);
 

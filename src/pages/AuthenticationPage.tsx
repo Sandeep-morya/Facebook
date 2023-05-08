@@ -79,7 +79,7 @@ const AuthenticationPage = () => {
 	}
 
 	useEffect(() => {
-		window.document.title = `Facebook - log in or sign up`;
+		window.document.title = `Socailbook - log in or sign up`;
 	}, []);
 
 	if (token) {
@@ -133,13 +133,13 @@ const AuthenticationPage = () => {
 						<Image
 							w={"100%"}
 							src={
-								"https://res.cloudinary.com/due9pi68z/image/upload/v1680507858/dnpjtjjqrvjvkslrqxxp.png"
+								"https://res.cloudinary.com/due9pi68z/image/upload/v1683515232/v5aulwovlglhjn5upcml.png"
 							}
-							alt="facebook-logo-name"
+							alt="Socailbook-logo-name"
 						/>
 					</Box>
 					<Text c="rgba(0,0,0,0.9)" fw={500} fz="1.7rem" lts={"1px"}>
-						Facebook helps you connect and share with the people in your life.
+						Socailbook helps you connect and share with the people in your life.
 					</Text>
 				</Flex>
 

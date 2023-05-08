@@ -162,7 +162,7 @@ const SignUpForm = ({ handleSignup, loading }: Props) => {
 			</Radio.Group>
 			<Text fz="xs">
 				People who use our service may have uploaded your contact information to
-				Facebook. <Link to="/">Learn more</Link>.
+				Socailbook. <Link to="/">Learn more</Link>.
 			</Text>
 			<Text fz="xs">
 				By clicking Sign Up, you agree to our{" "}

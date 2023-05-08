@@ -37,7 +37,7 @@ function Footer() {
 					<Ftext>Sign Up</Ftext>
 					<Ftext>Log in</Ftext>
 					<Ftext>Messenger</Ftext>
-					<Ftext>Facebook Lite</Ftext>
+					<Ftext>Socailbook Lite</Ftext>
 					<Ftext>Watch</Ftext>
 					<Ftext>Places Games</Ftext>
 					<Ftext>Marketplace</Ftext>
@@ -65,7 +65,7 @@ function Footer() {
 					<Ftext>Contact uploading and non-users</Ftext>
 				</Flex>
 				<Text mt="0.5rem" fz="xs">
-					Meta &copy; {date.getFullYear()}
+					Shadow Inc &copy; {date.getFullYear()}
 				</Text>
 			</Flex>
 		</footer>

@@ -27,7 +27,7 @@ const Homepage = (props: Props) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		window.document.title = "Facebook";
+		window.document.title = "Socailbook";
 	}, []);
 
 	if (isLoading || !userdata) {
@@ -107,8 +107,7 @@ const Homepage = (props: Props) => {
 							"-ms-overflow-style": "none" /* IE 11 */,
 							scrollbarWidth: "none",
 						}}>
-
-							<Contacts />
+						<Contacts />
 					</Box>
 				)}
 			</Box>

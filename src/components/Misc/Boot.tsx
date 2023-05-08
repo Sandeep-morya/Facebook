@@ -14,7 +14,7 @@ const Boot = () => {
 				width={"5rem"}
 				height={"5rem"}
 				src={
-					"https://res.cloudinary.com/due9pi68z/image/upload/v1680333681/ntpzmiiotgzmn9loafur.png"
+					"https://res.cloudinary.com/due9pi68z/image/upload/v1683515232/f2nrexkkzmzb6l2kadve.png"
 				}
 				alt="logo"
 			/>

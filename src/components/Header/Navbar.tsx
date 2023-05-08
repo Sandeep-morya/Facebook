@@ -89,7 +89,7 @@ function Navbar({ unActive }: Props) {
 								variant="filled"
 								onFocus={() => setShowSearchModal(true)}
 								icon={<FaSearch />}
-								placeholder="Search Facebook"
+								placeholder="Search Socailbook"
 								radius="xl"
 							/>
 						)}

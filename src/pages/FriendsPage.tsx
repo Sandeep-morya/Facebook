@@ -15,7 +15,7 @@ type Props = {};
 const titles = [
 	"People you may know",
 	"All Friend Requests",
-	"Suggested by Facebook",
+	"Suggested by Socailbook",
 	"Your all Friends",
 	"Birthdays",
 	"Custom Lists",
@@ -29,7 +29,7 @@ function FriendsPage({}: Props) {
 
 	const { isLoading, isError, userdata } = useUserProfile();
 	useEffect(() => {
-		window.document.title = "Facebook - Friends";
+		window.document.title = "Socailbook - Friends";
 	}, []);
 
 	if (isLoading) {
@@ -55,7 +55,7 @@ function FriendsPage({}: Props) {
 					</Title>
 					{tabIndex === 0 && <AllFriends />}
 					{tabIndex === 1 && <FriendRequests />}
-					{tabIndex === 2 && <FriendsGrid title="Suggested by facebook" />}
+					{tabIndex === 2 && <FriendsGrid title="Suggested by Socailbook" />}
 					{tabIndex === 3 && <AllFriends />}
 					{tabIndex === 4 && <NoFriends />}
 					{tabIndex === 5 && <NoFriends />}

@@ -42,7 +42,7 @@ function MobileNav({}: Props) {
 	const label = opened ? "Close navigation" : "Open navigation";
 	const { isLoading, isError, userdata } = useUserProfile();
 	const [open, setOpen] = useState(false);
-	const {removeToken} = useToken()
+	const { removeToken } = useToken();
 
 	if (!userdata) {
 		return <></>;
