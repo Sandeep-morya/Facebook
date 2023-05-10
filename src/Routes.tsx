@@ -23,9 +23,9 @@ function AllRoutes({}: Props) {
 				element={
 					<PrivateRoute>
 						<UserContextProvider>
-							<SocketProvider>
+
 								<Homepage />
-							</SocketProvider>
+							
 						</UserContextProvider>
 					</PrivateRoute>
 				}

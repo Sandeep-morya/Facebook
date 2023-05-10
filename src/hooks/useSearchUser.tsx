@@ -8,6 +8,8 @@ function useSearchUser(id: string) {
 	const [isError, setIsError] = useState(false);
 	const [userdata, setUserdata] = useState<UserProfileType>();
 
+	console.log({ id });
+
 	const getUserProfile = useCallback(async () => {
 		try {
 			setIsLoading(true);

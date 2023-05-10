@@ -10,16 +10,7 @@ import AvatarButton from "./AvatarButton";
 
 import Havatar from "./Havatar";
 
-const customStyles = {
-	content: {
-		top: "50%",
-		left: "50%",
-		right: "auto",
-		bottom: "auto",
-		marginRight: "-50%",
-		transform: "translate(-50%, -50%)",
-	},
-};
+
 
 type Props = {
 	id: string;
@@ -29,6 +20,7 @@ type Props = {
 };
 
 const ContactTile = ({ id, src, online = true, story }: Props) => {
+	console.log("id in contact tile",id)
 	const { isLoading, isError, userdata } = useSearchUser(id);
 
 	const [open, setOpen] = useState(false);

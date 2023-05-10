@@ -45,7 +45,7 @@ function UserContextProvider({ children }: { children: React.ReactNode }) {
 			if (token === undefined || secret === undefined) {
 				throw new Error("You have to login again");
 			}
-			const id = await verifyToken(token, secret);
+			const id = await verifyToken(token, secret)
 
 			const { data }: AxiosResponse<UserProfileType> = await axios.get(
 				baseURL + "/profile/" + id,

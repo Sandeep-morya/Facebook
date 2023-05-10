@@ -107,7 +107,9 @@ const Homepage = (props: Props) => {
 							"-ms-overflow-style": "none" /* IE 11 */,
 							scrollbarWidth: "none",
 						}}>
-						<Contacts />
+						<SocketProvider>
+							<Contacts />
+						</SocketProvider>
 					</Box>
 				)}
 			</Box>
