@@ -137,7 +137,7 @@ const AuthenticationPage = () => {
 									"brightness(0) saturate(100%) invert(48%) sepia(47%) saturate(3676%) hue-rotate(187deg) brightness(95%) contrast(90%);",
 							}}
 							src={
-								"https://res.cloudinary.com/due9pi68z/image/upload/v1683515232/v5aulwovlglhjn5upcml.png"
+								"https://res.cloudinary.com/due9pi68z/image/upload/v1683806427/h8ugy2wlfyrunzbowvgd.png"
 							}
 							alt="Socailbook-logo-name"
 						/>
