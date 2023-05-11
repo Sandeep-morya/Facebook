@@ -13,8 +13,15 @@
 	TextInput,
 	Title,
 	Tooltip,
+	useMantineTheme,
 } from "@mantine/core";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { FaGlobeAsia, FaTrash } from "react-icons/fa";
 import { TbDots, TbShare3 } from "react-icons/tb";
 import Havatar from "../Common/Havatar";
@@ -32,6 +39,7 @@ import { useNavigate } from "react-router-dom";
 import { useToken } from "../../Provider/AuthContextProvider";
 import useAlert from "../../hooks/useAlert";
 import { randomNumber } from "../../hooks/useRandomName";
+import { IconType } from "react-icons";
 
 type Props = {
 	post: PostType;
@@ -52,6 +60,7 @@ export const modalCloseButtonStyle = {
 
 function Post({ post }: Props) {
 	const { isLoading, isError, userdata } = useSearchUser(post.user_id);
+	const theme = useMantineTheme();
 	const [visible, setVisible] = useState(true);
 	const timeago = useTimeAgo(post.updatedAt);
 	const [open, setOpen] = useState(false);
@@ -66,6 +75,8 @@ function Post({ post }: Props) {
 	const emojiTwo = useMemo(() => randomNumber(0, 6), []);
 	const emojiThree = useMemo(() => randomNumber(0, 6), []);
 	const reactionCount = useMemo(() => randomNumber(10, 999), []);
+
+	const [liked, setLiked] = useState(false);
 
 	const editPost = useCallback(async () => {
 		try {
@@ -231,8 +242,9 @@ function Post({ post }: Props) {
 				<Divider />
 				<SimpleGrid cols={3}>
 					<Button
+						onClick={() => setLiked(!liked)}
 						variant={"subtle"}
-						color="gray"
+						color={liked ? theme.colors.blue[5] : "gray"}
 						size={"md"}
 						leftIcon={<BiLike size={22} />}>
 						Like

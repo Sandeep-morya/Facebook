@@ -35,6 +35,7 @@ import Contacts from "../Main/Contacts";
 import NavButton from "./NavButton";
 import { ImExit } from "react-icons/im";
 import { useToken } from "../../Provider/AuthContextProvider";
+import SocketProvider from "../../Provider/SocketContextProvider";
 type Props = {};
 
 function MobileNav({}: Props) {
@@ -66,7 +67,10 @@ function MobileNav({}: Props) {
 						title={<Logo />}
 						position="right"
 						closeButtonProps={modalCloseButtonStyle}>
-						<Contacts />
+						<SocketProvider>
+							{" "}
+							<Contacts />
+						</SocketProvider>
 					</Drawer>
 					<Burger opened={opened} onClick={toggle} aria-label={label} />
 					<Drawer
