@@ -10,8 +10,6 @@ import AvatarButton from "./AvatarButton";
 
 import Havatar from "./Havatar";
 
-
-
 type Props = {
 	id: string;
 	src?: string;
@@ -20,7 +18,7 @@ type Props = {
 };
 
 const ContactTile = ({ id, src, online = true, story }: Props) => {
-	console.log("id in contact tile",id)
+	// :: console.log("id in contact tile",id)
 	const { isLoading, isError, userdata } = useSearchUser(id);
 
 	const [open, setOpen] = useState(false);

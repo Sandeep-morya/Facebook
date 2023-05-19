@@ -34,7 +34,7 @@ function FriendCard({ id, friendRequest, chat }: Props) {
 
 	const addFriend = useCallback(async () => {
 		try {
-			console.log("called");
+			// :: console.log("called");
 			const { data } = await axios.post(
 				`${VITE_API_URL}/friend/add`,
 				{
@@ -51,7 +51,7 @@ function FriendCard({ id, friendRequest, chat }: Props) {
 
 	const acceptRequest = useCallback(async () => {
 		try {
-			console.log("called");
+			// :: console.log("called");
 			const { data } = await axios.post(
 				`${VITE_API_URL}/friend/accept`,
 				{

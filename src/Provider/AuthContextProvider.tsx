@@ -22,7 +22,7 @@ const AuthContextProvider = ({ children }: Props) => {
 	const cookie_value = useGetCookie()("fb_user");
 	const setCookie = useSetCookie();
 	const removeCookie = useRemoveCookie();
-	console.log({ cookie_value });
+	// :: console.log({ cookie_value });
 
 	const [token, setToken] = useState(cookie_value || "");
 

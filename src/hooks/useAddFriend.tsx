@@ -14,7 +14,7 @@ function useAddFriend() {
 	const addFriend = useCallback(
 		async (id: string) => {
 			try {
-				console.log("called");
+				// :: console.log("called");
 				const { data } = await axios.post(
 					`${VITE_API_URL}/friend/add`,
 					{

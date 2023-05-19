@@ -11,30 +11,42 @@ import ScrollBtnLeft from "../Common/ScrollBtnLeft";
 
 function StoryNreelTabs() {
 	const [activeTab, setActiveTab] = useState<string | null>("Stories");
-	const flexRef = useRef<HTMLDivElement>(null);
+	const firstRef = useRef<HTMLDivElement>(null);
 	const secondRef = useRef<HTMLDivElement>(null);
 
-	const handleScrollLeft = () => {
-		if (flexRef.current) {
-			flexRef.current.scrollBy({ left: -200, behavior: "smooth" });
+	// :: left button state management for reels ::
+	const [showFirstLeftButton, setShowFirstLeftButton] = useState(false);
+
+	// :: right button state management for reels ::
+	const [showFirstRightButton, setShowFirstRightButton] = useState(true);
+
+	// :: left button state management for story ::
+	const [showSecondLeftButton, setShowSecondLeftButton] = useState(false);
+
+	// :: right button state management for story ::
+	const [showSecondRightButton, setShowSecondRightButton] = useState(true);
+
+	const handleFirstRefScroll = (left: number) => {
+		if (firstRef.current) {
+			const scrollableWidth =
+				firstRef.current.scrollWidth - firstRef.current.clientWidth;
+			firstRef.current.scrollBy({ left, behavior: "smooth" });
+			setShowFirstLeftButton(firstRef.current.scrollLeft + left > 0);
+			setShowFirstRightButton(
+				firstRef.current.scrollLeft < scrollableWidth - left,
+			);
 		}
 	};
 
-	const handleScrollRight = () => {
-		if (flexRef.current) {
-			flexRef.current.scrollBy({ left: 200, behavior: "smooth" });
-		}
-	};
-
-	const SecondhandleScrollLeft = () => {
+	const handleSecondRefScroll = (left: number) => {
 		if (secondRef.current) {
-			secondRef.current.scrollBy({ left: -200, behavior: "smooth" });
-		}
-	};
-
-	const SecondhandleScrollRight = () => {
-		if (secondRef.current) {
-			secondRef.current.scrollBy({ left: 200, behavior: "smooth" });
+			const scrollableWidth =
+				secondRef.current.scrollWidth - secondRef.current.clientWidth;
+			setShowSecondLeftButton(secondRef.current.scrollLeft + left > 0);
+			setShowSecondRightButton(
+				secondRef.current.scrollLeft < scrollableWidth - left,
+			);
+			secondRef.current.scrollBy({ left, behavior: "smooth" });
 		}
 	};
 
@@ -72,7 +84,10 @@ function StoryNreelTabs() {
 						"-ms-overflow-style": "none" /* IE 11 */,
 						scrollbarWidth: "none",
 					}}>
-					<ScrollBtnLeft onClick={SecondhandleScrollLeft} />
+					{showSecondLeftButton && (
+						<ScrollBtnLeft onClick={() => handleSecondRefScroll(-300)} />
+					)}
+
 					<CreateStoryCard />
 					{new Array(20).fill("reel").map((e, i) => (
 						<StoryCard
@@ -81,13 +96,18 @@ function StoryNreelTabs() {
 						/>
 					))}
 				</Flex>
-				<ScrollBtnRight onClick={SecondhandleScrollRight} />
+				{showSecondRightButton && (
+					<ScrollBtnRight onClick={() => handleSecondRefScroll(300)} />
+				)}
 			</Tabs.Panel>
 
 			<Tabs.Panel value="Reels" h="12rem" pos={"relative"}>
-				<ScrollBtnLeft onClick={handleScrollLeft} />
+				{showFirstLeftButton && (
+					<ScrollBtnLeft onClick={() => handleFirstRefScroll(-300)} />
+				)}
+
 				<Flex
-					ref={flexRef}
+					ref={firstRef}
 					gap={"0.5rem"}
 					h="100%"
 					sx={{
@@ -103,7 +123,9 @@ function StoryNreelTabs() {
 						/>
 					))}
 				</Flex>
-				<ScrollBtnRight onClick={handleScrollRight} />
+				{showFirstRightButton && (
+					<ScrollBtnRight onClick={() => handleFirstRefScroll(300)} />
+				)}
 			</Tabs.Panel>
 		</Tabs>
 	);

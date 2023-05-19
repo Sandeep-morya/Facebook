@@ -50,7 +50,7 @@ const AuthenticationPage = () => {
 			setError(true);
 		}
 	}
-	console.log({ token });
+	// :: console.log({ token });
 
 	// :: Handle Signup ::
 	async function handleSignup(values: {

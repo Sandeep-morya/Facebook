@@ -36,6 +36,7 @@ import NavButton from "./NavButton";
 import { ImExit } from "react-icons/im";
 import { useToken } from "../../Provider/AuthContextProvider";
 import SocketProvider from "../../Provider/SocketContextProvider";
+import SearchModal from "./SearchModal";
 type Props = {};
 
 function MobileNav({}: Props) {
@@ -43,6 +44,7 @@ function MobileNav({}: Props) {
 	const label = opened ? "Close navigation" : "Open navigation";
 	const { isLoading, isError, userdata } = useUserProfile();
 	const [open, setOpen] = useState(false);
+	const [show, setShow] = useState(false);
 	const { removeToken } = useToken();
 
 	if (!userdata) {
@@ -54,13 +56,21 @@ function MobileNav({}: Props) {
 			<Flex justify={"space-between"} p="0.5rem 1rem">
 				<TextLogo />
 				<Flex gap="0.5rem" align={"center"}>
-					<IconButton title="Search" Icon={FaSearch} notficationCount={0} />
+					<IconButton
+						title="Search"
+						Icon={FaSearch}
+						notficationCount={0}
+						onClick={() => setShow(!show)}
+					/>
 					<IconButton
 						title="Messenger"
 						Icon={FaFacebookMessenger}
 						notficationCount={0}
 						onClick={() => setOpen(true)}
 					/>
+
+					{show && <SearchModal setShowSearchModal={setShow} />}
+
 					<Drawer
 						opened={open}
 						onClose={() => setOpen(false)}

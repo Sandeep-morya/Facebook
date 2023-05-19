@@ -53,7 +53,9 @@ function Navbar({ unActive }: Props) {
 	const [showSearchModal, setShowSearchModal] = useState(false);
 	const [showAccountModal, setShowAccountModal] = useState(false);
 	const { isLoading, isError, userdata } = useUserProfile();
-	const {removeToken} = useToken()
+	const [show, setShow] = useState(false);
+
+	const { removeToken } = useToken();
 
 	if (!userdata) {
 		return <></>;
@@ -82,7 +84,15 @@ function Navbar({ unActive }: Props) {
 							position: "relative",
 						}}>
 						{matches ? (
-							<IconButton title="Search" Icon={FaSearch} notficationCount={0} />
+							<>
+								<IconButton
+									title="Search"
+									Icon={FaSearch}
+									notficationCount={0}
+									onClick={() => setShow(!show)}
+								/>
+								{show && <SearchModal setShowSearchModal={setShow} />}
+							</>
 						) : (
 							<Input
 								size={"md"}
