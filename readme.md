@@ -1,4 +1,4 @@
-﻿# Socailbook Clone
+﻿# Facebook Clone
 
 [Live URL](https://sandeep-Socailbook.netlify.app/)
 
@@ -37,8 +37,10 @@ visit 👇👇
 
 [My Portfolio](https://sandeep-morya.vercel.app)
 
+## Folder Structure
+
 ```
-Facebook_clone
+Socailbook
 
 📦src
  ┣ 📂api
