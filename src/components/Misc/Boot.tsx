@@ -32,7 +32,7 @@ const Boot = () => {
 				}}>
 				<Loader />
 				<Text fw={500} c="dimmed">
-					Heating up the server
+					This may take upto 30s
 				</Text>
 			</Stack>
 		</div>
