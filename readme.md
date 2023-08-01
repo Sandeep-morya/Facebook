@@ -1,6 +1,6 @@
 ﻿# Facebook Clone
 
-[Live URL](https://sandeep-Socailbook.netlify.app/)
+[Live URL](https://sandeep-Meetbook.netlify.app/)
 
 ## Overview :
 
@@ -40,7 +40,7 @@ visit 👇👇
 ## Folder Structure
 
 ```
-Socailbook
+Meetbook
 
 📦src
  ┣ 📂api

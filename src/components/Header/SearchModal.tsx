@@ -110,7 +110,7 @@ const SearchModal = ({ setShowSearchModal }: Props) => {
 					size={"md"}
 					variant="filled"
 					icon={<FaSearch />}
-					placeholder="Search Socailbook"
+					placeholder="Search Meetbook"
 					radius="xl"
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}

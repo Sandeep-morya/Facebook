@@ -9,7 +9,7 @@ type Props = {
 
 function Sidebar({ user }: Props) {
 	return (
-		<Flex direction={"column"} pr="1rem" align="flex-start">
+		<Flex direction={"column"} ml={"0.5rem"} pr="1rem" align="flex-start">
 			<AvatarButton src={user.image} name={user.name} redirectOn={user._id} />
 			<AvatarButton
 				src="https://res.cloudinary.com/due9pi68z/image/upload/v1680723363/up49bubcrskek6eluya8.png"

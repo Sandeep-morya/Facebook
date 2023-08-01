@@ -15,6 +15,7 @@ import useSearchPosts from "../hooks/useSearchPosts";
 import useSearchUser from "../hooks/useSearchUser";
 import { useUserProfile } from "../Provider/UserContextProvider";
 import { PostType, UserProfileType } from "../types";
+import Footer from "../components/Footer/Footer";
 
 type Props = {};
 
@@ -38,7 +39,7 @@ function ProfilePage({}: Props) {
 	const { isLoading, isError, posts, getPosts } = useSearchPosts(params.id);
 
 	useEffect(() => {
-		window.document.title = `Socailbook - ${userdata?.name || ""}` || "Socailbook";
+		window.document.title = `Meetbook - ${userdata?.name || ""}` || "Meetbook";
 		scrollTo({ y: 200 });
 	}, [userdata]);
 
@@ -120,6 +121,9 @@ function ProfilePage({}: Props) {
 					{posts.map((post) => (
 						<Post key={post._id} {...{ post }} />
 					))}
+					<Box mt={"2rem"}>
+						<Footer />
+					</Box>
 				</Flex>
 			</Flex>
 		</Flex>

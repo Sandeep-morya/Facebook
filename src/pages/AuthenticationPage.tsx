@@ -79,7 +79,7 @@ const AuthenticationPage = () => {
 	}
 
 	useEffect(() => {
-		window.document.title = `Socailbook - log in or sign up`;
+		window.document.title = `Meetbook - log in or sign up`;
 	}, []);
 
 	if (token) {
@@ -130,20 +130,10 @@ const AuthenticationPage = () => {
 					}}
 					gap={"0.5rem"}>
 					<Box w={"45%"}>
-						<Image
-							w={"100%"}
-							sx={{
-								filter:
-									"brightness(0) saturate(100%) invert(48%) sepia(47%) saturate(3676%) hue-rotate(187deg) brightness(95%) contrast(90%);",
-							}}
-							src={
-								"https://res.cloudinary.com/due9pi68z/image/upload/v1683806427/h8ugy2wlfyrunzbowvgd.png"
-							}
-							alt="Socailbook-logo-name"
-						/>
+						<Image w={"100%"} src={"logoname.png"} alt="Meetbook-logo-name" />
 					</Box>
 					<Text c="rgba(0,0,0,0.9)" fw={500} fz="1.7rem" lts={"1px"}>
-						Socailbook helps you connect and share with the people in your life.
+						Meetbook helps you connect and share with the people in your life.
 					</Text>
 				</Flex>
 

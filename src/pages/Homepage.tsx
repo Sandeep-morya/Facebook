@@ -1,22 +1,17 @@
-﻿import { Box, Center, Flex, Loader } from "@mantine/core";
+﻿import { Box, Flex } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import axios from "axios";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { BiEdit } from "react-icons/bi";
 import { MdVideoCall } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import VideoCallButton from "../components/Common/FixedButton";
 
-import MobileNav from "../components/Header/MobileNav";
 import Navbar from "../components/Header/Navbar";
 import Contacts from "../components/Main/Contacts";
 import Feeds from "../components/Main/Feeds";
 import Sidebar from "../components/Main/Sidebar";
-import useGetCookie from "../hooks/useGetCookie";
 import SocketProvider from "../Provider/SocketContextProvider";
 import { useUserProfile } from "../Provider/UserContextProvider";
-import { UserProfileType } from "../types";
+import { useEffect } from "react";
 
 type Props = {};
 
@@ -27,7 +22,7 @@ const Homepage = (props: Props) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		window.document.title = "Socailbook";
+		window.document.title = "Meetbook";
 	}, []);
 
 	if (isLoading || !userdata) {

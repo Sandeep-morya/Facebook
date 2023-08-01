@@ -74,11 +74,10 @@ function MobileNav({}: Props) {
 					<Drawer
 						opened={open}
 						onClose={() => setOpen(false)}
-						title={<Logo />}
+						title={<TextLogo />}
 						position="right"
 						closeButtonProps={modalCloseButtonStyle}>
 						<SocketProvider>
-							{" "}
 							<Contacts />
 						</SocketProvider>
 					</Drawer>
@@ -86,7 +85,7 @@ function MobileNav({}: Props) {
 					<Drawer
 						opened={opened}
 						onClose={toggle}
-						title={<Logo />}
+						title={<TextLogo />}
 						closeButtonProps={modalCloseButtonStyle}>
 						<Sidebar user={userdata} />
 						<NavButton
