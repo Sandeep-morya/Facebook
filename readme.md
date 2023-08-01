@@ -3,7 +3,7 @@
 <center>
 <img align="center" height="100" src="./public/logoname.png" alt="Meetbook" />
 </center>
-[Live URL](https://sandeep-Meetbook.netlify.app/)
+(https://meet-book.netlify.app/)[Live URL]
 
 ## Overview :
 
