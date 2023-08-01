@@ -1,7 +1,7 @@
 ﻿# Facebook Clone
 
 <center>
-<img width="100" src="./public/logoname.png" alt="Meetbook" />
+<img align="center" height="100" src="./public/logoname.png" alt="Meetbook" />
 </center>
 [Live URL](https://sandeep-Meetbook.netlify.app/)
 
