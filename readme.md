@@ -1,9 +1,10 @@
 ﻿# Facebook Clone
 
-<center>
-<img align="center" height="100" src="./public/logoname.png" alt="Meetbook" />
-</center>
-(https://meet-book.netlify.app/)[Live URL]
+<div align="center">
+<img height="80" src="./public/logoname.png" alt="Meetbook" />
+</div>
+
+[Live URL](https://meet-book.netlify.app)
 
 ## Overview :
 
@@ -39,6 +40,10 @@ This project is a clone of offical facebook website. I have tried to make it loo
 visit 👇👇
 
 [My Portfolio](https://sandeep-morya.vercel.app)
+
+<div align="center">
+<img height="100" src="./public/logo.png" alt="Meetbook" />
+</div>
 
 ## Folder Structure
 
