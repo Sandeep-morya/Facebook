@@ -76,3 +76,19 @@ export interface MessageType {
 	recipient: string;
 	time: number;
 }
+
+export interface DummyPost {
+	id: string;
+	image: string;
+	likes: 43;
+	tags: string[];
+	text: string;
+	publishDate: "2020-05-24T14:53:17.598Z";
+	owner: {
+		id: string;
+		title: string;
+		firstName: string;
+		lastName: string;
+		picture: string;
+	};
+}

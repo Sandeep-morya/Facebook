@@ -1,4 +1,12 @@
-﻿import { Container, Flex, SimpleGrid, Title } from "@mantine/core";
+﻿import {
+	Box,
+	Container,
+	Flex,
+	SimpleGrid,
+	Skeleton,
+	Text,
+	Title,
+} from "@mantine/core";
 import axios, { AxiosResponse } from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import useAlert from "../../hooks/useAlert";
@@ -7,10 +15,12 @@ import { useUserProfile } from "../../Provider/UserContextProvider";
 import { FriendType, UserProfileType } from "../../types";
 import FriendCard from "./FriendCard";
 import NoFriends from "./NoFriends";
+import StoryCard from "../Main/StoryCard";
 
 type Props = {
 	title: string;
 };
+
 const { VITE_API_URL, VITE_TOKEN_SECRET } = import.meta.env;
 
 function FriendsGrid({ title }: Props) {
@@ -59,6 +69,7 @@ function FriendsGrid({ title }: Props) {
 				.map((user) => (
 					<FriendCard id={user._id} key={user._id} />
 				))}
+			<br />
 		</Flex>
 	);
 }

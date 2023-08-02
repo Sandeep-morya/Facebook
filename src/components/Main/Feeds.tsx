@@ -1,4 +1,4 @@
-﻿import { Button, Flex } from "@mantine/core";
+﻿import { Button, Center, Flex, Loader } from "@mantine/core";
 import axios, { AxiosResponse } from "axios";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useAlert from "../../hooks/useAlert";
@@ -8,6 +8,7 @@ import { PostType } from "../../types";
 import Post from "./Post";
 import StoryNreelTabs from "./StoryNreelTabs";
 import UploadPost from "./UploadPost";
+import DummyPosts from "./DummyPosts";
 
 function Feeds() {
 	const { isLoading, isError, posts, getPosts } = useSearchPosts();
@@ -15,6 +16,13 @@ function Feeds() {
 
 	if (!userdata) {
 		return <></>;
+	}
+	if (isLoading) {
+		return (
+			<Center w="100%" py="1rem">
+				<Loader variant="bars" />
+			</Center>
+		);
 	}
 
 	return (
@@ -49,6 +57,7 @@ function Feeds() {
 				{posts.map((post) => (
 					<Post key={post._id} {...{ post }} />
 				))}
+				<DummyPosts />
 			</Flex>
 		</Flex>
 	);

@@ -36,11 +36,19 @@ function FriendsPage({}: Props) {
 		return <LoadingScreen />;
 	}
 	return (
-		<Flex w={"100%"} mih="100vh" direction={"column"} bg="#F0F2F5">
+		<Flex
+			w={"100%"}
+			h="100vh"
+			mih="100vh"
+			direction={"column"}
+			bg="#F0F2F5"
+			sx={{
+				overflow: "hidden",
+			}}>
 			<Box w={"100%"} sx={{ position: "sticky", zIndex: 100, top: "0" }}>
 				<Navbar unActive />
 			</Box>
-			<Flex>
+			<Flex sx={{ flex: 1 }}>
 				{!tabletView && <Sidebar {...{ tabIndex, setTabIndex }} />}
 				<Flex
 					p={{
@@ -48,7 +56,10 @@ function FriendsPage({}: Props) {
 						md: "1rem",
 						lg: "2rem",
 					}}
-					sx={{ flex: 1 }}
+					sx={{
+						width: "100%",
+						height: "calc(100vh - 3rem)",
+					}}
 					direction={"column"}>
 					<Title order={4} pt="md">
 						{titles[tabIndex]}
@@ -56,7 +67,6 @@ function FriendsPage({}: Props) {
 					{tabIndex === 0 && <AllFriends />}
 					{tabIndex === 1 && <FriendRequests />}
 					{tabIndex === 2 && <FriendsGrid title="Suggested by Meetbook" />}
-					{tabIndex === 3 && <AllFriends />}
 					{tabIndex === 4 && <NoFriends />}
 					{tabIndex === 5 && <NoFriends />}
 				</Flex>

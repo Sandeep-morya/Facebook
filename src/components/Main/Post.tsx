@@ -169,6 +169,7 @@ function Post({ post }: Props) {
 							objectFit: "contain",
 						}}
 						src={post.url}
+						loading="lazy"
 						alt={userdata.name}
 					/>
 					<Modal
@@ -212,6 +213,7 @@ function Post({ post }: Props) {
 								objectFit: "contain",
 							}}
 							src={post.url}
+							loading="lazy"
 							alt="Preview"
 						/>
 					</Modal>

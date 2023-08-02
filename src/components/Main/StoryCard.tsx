@@ -7,9 +7,11 @@ import { modalCloseButtonStyle } from "./Post";
 
 type Props = {
 	image: string;
+	name?: string;
+	noAvatar?: boolean;
 };
 
-function StoryCard({ image }: Props) {
+function StoryCard({ image, name, noAvatar }: Props) {
 	const { hovered, ref } = useHover();
 	const randomName = useRandomName();
 	const [open, setOpen] = useState(false);
@@ -39,14 +41,16 @@ function StoryCard({ image }: Props) {
 					backgroundRepeat: "no-repeat",
 					transition: "all 0.1s",
 				}}></Box>
-			<Box
-				sx={{
-					position: "absolute",
-					top: "5%",
-					left: "10%",
-				}}>
-				<Havatar online={true} name="arm" src={image} story="s" />
-			</Box>
+			{!noAvatar && (
+				<Box
+					sx={{
+						position: "absolute",
+						top: "5%",
+						left: "10%",
+					}}>
+					<Havatar online={true} name="arm" src={image} story="s" />
+				</Box>
+			)}
 
 			<Text
 				sx={{
@@ -58,7 +62,7 @@ function StoryCard({ image }: Props) {
 				fw={600}
 				fz="sm"
 				c="white">
-				{randomName}
+				{name || randomName}
 			</Text>
 			{/* Modal */}
 			<Modal
