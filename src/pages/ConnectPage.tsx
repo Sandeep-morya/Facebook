@@ -14,8 +14,8 @@ function ConnectPage({}: Props) {
 	const [zegoInstance, setZegoInstance] = useState<ZegoUIKitPrebuilt>();
 
 	const myMeeting = async (element: HTMLDivElement) => {
-		const AppID = 1181006195;
-		const serverSecret = "e5b6e9f185c9f368c40476dfaaf537e7";
+		const AppID = 1477728151;
+		const serverSecret = "2b30e272326928c0abef518894ba83a3";
 
 		const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
 			AppID,
