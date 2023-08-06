@@ -116,7 +116,6 @@ function Post({ post }: Props) {
 						<Havatar
 							onClick={() => navigate(`/${post.user_id}`)}
 							src={userdata.image}
-							online
 							name={userdata.name}
 						/>
 						<Flex direction={"column"}>

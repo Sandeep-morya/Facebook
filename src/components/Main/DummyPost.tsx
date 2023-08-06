@@ -62,7 +62,6 @@ const DummyPost = (post: Props) => {
 						<Havatar
 							onClick={() => alert("This is a dummy user", "error")}
 							src={post.owner.picture}
-							online
 							name={
 								post.owner.title +
 								" " +
