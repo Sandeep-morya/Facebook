@@ -12,7 +12,7 @@
 	SimpleGrid,
 	Tabs,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import { FaSearch, FaFacebookMessenger, FaLaptopHouse } from "react-icons/fa";
 import { BsGrid3X3GapFill } from "react-icons/bs";
@@ -40,6 +40,9 @@ import Sidebar from "../Main/Sidebar";
 import NavButton from "./NavButton";
 import { ImExit } from "react-icons/im";
 import { useToken } from "../../Provider/AuthContextProvider";
+import { useSocket } from "../../Provider/SocketContextProvider";
+import useAlert from "../../hooks/useAlert";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
 	unActive?: boolean;
@@ -54,8 +57,29 @@ function Navbar({ unActive }: Props) {
 	const [showAccountModal, setShowAccountModal] = useState(false);
 	const { isLoading, isError, userdata } = useUserProfile();
 	const [show, setShow] = useState(false);
+	const socket = useSocket();
+	const Alert = useAlert();
+	const [params] = useSearchParams();
 
 	const { removeToken } = useToken();
+	useEffect(() => {
+		if (socket) {
+			socket.on("server:send-message", (chat) => {
+				if (!params.get("chatting_with")) {
+					Alert(`New Message: ${chat.message}`);
+					(() => {
+						const audio = new Audio("message.mp3");
+						audio.play();
+					})();
+				}
+			});
+		}
+		return () => {
+			if (socket) {
+				socket.off("server:send-message");
+			}
+		};
+	}, [socket, params]);
 
 	if (!userdata) {
 		return <></>;

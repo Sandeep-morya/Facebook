@@ -12,7 +12,7 @@ import {
 	MdOutlineWavingHand,
 	MdStickyNote2,
 } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useAlert from "../../hooks/useAlert";
 import useSearchUser from "../../hooks/useSearchUser";
 import { useToken } from "../../Provider/AuthContextProvider";
@@ -30,6 +30,8 @@ type Props = {
 const { VITE_API_URL } = import.meta.env;
 
 function ChatScreen({ recipient }: Props) {
+	const [_, setSearchParams] = useSearchParams();
+
 	const theme = useMantineTheme();
 	const { ref, hovered } = useHover();
 	const { token } = useToken();
@@ -108,6 +110,15 @@ function ChatScreen({ recipient }: Props) {
 	useEffect(() => {
 		getChatRoom();
 	}, []);
+
+	useEffect(() => {
+		if (sender) {
+			setSearchParams({ chatting_with: sender.name });
+		}
+		return () => {
+			setSearchParams({});
+		};
+	}, [sender]);
 
 	useEffect(() => {
 		if (socket && room != "") {
