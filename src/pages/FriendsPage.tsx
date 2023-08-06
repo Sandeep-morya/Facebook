@@ -43,7 +43,7 @@ function FriendsPage({}: Props) {
 			direction={"column"}
 			bg="#F0F2F5"
 			sx={{
-				overflow: "hidden",
+				overflowY: "scroll",
 			}}>
 			<Box w={"100%"} sx={{ position: "sticky", zIndex: 100, top: "0" }}>
 				<Navbar unActive />
