@@ -6,7 +6,7 @@ type Props = {};
 function TextLogo({}: Props) {
 	return (
 		<Box w={"180px"}>
-			<Image w={"100%"} src={"/logoname.png"} alt="Meetbook-logo-name" />
+			<Image w={"100%"} src={"/logoname.png"} alt="Facebook-logo-name" />
 		</Box>
 	);
 }

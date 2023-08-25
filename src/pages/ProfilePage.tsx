@@ -39,7 +39,7 @@ function ProfilePage({}: Props) {
 	const { isLoading, isError, posts, getPosts } = useSearchPosts(params.id);
 
 	useEffect(() => {
-		window.document.title = `Meetbook - ${userdata?.name || ""}` || "Meetbook";
+		window.document.title = `Facebook - ${userdata?.name || ""}` || "Facebook";
 		scrollTo({ y: 200 });
 	}, [userdata]);
 

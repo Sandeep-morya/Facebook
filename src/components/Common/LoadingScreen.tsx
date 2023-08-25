@@ -31,7 +31,7 @@ function LoadingScreen({}: Props) {
 				<Logo />
 				<Input
 					icon={<MdSearch size={20} />}
-					placeholder="Search Meetbook"
+					placeholder="Search Facebook"
 					radius={"xl"}
 					size="md"
 					readOnly

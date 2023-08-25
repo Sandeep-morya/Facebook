@@ -22,7 +22,7 @@ const Homepage = (props: Props) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		window.document.title = "Meetbook";
+		window.document.title = "Facebook";
 	}, []);
 
 	if (isLoading || !userdata) {

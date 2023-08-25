@@ -1,7 +1,7 @@
 ﻿# Facebook Clone
 
 <div align="center">
-<img height="80" src="./public/logoname.png" alt="Meetbook" />
+<img height="80" src="./public/logoname.png" alt="Facebook" />
 </div>
 
 [Live URL](https://meet-book.netlify.app)
@@ -42,13 +42,13 @@ visit 👇👇
 [My Portfolio](https://sandeep-morya.vercel.app)
 
 <div align="center">
-<img height="100" src="./public/logo.png" alt="Meetbook" />
+<img height="100" src="./public/logo.png" alt="Facebook" />
 </div>
 
 ## Folder Structure
 
 ```
-Meetbook
+Facebook
 
 📦src
  ┣ 📂api

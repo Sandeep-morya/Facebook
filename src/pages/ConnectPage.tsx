@@ -39,7 +39,7 @@ function ConnectPage({}: Props) {
 	};
 
 	useEffect(() => {
-		window.document.title = `Meetbook - Stream`;
+		window.document.title = `Facebook - Stream`;
 	}, []);
 
 	return (

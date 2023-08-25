@@ -79,7 +79,7 @@ const AuthenticationPage = () => {
 	}
 
 	useEffect(() => {
-		window.document.title = `Meetbook - log in or sign up`;
+		window.document.title = `Facebook - log in or sign up`;
 	}, []);
 
 	if (token) {
@@ -130,10 +130,10 @@ const AuthenticationPage = () => {
 					}}
 					gap={"0.5rem"}>
 					<Box w={"45%"}>
-						<Image w={"100%"} src={"logoname.png"} alt="Meetbook-logo-name" />
+						<Image w={"100%"} src={"logoname.png"} alt="Facebook-logo-name" />
 					</Box>
 					<Text c="rgba(0,0,0,0.9)" fw={500} fz="1.7rem" lts={"1px"}>
-						Meetbook helps you connect and share with the people in your life.
+						Facebook helps you connect and share with the people in your life.
 					</Text>
 				</Flex>
 

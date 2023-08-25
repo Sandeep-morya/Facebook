@@ -37,7 +37,7 @@ function Footer() {
 					<Ftext>Sign Up</Ftext>
 					<Ftext>Log in</Ftext>
 					<Ftext>Messenger</Ftext>
-					<Ftext>Meetbook Lite</Ftext>
+					<Ftext>Facebook Lite</Ftext>
 					<Ftext>Watch</Ftext>
 					<Ftext>Places Games</Ftext>
 					<Ftext>Marketplace</Ftext>

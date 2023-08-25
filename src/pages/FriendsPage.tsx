@@ -15,7 +15,7 @@ type Props = {};
 const titles = [
 	"People you may know",
 	"All Friend Requests",
-	"Suggested by Meetbook",
+	"Suggested by Facebook",
 	"Your all Friends",
 	"Birthdays",
 	"Custom Lists",
@@ -29,7 +29,7 @@ function FriendsPage({}: Props) {
 
 	const { isLoading, isError, userdata } = useUserProfile();
 	useEffect(() => {
-		window.document.title = "Meetbook - Friends";
+		window.document.title = "Facebook - Friends";
 	}, []);
 
 	if (isLoading) {
@@ -66,7 +66,7 @@ function FriendsPage({}: Props) {
 					</Title>
 					{tabIndex === 0 && <AllFriends />}
 					{tabIndex === 1 && <FriendRequests />}
-					{tabIndex === 2 && <FriendsGrid title="Suggested by Meetbook" />}
+					{tabIndex === 2 && <FriendsGrid title="Suggested by Facebook" />}
 					{tabIndex === 4 && <NoFriends />}
 					{tabIndex === 5 && <NoFriends />}
 				</Flex>
