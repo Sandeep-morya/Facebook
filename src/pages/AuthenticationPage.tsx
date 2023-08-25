@@ -130,7 +130,7 @@ const AuthenticationPage = () => {
 					}}
 					gap={"0.5rem"}>
 					<Box w={"45%"}>
-						<Image w={"100%"} src={"logoname.png"} alt="Facebook-logo-name" />
+						<Image w={"100%"} src={"logo-2.png"} alt="Facebook-logo-name" />
 					</Box>
 					<Text c="rgba(0,0,0,0.9)" fw={500} fz="1.7rem" lts={"1px"}>
 						Facebook helps you connect and share with the people in your life.

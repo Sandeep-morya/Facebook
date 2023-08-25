@@ -1,7 +1,7 @@
 ﻿# Facebook Clone
 
 <div align="center">
-<img height="80" src="./public/logoname.png" alt="Facebook" />
+<img height="80" src="./public/logo-2.png" alt="Facebook" />
 </div>
 
 [Live URL](https://meet-book.netlify.app)
